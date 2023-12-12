@@ -1,0 +1,10 @@
+
+*.vsidx
+*.vsidx
+*.lock
+.vs/AR_TP_Info_Sem-3/v17/.wsuo
+*.db
+*.json
+*.sqlite
+*.vsidx
+*.vsidx
