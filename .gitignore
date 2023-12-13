@@ -1,10 +1,9 @@
+# Fichiers spécifiques
+Datasets.zip
 
-*.vsidx
-*.vsidx
-*.lock
-.vs/AR_TP_Info_Sem-3/v17/.wsuo
-*.db
-*.json
-*.sqlite
-*.vsidx
-*.vsidx
+# Dossiers et fichiers spécifiques à Visual Studio
+TP_Info_sem-3/x64
+
+x64
+
+.vs
