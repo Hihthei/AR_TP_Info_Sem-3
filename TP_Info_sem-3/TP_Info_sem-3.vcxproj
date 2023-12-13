@@ -128,11 +128,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="C:\Users\Celin\OneDrive - Groupe ESIEA\ESIEA\Semestre 3\#Programmation-en-C\#Library\ABR\ABR_c.c" />
+    <ClCompile Include="Dataset_c.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\Celin\OneDrive - Groupe ESIEA\ESIEA\Semestre 3\#Programmation-en-C\#Library\ABR\ABR_h.h" />
     <ClInclude Include="C:\Users\Celin\OneDrive - Groupe ESIEA\ESIEA\Semestre 3\#Programmation-en-C\#Library\ABR\Settings.h" />
+    <ClInclude Include="Dataset_h.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
