@@ -19,6 +19,12 @@
     <Filter Include="Fichiers sources\ABR_AVL">
       <UniqueIdentifier>{e934978f-fdc2-4802-8b3b-6c0b60d59642}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\DataSet">
+      <UniqueIdentifier>{563f7d42-837a-4301-aca1-aeca34cc621e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\DataSet">
+      <UniqueIdentifier>{399863f3-fc99-43e8-bc6b-069d34b0e6dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -27,6 +33,9 @@
     <ClCompile Include="C:\Users\Celin\OneDrive - Groupe ESIEA\ESIEA\Semestre 3\#Programmation-en-C\#Library\ABR\ABR_c.c">
       <Filter>Fichiers sources\ABR_AVL</Filter>
     </ClCompile>
+    <ClCompile Include="Dataset_c.c">
+      <Filter>Fichiers sources\DataSet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\Celin\OneDrive - Groupe ESIEA\ESIEA\Semestre 3\#Programmation-en-C\#Library\ABR\Settings.h">
@@ -34,6 +43,9 @@
     </ClInclude>
     <ClInclude Include="C:\Users\Celin\OneDrive - Groupe ESIEA\ESIEA\Semestre 3\#Programmation-en-C\#Library\ABR\ABR_h.h">
       <Filter>Fichiers d%27en-tête\ABR_AVL</Filter>
+    </ClInclude>
+    <ClInclude Include="Dataset_h.h">
+      <Filter>Fichiers d%27en-tête\DataSet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
