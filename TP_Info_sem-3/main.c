@@ -11,26 +11,28 @@ int main(int argc, char** argv)
 
     srand((unsigned int)time(NULL));
 
-    char* path = "../Dataset/PENDIGITS_train.txt";
+    char* path = "../Dataset/TEST_train.txt";
     
     Dataset* trainData = Dataset_readFromFile(path);
     if (trainData == NULL)
         return EXIT_FAILURE;
 
+    printf("%d %d %d\n", trainData->instanceCount, trainData->featureCount, trainData->classCount);
+
+    /*
     Subproblem* subproblem = Subproblem_create(10, 10, 10);
     if (subproblem == NULL)
         return EXIT_FAILURE;
-    /*
+    //*/
+    //*
     Subproblem* subproblem = Dataset_getSubproblem(trainData);
     if (subproblem == NULL)
-        return EXIT_FAILURE;
+		return EXIT_FAILURE;
+    //*/
 
 
     //----------------------------------------------------------
-    */
     Subproblem_print(subproblem);
-    //*/
-    printf("%d %d %d\n", trainData->instanceCount, trainData->featureCount, trainData->classCount);
 
     //----------------------------------------------------------
     

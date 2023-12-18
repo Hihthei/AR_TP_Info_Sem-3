@@ -129,7 +129,7 @@ void Subproblem_destroy(Subproblem* subproblem);
  * 
  * @return 
  */
-void Subproblem_insert(Subproblem* subproblem, Instance* instance);
+bool Subproblem_insert(Subproblem* subproblem, Instance* instance);
 // TODO
 
 
@@ -144,6 +144,5 @@ void Subproblem_insert(Subproblem* subproblem, Instance* instance);
  * @return 
  */
 void Subproblem_print(Subproblem* subproblem);
-// TODO
 
 #endif
