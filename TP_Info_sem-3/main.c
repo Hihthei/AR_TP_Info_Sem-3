@@ -17,6 +17,9 @@ int main(int argc, char** argv)
     if (trainData == NULL)
         return EXIT_FAILURE;
 
+    Subproblem* subproblem = Subproblem_create(10, 10, 10);
+    if (subproblem == NULL)
+        return EXIT_FAILURE;
     /*
     Subproblem* subproblem = Dataset_getSubproblem(trainData);
     if (subproblem == NULL)
@@ -24,17 +27,18 @@ int main(int argc, char** argv)
 
 
     //----------------------------------------------------------
-    
+    */
     Subproblem_print(subproblem);
     //*/
+    printf("%d %d %d\n", trainData->instanceCount, trainData->featureCount, trainData->classCount);
 
     //----------------------------------------------------------
     
     Dataset_destroy(trainData);
     trainData = NULL;
 
-    //Subproblem_destroy(subproblem);
-    //subproblem = NULL;
+    Subproblem_destroy(subproblem);
+    subproblem = NULL;
 
     //TIME CLOCK END --------------------------------------------
     end = clock();

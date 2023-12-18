@@ -56,7 +56,6 @@ typedef struct sSubproblem {
  * @return un pointeur vers une structure contenant les informations de DataSet
  */
 Dataset* Dataset_readFromFile(char* filename);
-// TODO
 
 
 
@@ -71,7 +70,6 @@ Dataset* Dataset_readFromFile(char* filename);
  * @return void
  */
 void Dataset_destroy(Dataset* dataset);
-// TODO
 
 
 
@@ -103,8 +101,6 @@ Subproblem* Dataset_getSubproblem(Dataset* dataset);
  * @return 
  */
 Subproblem* Subproblem_create(int maximumCapacity, int featureCount, int classCount);
-// TODO
-
 
 
 /**
@@ -120,7 +116,6 @@ Subproblem* Subproblem_create(int maximumCapacity, int featureCount, int classCo
  * @return 
  */
 void Subproblem_destroy(Subproblem* subproblem);
-// TODO
 
 
 

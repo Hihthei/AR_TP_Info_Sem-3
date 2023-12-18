@@ -1,4 +1,5 @@
 #include "Dataset_h.h"
+//#include <openMP.h>
 
 void CodeError(void** freeptr, char* errormsg) {
 	if(strcmp(errormsg, "") != 0 && errormsg != NULL)
@@ -14,7 +15,7 @@ void CodeError(void** freeptr, char* errormsg) {
 
 Dataset* Dataset_readFromFile(char* filename) {
 	if (filename == NULL) {
-		CodeError(NULL, "readFromFile - fichier inexistant");
+		CodeError(NULL, "Dataset_readFromFile - fichier inexistant");
 		return NULL;
 	}
 		
@@ -22,7 +23,7 @@ Dataset* Dataset_readFromFile(char* filename) {
 	pfile = fopen(filename, "r");
 
 	if (pfile == NULL) {
-		CodeError(NULL, "readFromFile - fichier introuvable");
+		CodeError(NULL, "Dataset_readFromFile - fichier introuvable");
 		return NULL;
 	}
 
@@ -31,7 +32,7 @@ Dataset* Dataset_readFromFile(char* filename) {
 	if (!fscanf(pfile, "%d %d %d\n", &dataset->instanceCount,
 									 &dataset->featureCount,
 									 &dataset->classCount)) {
-		CodeError(&dataset, "readFromFile - fscanf instanceCount / featureCount / classCount");
+		CodeError(&dataset, "Dataset_readFromFile - fscanf instanceCount / featureCount / classCount");
 
 		fclose(pfile);
 		pfile = NULL;
@@ -45,7 +46,7 @@ Dataset* Dataset_readFromFile(char* filename) {
 		Instance* instance = &(dataset->instances[i]);
 
 		if (!fscanf(pfile, "%d", &instance->classID)) {
-			CodeError(instance, "readFromFile - fscanf instances[].classID");
+			CodeError(instance, "Dataset_readFromFile - fscanf instances[].classID");
 			CodeError(&dataset, "");
 
 			fclose(pfile);
@@ -63,7 +64,7 @@ Dataset* Dataset_readFromFile(char* filename) {
 					CodeError(dataset->instances[k].values, "");
 					k++;
 				}
-				CodeError(&dataset->instances, "readFromFile - fscanf instances[].values[]");
+				CodeError(&dataset->instances, "Dataset_readFromFile - fscanf instances[].values[]");
 				CodeError(&dataset, "");
 
 				fclose(pfile);
@@ -82,7 +83,7 @@ Dataset* Dataset_readFromFile(char* filename) {
 
 void Dataset_destroy(Dataset* dataset) {
 	if (dataset == NULL) {
-		CodeError(NULL, "destroy - dataset = NULL");
+		CodeError(NULL, "Dataset_destroy - dataset = NULL");
 		return;
 	}
 
@@ -106,12 +107,69 @@ Subproblem* Dataset_getSubproblem(Dataset* dataset) {
 Subproblem* Subproblem_create(	int maximumCapacity,
 								int featureCount,
 								int classCount) {
-	// TODO
-	return NULL;
+	if (maximumCapacity <= 0 || featureCount <= 0 || classCount <= 0) {
+		CodeError(NULL, "Subproblem_create - tab range < 0");
+		return NULL;
+	}
+
+	Subproblem* subproblem = (Subproblem*)calloc(1, sizeof(Subproblem));
+	if (subproblem == NULL) {
+		CodeError(NULL, "Subproblem_create - allocation subproblem");
+		return NULL;
+	}
+
+	subproblem->instances = (Instance**)calloc(maximumCapacity, sizeof(Instance*));
+	if (subproblem->instances == NULL) {
+		CodeError(&subproblem, "Subproblem_create - allocation subproblem->instances");
+		return NULL;
+	}
+	
+	subproblem->classCount = classCount;
+	subproblem->featureCount = featureCount;
+	subproblem->capacity = maximumCapacity;
+
+	subproblem->classes = (SubproblemClass*)calloc(subproblem->classCount, sizeof(SubproblemClass));
+	if (subproblem->classes == NULL) {
+		CodeError(&subproblem->instances, NULL);
+		CodeError(&subproblem, "Subproblem_create - allocation subproblem->classes");
+		return NULL;
+	}
+
+	for (int i = 0; i < subproblem->classCount; i++) {
+		subproblem->classes[i].instances = (Instance**)calloc(maximumCapacity, sizeof(Instance*));
+		if (subproblem->classes[i].instances == NULL) {
+			for (int j = 0; j < i; j++)
+				CodeError(&subproblem->classes[j].instances, NULL);
+			
+			CodeError(&subproblem->instances, NULL);
+			CodeError(&subproblem->classes, NULL);
+			CodeError(&subproblem, "Subproblem_create - allocation subproblem->classes[].instances");
+			return NULL;
+		}
+	}
+
+	return subproblem;
 }
 
 void Subproblem_destroy(Subproblem* subproblem) {
-	// TODO
+	if (subproblem == NULL) {
+		CodeError(NULL, "Subproblem_destroy - subproblem = NULL");
+		return;
+	}
+
+	for (int i = 0; i < subproblem->classCount; i++) {
+		free(subproblem->classes[i].instances);
+		subproblem->classes[i].instances = NULL;
+	}
+
+	free(subproblem->classes);
+	subproblem->classes = NULL;
+
+	free(subproblem->instances);
+	subproblem->instances = NULL;
+
+	free(subproblem);
+	subproblem = NULL;
 }
 
 void Subproblem_insert(	Subproblem* subproblem,
@@ -120,5 +178,15 @@ void Subproblem_insert(	Subproblem* subproblem,
 }
 
 void Subproblem_print(Subproblem* subproblem) {
-	// TODO
+	if (subproblem == NULL) {
+		CodeError(NULL, "Subproblem_print - subproblem = NULL");
+		return;
+	}
+
+	printf("Nombre de classes : %d\n", subproblem->classCount);
+	printf("Nombre de features par classes : %d\n", subproblem->featureCount);
+	printf("Taille = %d, capacite = %d\n", subproblem->instanceCount, subproblem->capacity);								
+
+	for (int i = 0; i < subproblem->classCount; i++)
+		printf("- classe numero %d : %d instances\n", i, subproblem->classes->instances[i]);
 }
