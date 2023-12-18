@@ -66,11 +66,11 @@ Dataset* Dataset_readFromFile(char* filename);
  * Détruit proprement une allocation de la structure Dataset dont l’adresse est donnée en paramètre.
  * On pensera également à désallouer le tableau d’instances présent à l’intérieur de la structure.
  * 
- * @param data : un pointeur vers une structure Dataset
+ * @param dataset : un pointeur vers une structure Dataset
  * 
  * @return void
  */
-void Dataset_destroy(Dataset* data);
+void Dataset_destroy(Dataset* dataset);
 // TODO
 
 
@@ -83,11 +83,11 @@ void Dataset_destroy(Dataset* data);
  * mais de simplement stocker leur adresse dans un tableau. On en profitera également pour recopier les valeurs instanceCount,
  * featureCount et classCount, qui seront identiques dans les deux structures.
  * 
- * @param data : un pointeur vers une structure Dataset
+ * @param dataset : un pointeur vers une structure Dataset
  *
  * @return
  */
-Subproblem* Dataset_getSubproblem(Dataset* data);
+Subproblem* Dataset_getSubproblem(Dataset* dataset);
 // TODO
 
 

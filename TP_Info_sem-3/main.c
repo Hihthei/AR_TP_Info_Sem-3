@@ -11,29 +11,36 @@ int main(int argc, char** argv)
 
     srand((unsigned int)time(NULL));
 
-    BSTree* tree = BSTree_Create();
+    char* path = "../Dataset/PENDIGITS_train.txt";
+    
+    Dataset* trainData = Dataset_readFromFile(path);
+    if (trainData == NULL)
+        return EXIT_FAILURE;
+
+    /*
+    Subproblem* subproblem = Dataset_getSubproblem(trainData);
+    if (subproblem == NULL)
+        return EXIT_FAILURE;
+
 
     //----------------------------------------------------------
-
-    for (int i = 0; i < 15; i++) {
-        int tmp = (int)rand()%10;
-        BSTree_Insert(tree, tmp);
-    }
-
-    printf("tree size = %d\n", tree->size);
-
-    BSTree_Print_UI(tree);
+    
+    Subproblem_print(subproblem);
+    //*/
 
     //----------------------------------------------------------
+    
+    Dataset_destroy(trainData);
+    trainData = NULL;
 
-    BSTree_Delete(tree);
-    tree = NULL;
+    //Subproblem_destroy(subproblem);
+    //subproblem = NULL;
 
     //TIME CLOCK END --------------------------------------------
     end = clock();
     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
     printf( "____________________________\n"
-                    "\nTemps d'execution : %f.\n", cpu_time_used);
+            "\nTemps d'execution : %f.\n", cpu_time_used);
     //----------------------------------------------------------
     return 0;
 }
