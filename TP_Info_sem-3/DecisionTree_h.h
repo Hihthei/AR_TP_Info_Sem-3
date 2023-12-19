@@ -18,7 +18,7 @@ typedef struct sDecisionTreeNode {
  *
  * @param  :
  *
- * @return
+ * @return :
  */
 
  //FONCTION : -----------------------------------------------------------------------------------------------------------
@@ -32,7 +32,7 @@ typedef struct sDecisionTreeNode {
  *
  * @param  :
  *
- * @return
+ * @return :
  */
 DecisionTreeNode* DecisionTree_create(	Subproblem* sp,
 										int currentDepth,
@@ -48,7 +48,7 @@ DecisionTreeNode* DecisionTree_create(	Subproblem* sp,
  *
  * @param  :
  *
- * @return
+ * @return :
  */
 void DecisionTree_destroy(DecisionTreeNode* decisionTree);
 
@@ -63,7 +63,7 @@ void DecisionTree_destroy(DecisionTreeNode* decisionTree);
  *
  * @param  :
  *
- * @return
+ * @return :
  */
 int Decision_nodeCount(DecisionTreeNode* node);
 
@@ -78,7 +78,7 @@ int Decision_nodeCount(DecisionTreeNode* node);
  *
  * @param  :
  *
- * @return
+ * @return :
  */
 int DecisionTree_predict(DecisionTreeNode* tree, Instance* instance);
 //TODO
@@ -94,7 +94,7 @@ int DecisionTree_predict(DecisionTreeNode* tree, Instance* instance);
  *
  * @param  :
  *
- * @return
+ * @return :
  */
 float DecisionTree_evaluate(DecisionTreeNode* tree, Dataset* dataset);
 //TODO
