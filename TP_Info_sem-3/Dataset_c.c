@@ -68,7 +68,7 @@ Instance* Dataset_instanceAlloc(Dataset* dataset, FILE* pfile) {
 
 			return NULL;
 		}
-		printf("classID : %d\n", inst_tmp->classID);
+		//printf("classID : %d\n", inst_tmp->classID);
 
 		inst_tmp->values = (int*)calloc(dataset->featureCount, sizeof(int));
 
@@ -283,7 +283,7 @@ void Subproblem_print(Subproblem* subproblem) {
 
 	printf("Capacite = %d\nTaille = %d\n", subproblem->capacity, subproblem->instanceCount);
 	printf("Nombre de Features par classes : %d\n", subproblem->featureCount);
-	printf("Nombre de Classes : %d\n", subproblem->classCount);
+	printf("Nombre de Classes : %d\n\n", subproblem->classCount);
 
 	for (int i = 0; i < subproblem->classCount; i++)
 		printf("- classe numero %d : %d instances\n", i, subproblem->classes[i].instanceCount);

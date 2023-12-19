@@ -1,5 +1,6 @@
 #include "ABR_h.h"
 #include "Dataset_h.h"
+#include "Split_h.h"
 
 /*
 int main(int argc, char** argv)
@@ -29,7 +30,7 @@ int main(int argc, char** argv)
 
     srand((unsigned int)time(NULL));
 
-    char* path = "../Dataset/TEST_train.txt";
+    char* path = "../Dataset/PENDIGITS_train.txt";
     
     Dataset* trainData = Dataset_readFromFile(path);
     if (trainData == NULL)
@@ -52,9 +53,14 @@ int main(int argc, char** argv)
 
     //----------------------------------------------------------
 
-    Dataset_printClasses(trainData);
+    //en commentaire Dataset_printClasses(trainData);
 
     Subproblem_print(subproblem);
+
+    //----------------------------------------------------------
+
+    Split split = Split_compute(subproblem);
+    printf("ICI : %f %f %f\n", split.threshold, Split_gini(subproblem, 5, 1), Split_gini(subproblem, 1, 0.6));
 
     //----------------------------------------------------------
     
