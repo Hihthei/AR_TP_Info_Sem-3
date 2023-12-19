@@ -70,9 +70,8 @@ int main(int argc, char** argv)
 	BSTree* tree = BSTree_Create();
 
 	for (int i = 0; i < 1500; i++)
-	{
         BSTree_Insert(tree, rand() % 3000);
-	}
+
     printf("%d - %d\n", tree->size, BSTree_nodeCount(tree));
 
     BSTree_Delete(tree);
