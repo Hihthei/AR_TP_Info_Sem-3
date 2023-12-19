@@ -25,6 +25,18 @@
     <Filter Include="Fichiers sources\DataSet">
       <UniqueIdentifier>{399863f3-fc99-43e8-bc6b-069d34b0e6dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\Split">
+      <UniqueIdentifier>{43b00f0f-4aab-4c6e-b0b6-7b0095eef033}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\DecisionTree">
+      <UniqueIdentifier>{fd260772-4624-41e6-aade-fe3df33d5026}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Split">
+      <UniqueIdentifier>{50992558-1a2b-465e-9049-aeb31122ea5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\DecisionTree">
+      <UniqueIdentifier>{2fd80969-fd9b-4e8d-a233-9afabc250b8e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dataset_h.h">
@@ -36,6 +48,12 @@
     <ClInclude Include="ABR_h.h">
       <Filter>Fichiers d%27en-tête\ABR_AVL</Filter>
     </ClInclude>
+    <ClInclude Include="Split_h.h">
+      <Filter>Fichiers d%27en-tête\Split</Filter>
+    </ClInclude>
+    <ClInclude Include="DecisionTree_h.h">
+      <Filter>Fichiers d%27en-tête\DecisionTree</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -46,6 +64,12 @@
     </ClCompile>
     <ClCompile Include="ABR_c.c">
       <Filter>Fichiers sources\ABR_AVL</Filter>
+    </ClCompile>
+    <ClCompile Include="Split_c.c">
+      <Filter>Fichiers sources\Split</Filter>
+    </ClCompile>
+    <ClCompile Include="DecisionTree_c.c">
+      <Filter>Fichiers sources\DecisionTree</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
