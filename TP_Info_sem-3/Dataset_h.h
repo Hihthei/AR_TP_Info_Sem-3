@@ -145,4 +145,17 @@ bool Subproblem_insert(Subproblem* subproblem, Instance* instance);
  */
 void Subproblem_print(Subproblem* subproblem);
 
+
+
+/**
+ * @brief
+ *
+ *
+ *
+ * @param  : //TODO
+ *
+ * @return
+ */
+void Subproblem_printClasses(Subproblem* subproblem);
+
 #endif

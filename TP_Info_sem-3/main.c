@@ -33,6 +33,8 @@ int main(int argc, char** argv)
 
     //----------------------------------------------------------
 
+    Subproblem_printClasses(subproblem);
+
     Subproblem_print(subproblem);
 
     //----------------------------------------------------------
