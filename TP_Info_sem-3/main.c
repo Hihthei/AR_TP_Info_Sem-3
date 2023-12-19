@@ -1,6 +1,7 @@
 #include "ABR_h.h"
 #include "Dataset_h.h"
 
+/*
 int main(int argc, char** argv)
 {
     char path[128] = "C:/Users/alyog/Documents/Datasets/PENDIGITS_train.txt";
@@ -15,9 +16,9 @@ int main(int argc, char** argv)
     // Dataset_destroy(trainData);
 
     return 0;
-}
+}//*/
 
-/*
+//*
 int main(int argc, char** argv)
 {
     //TIME CLOCK INITIALISATION --------------------------------
@@ -34,13 +35,14 @@ int main(int argc, char** argv)
     if (trainData == NULL)
         return EXIT_FAILURE;
 
+    /*
     printf("%d %d %d\n", trainData->instanceCount, trainData->featureCount, trainData->classCount);
 
-    /*
     Subproblem* subproblem = Subproblem_create(10, 10, 10);
     if (subproblem == NULL)
         return EXIT_FAILURE;
     //*/
+    
     //*
     Subproblem* subproblem = Dataset_getSubproblem(trainData);
     if (subproblem == NULL)
@@ -68,5 +70,6 @@ int main(int argc, char** argv)
     printf( "____________________________\n"
             "\nTemps d'execution : %f.\n", cpu_time_used);
     //----------------------------------------------------------
+
     return 0;
-}*/
+}//*/
