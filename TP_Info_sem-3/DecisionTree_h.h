@@ -34,7 +34,7 @@ typedef struct sDecisionTreeNode {
  *
  * @return :
  */
-DecisionTreeNode* DecisionTree_create(	Subproblem* sp,
+DecisionTreeNode* DecisionTree_create(	Subproblem* subproblem,
 										int currentDepth,
 										int maxDepth,
 										float prunningThreshold);

@@ -12,43 +12,36 @@ void CodeError_DT(void** freeptr, char* errormsg) {
 
 //FONCTION : -----------------------------------------------------------------------------------------------------------
 
+/*
 DecisionTreeNode* DecisionTreeNode_create(	DecisionTreeNode* left,
 											DecisionTreeNode* right,
 											Split split, int classID) {
-	if (left == NULL) {
-		CodeError_DT(NULL, "DecisionTreeNode_create - left = null");
-		return NULL;
-	}
-	if (right == NULL) {
-		CodeError_DT(NULL, "DecisionTreeNode_create - right = null");
-		return NULL;
-	}
-
 	DecisionTreeNode* dtNode = (DecisionTreeNode*)calloc(1, sizeof(DecisionTreeNode));
 	if (dtNode == NULL) {
 		CodeError_DT(NULL, "DecisionTreeNode_create - alloc dtNode");
 		return NULL;
 	}
-
+	dtNode->left = left;
+	dtNode->right = right;
 	dtNode->split = split;
 	dtNode->classID = classID;
 
 	return dtNode;
 }
 
-DecisionTreeNode* DecisionTree_create(	Subproblem* sp,
-										int currentDepth, int maxDepth,
-										float prunningThreshold) {
-	if (sp == NULL) {
-		CodeError_DT(NULL, "DecisionTree_create - sp = null");
+DecisionTreeNode* DecisionTree_create(Subproblem* subproblem,
+	int currentDepth, int maxDepth,
+	float prunningThreshold) {
+	if (subproblem == NULL) {
+		CodeError_DT(NULL, "DecisionTree_create - subproblem = null");
 		return NULL;
 	}
 
 	Split null_split = { 0 };
-
+	
 	DecisionTreeNode* dtTree = DecisionTreeNode_create(NULL, NULL, null_split, 0);
 	if (dtTree == NULL) {
-		CodeError_DT(NULL, "DecisionTree_create - sp = null");
+		CodeError_DT(NULL, "DecisionTree_create - dtTree = null");
 		return NULL;
 	}
 
@@ -66,8 +59,15 @@ DecisionTreeNode* DecisionTree_create(	Subproblem* sp,
 	if (purete_sp >= prunningThreshold)
 	{
 		n->classID = majorClassCount_sp;
+		return n;
 	}
+	n->split = Split_compute(sp);
+	n->left = DecisionTree_create(spl, currentDepth - 1, maxDepth, prunningThreshold);
+	n->right = DecisionTree_create(spr, currentDepth - 1, maxDepth, prunningThreshold);
+
+	return n;
 }
+*/
 
 void DecisionTree_destroy(DecisionTreeNode* decisionTree) {
 	if (decisionTree == NULL)
