@@ -12,7 +12,7 @@ int main(int argc, char** argv)
 
     srand((unsigned int)time(NULL));
 
-    char* path = "../Dataset/TEST_train.txt";
+    char* path = "../Dataset/PENDIGITS_test.txt";
     
     Dataset* trainData = Dataset_readFromFile(path);
     if (trainData == NULL)
@@ -35,7 +35,7 @@ int main(int argc, char** argv)
 
     //----------------------------------------------------------
 
-    Dataset_printClasses(trainData);
+    //Dataset_printClasses(trainData);
 
     Subproblem_print(subproblem);
 
@@ -51,7 +51,7 @@ int main(int argc, char** argv)
     end = clock();
     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
     printf( "____________________________\n"
-            "\nTemps d'execution : %f.\n", cpu_time_used);
+            "\nTemps d'execution : %.3fs.\n", cpu_time_used);
     //----------------------------------------------------------
 
     return 0;
