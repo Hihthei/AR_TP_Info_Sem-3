@@ -287,8 +287,8 @@ void Subproblem_printFeatures(Instance* instance) {
 		return;
 	}
 
-	for (int i = 0; i < ; i++)
+	for (int i = 0; i < 5; i++)
 	{
-
+		;
 	}
 }
