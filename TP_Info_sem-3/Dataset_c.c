@@ -22,8 +22,8 @@ Dataset* Dataset_dynamicAlloc(FILE* pfile) {
 	Dataset* dataset = (Dataset*)calloc(1, sizeof(Dataset));
 
 	if (!fscanf(pfile, "%d %d %d\n",	&dataset->instanceCount,
-										&dataset->featureCount,
-										&dataset->classCount)) {
+										&dataset->classCount,
+										&dataset->featureCount)) {
 		CodeError(&dataset, "Dataset_dynamicAlloc - fscanf instanceCount / featureCount / classCount");
 
 		fclose(pfile);
@@ -145,14 +145,17 @@ Subproblem* Dataset_getSubproblem(Dataset* dataset) {
 		CodeError(&subproblem, "Dataset_getSubproblem - allocation subproblem");
 		return NULL;
 	}
-	/*
+	
 	for (int i = 0; i < dataset->instanceCount; i++) {
 		if (!Subproblem_insert(subproblem, &dataset->instances[i])) {
+			for (int j = 0; j < i; j++)
+				CodeError(subproblem->instances[i], NULL);
+
 			CodeError(&subproblem, NULL);
 
 			return NULL;
 		}
-	}*/
+	}
 
 	return subproblem;
 }
@@ -275,5 +278,17 @@ void Subproblem_print(Subproblem* subproblem) {
 	printf("Nombre de Classes : %d\n", subproblem->classCount);
 
 	for (int i = 0; i < subproblem->classCount; i++)
-		printf("- classe numero %d : %d instances\n", i, subproblem->classes->instances[i]);
+		printf("- classe numero %d : %d instances\n", i, subproblem->classes[i].instanceCount);
+}
+
+void Subproblem_printFeatures(Instance* instance) {
+	if (instance == NULL) {
+		CodeError(NULL, "Subproblem_printFeatures - instance = NULL");
+		return;
+	}
+
+	for (int i = 0; i < ; i++)
+	{
+
+	}
 }
