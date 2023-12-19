@@ -9,6 +9,18 @@ typedef struct sSplit {
 	float threshold;
 } Split;
 
+/**
+ * @brief
+ *
+ *
+ *
+ * @param  :
+ *
+ * @return
+ */
+
+ //FONCTION : -----------------------------------------------------------------------------------------------------------
+
 // Réalise le calcul d’impureté tel qu’il est défini plus haut dans le texte, en tenant compte du
 //sous-problème passé en paramètre, mais également de la feature et du seuil caractérisant le split étudié.
 // Le résultat sera obligatoirement entre 0 et 1 inclus.

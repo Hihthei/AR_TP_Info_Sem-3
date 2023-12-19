@@ -11,8 +11,20 @@ typedef struct sDecisionTreeNode {
 	int classID;
 } DecisionTreeNode;
 
-// Implémente l’algorithme donné plus haut, tout en ajoutant une profondeur maximum qui sert de cas d’arrêt supplémentaire.
-//On a également prunningThreshold qui représente le seuil de pureté à atteindre pour qu’un nœud soit une feuille;
+/**
+ * @brief
+ *
+ *
+ *
+ * @param  :
+ *
+ * @return
+ */
+
+ //FONCTION : -----------------------------------------------------------------------------------------------------------
+
+// ImplÃ©mente lâ€™algorithme donnÃ© plus haut, tout en ajoutant une profondeur maximum qui sert de cas dâ€™arrÃªt supplÃ©mentaire.
+//On a Ã©galement prunningThreshold qui reprÃ©sente le seuil de puretÃ© Ã  atteindre pour quâ€™un nÅ“ud soit une feuille;
 DecisionTreeNode* DecisionTree_create(Subproblem* sp, int currentDepth, int maxDepth, float prunningThreshold);
 
 DecisionTreeNode* DecisionTreeNode_create(DecisionTreeNode* left, DecisionTreeNode* right, Split split, int classID);
