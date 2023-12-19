@@ -3,6 +3,23 @@
 
 int main(int argc, char** argv)
 {
+    char path[128] = "C:/Users/alyog/Documents/Datasets/PENDIGITS_train.txt";
+    Dataset* trainData = Dataset_readFromFile(path);
+    if (!trainData) printf("NO FILE !\n");
+    else printf("%d %d %d\n", trainData->instanceCount, trainData->featureCount, trainData->classCount);
+
+    Subproblem* subproblem = Dataset_getSubproblem(trainData);
+    //Subproblem_print(subproblem);
+
+    // Subproblem_destroy(subproblem);
+    // Dataset_destroy(trainData);
+
+    return 0;
+}
+
+/*
+int main(int argc, char** argv)
+{
     //TIME CLOCK INITIALISATION --------------------------------
     clock_t start = 0, end = 0;
     double cpu_time_used = 0;
@@ -52,4 +69,4 @@ int main(int argc, char** argv)
             "\nTemps d'execution : %f.\n", cpu_time_used);
     //----------------------------------------------------------
     return 0;
-}
+}*/

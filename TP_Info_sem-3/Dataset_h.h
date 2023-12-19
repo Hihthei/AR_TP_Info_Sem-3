@@ -47,11 +47,11 @@ typedef struct sSubproblem {
 /**
  * @brief
  *
- * Lit le fichier dont le nom est donné, et extrait toutes les informations du dataset.
- * Ces informations seront enregistrées dans un Dataset dont l’adresse sera renvoyée.
- * Si la lecture du fichier échoue, la fonction renvoie NULL.
+ * Lit le fichier dont le nom est donnÃ©, et extrait toutes les informations du dataset.
+ * Ces informations seront enregistrÃ©es dans un Dataset dont lâ€™adresse sera renvoyÃ©e.
+ * Si la lecture du fichier Ã©choue, la fonction renvoie NULL.
  *
- * @param filename : chaîne de charactère du nom du fichier
+ * @param filename : chaÃ®ne de charactÃ¨re du nom du fichier
  * 
  * @return un pointeur vers une structure contenant les informations de DataSet
  */
@@ -62,8 +62,8 @@ Dataset* Dataset_readFromFile(char* filename);
 /**
  * @brief
  *
- * Détruit proprement une allocation de la structure Dataset dont l’adresse est donnée en paramètre.
- * On pensera également à désallouer le tableau d’instances présent à l’intérieur de la structure.
+ * DÃ©truit proprement une allocation de la structure Dataset dont lâ€™adresse est donnÃ©e en paramÃ¨tre.
+ * On pensera Ã©galement Ã  dÃ©sallouer le tableau dâ€™instances prÃ©sent Ã  lâ€™intÃ©rieur de la structure.
  * 
  * @param dataset : un pointeur vers une structure Dataset
  * 
@@ -76,9 +76,9 @@ void Dataset_destroy(Dataset* dataset);
 /**
  * @brief
  *
- * Renvoie un sous-problème prenant en compte toutes les instances stockées dans le dataset dont
- * l’adresse est donnée en paramètre. Attention : on ne demande pas de copier les instances contenues dans Dataset,
- * mais de simplement stocker leur adresse dans un tableau. On en profitera également pour recopier les valeurs instanceCount,
+ * Renvoie un sous-problÃ¨me prenant en compte toutes les instances stockÃ©es dans le dataset dont
+ * lâ€™adresse est donnÃ©e en paramÃ¨tre. Attention : on ne demande pas de copier les instances contenues dans Dataset,
+ * mais de simplement stocker leur adresse dans un tableau. On en profitera Ã©galement pour recopier les valeurs instanceCount,
  * featureCount et classCount, qui seront identiques dans les deux structures.
  * 
  * @param dataset : un pointeur vers une structure Dataset
@@ -107,7 +107,7 @@ void Dataset_printClasses(Subproblem* subproblem);
  * @brief
  *
  * Renvoie une allocation de la structure Subproblem, en instanciant les valeurs des attributs featureCount et classCount,
- * et en allouant le tableau de pointeurs d’instance à sa capacité donnée en paramètre.
+ * et en allouant le tableau de pointeurs dâ€™instance Ã  sa capacitÃ© donnÃ©e en paramÃ¨tre.
  * 
  * @param  : // TODO
  * 
@@ -119,10 +119,10 @@ Subproblem* Subproblem_create(int maximumCapacity, int featureCount, int classCo
 /**
  * @brief
  *
- * Détruit proprement une allocation de Subproblem, en détruisant les différents tableaux.
- * Attention : ce n’est pas parce que l’on travaille avec des tableaux de pointeurs qu’il faut
- * détruire ce qui se trouve dans les cases des dits-tableaux, les adresses stockées font références
- * aux instances présentes dans la structure Dataset.
+ * DÃ©truit proprement une allocation de Subproblem, en dÃ©truisant les diffÃ©rents tableaux.
+ * Attention : ce nâ€™est pas parce que lâ€™on travaille avec des tableaux de pointeurs quâ€™il faut
+ * dÃ©truire ce qui se trouve dans les cases des dits-tableaux, les adresses stockÃ©es font rÃ©fÃ©rences
+ * aux instances prÃ©sentes dans la structure Dataset.
  * 
  * @param  : // TODO
  * 
@@ -135,8 +135,8 @@ void Subproblem_destroy(Subproblem* subproblem);
 /**
  * @brief
  *
- * Insère l’adresse d’une instance dans le sous-problème, à la fois dans le tableau principal
- * et le tableau dédié à la classe de l’instance, et met à jour le nombre d’instances considérées.
+ * InsÃ¨re lâ€™adresse dâ€™une instance dans le sous-problÃ¨me, Ã  la fois dans le tableau principal
+ * et le tableau dÃ©diÃ© Ã  la classe de lâ€™instance, et met Ã  jour le nombre dâ€™instances considÃ©rÃ©es.
  * 
  * @param  : // TODO
  * 
@@ -150,7 +150,7 @@ bool Subproblem_insert(Subproblem* subproblem, Instance* instance);
 /**
  * @brief
  *
- * Affiche le nombre de features, de classes et d’instances référencées, ainsi que le nombre d’instances pour chacune des classes.
+ * Affiche le nombre de features, de classes et dâ€™instances rÃ©fÃ©rencÃ©es, ainsi que le nombre dâ€™instances pour chacune des classes.
  *
  * @param  : // TODO
  * 

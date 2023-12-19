@@ -27,25 +27,25 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dataset_h.h">
+      <Filter>Fichiers d%27en-tête\DataSet</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="ABR_h.h">
+      <Filter>Fichiers d%27en-tête\ABR_AVL</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="main.c">
       <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="C:\Users\Celin\OneDrive - Groupe ESIEA\ESIEA\Semestre 3\#Programmation-en-C\#Library\ABR\ABR_c.c">
-      <Filter>Fichiers sources\ABR_AVL</Filter>
     </ClCompile>
     <ClCompile Include="Dataset_c.c">
       <Filter>Fichiers sources\DataSet</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="C:\Users\Celin\OneDrive - Groupe ESIEA\ESIEA\Semestre 3\#Programmation-en-C\#Library\ABR\Settings.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\Celin\OneDrive - Groupe ESIEA\ESIEA\Semestre 3\#Programmation-en-C\#Library\ABR\ABR_h.h">
-      <Filter>Fichiers d%27en-tête\ABR_AVL</Filter>
-    </ClInclude>
-    <ClInclude Include="Dataset_h.h">
-      <Filter>Fichiers d%27en-tête\DataSet</Filter>
-    </ClInclude>
+    <ClCompile Include="ABR_c.c">
+      <Filter>Fichiers sources\ABR_AVL</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
