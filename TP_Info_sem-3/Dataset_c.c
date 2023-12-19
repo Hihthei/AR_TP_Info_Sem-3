@@ -289,30 +289,30 @@ void Subproblem_print(Subproblem* subproblem) {
 		printf("- classe numero %d : %d instances\n", i, subproblem->classes[i].instanceCount);
 }
 
-bool Subproblem_printFeatures(SubproblemClass* classes) {
-	if (classes == NULL) {
-		CodeError(NULL, "Subproblem_printFeatures - classes = NULL");
+bool Dataset_printFeatures(Instance* instance, int featuresCount) {
+	if (instance == NULL) {
+		CodeError(NULL, "Dataset_printFeatures - instance = NULL");
 		return false;
 	}
 
-	printf("ClassID %d ", classes->instances[0]->classID);
+	printf("ClassID %d ", instance->classID);
 
-	for (int i = 0; i < classes->instanceCount; i++)
-		printf("- %d ", classes->instances[i]->values);
+	for (int i = 0; i < featuresCount; i++)
+		printf("- %d ", instance->values[i]);
 
 	printf("\n");
 
 	return true;
 }
 
-void Subproblem_printClasses(Subproblem* subproblem) {
-	if (subproblem == NULL) {
-		CodeError(NULL, "Subproblem_printClasses - subproblem = NULL");
+void Dataset_printClasses(Dataset* dataset) {
+	if (dataset == NULL) {
+		CodeError(NULL, "Dataset_printClasses - subproblem = NULL");
 		return;
 	}
 
-	for (int i = 0; i < subproblem->instanceCount; i++) {
-		if (!Subproblem_printFeatures(&subproblem->classes[i]))
+	for (int i = 0; i < dataset->instanceCount; i++) {
+		if (!Dataset_printFeatures(&dataset->instances[i], dataset->featureCount))
 			break;
 	}
 

@@ -33,7 +33,7 @@ int main(int argc, char** argv)
 
     //----------------------------------------------------------
 
-    Subproblem_printClasses(subproblem);
+    Dataset_printClasses(trainData);
 
     Subproblem_print(subproblem);
 
