@@ -28,5 +28,6 @@ void BSNode_SetLeft(BSNode* node, BSNode* left);
 void BSNode_SetRight(BSNode* node, BSNode* right);
 int BSTree_RemoveNode(BSTree *tree, BSNode *node);
 bool BSTree_RemoveValue(BSTree *tree, int value);
+int BSTree_nodeCount(BSTree* tree);
 
 #endif

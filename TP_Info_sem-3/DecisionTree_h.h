@@ -81,7 +81,7 @@ int Decision_nodeCount(DecisionTreeNode* node);
  * @return
  */
 int DecisionTree_predict(DecisionTreeNode* tree, Instance* instance);
-
+//TODO
 
 
 /**
@@ -97,5 +97,6 @@ int DecisionTree_predict(DecisionTreeNode* tree, Instance* instance);
  * @return
  */
 float DecisionTree_evaluate(DecisionTreeNode* tree, Dataset* dataset);
+//TODO
 
 #endif

@@ -224,3 +224,20 @@ bool BSTree_RemoveValue(BSTree* tree, int value) {
     }
     return false;
 }
+
+int Tree_nodeCount(BSNode* node) {
+    if (node == NULL)
+        return 0;
+
+    int tmp = 1;
+
+    tmp += Tree_nodeCount(node->leftChild);
+    tmp += Tree_nodeCount(node->rightChild);
+
+    return tmp;
+}
+
+int BSTree_nodeCount(BSTree* tree)
+{
+    return tree != NULL ? Tree_nodeCount(tree->root) : -1;
+}
