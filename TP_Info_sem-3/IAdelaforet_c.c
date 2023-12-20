@@ -53,3 +53,8 @@ float DecisionTree_evaluate(DecisionTreeNode* tree, Dataset* dataset)
 	
 	return (nb_success / (float)dataset->instanceCount);
 }
+
+Subproblem* Dataset_bagging(Dataset* data, float proportion)
+{
+
+}

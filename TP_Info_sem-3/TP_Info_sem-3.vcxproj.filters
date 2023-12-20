@@ -63,7 +63,7 @@
     <ClInclude Include="Split_h.h">
       <Filter>Fichiers d%27en-tête\Split</Filter>
     </ClInclude>
-    <ClInclude Include="Forest_h.h">
+    <ClInclude Include="RandomForest_h.h">
       <Filter>Fichiers d%27en-tête\Forest</Filter>
     </ClInclude>
   </ItemGroup>

@@ -15,4 +15,7 @@ float DecisionTree_evaluate(DecisionTreeNode* tree, Dataset* dataset);
 // correctement la classe de chacune des instances du dataset).On le calculera facilement
 // comme le nombre d’instances bien classées sur le nombre total d’instances.
 
+Subproblem* Dataset_bagging(Dataset* data, float proportion);
+// Permet de produire un sous-problème considérant seulement une partie des instances du dataset original.
+
 #endif

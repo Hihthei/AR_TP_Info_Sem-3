@@ -22,7 +22,7 @@
     <ClInclude Include="ABR_h.h" />
     <ClInclude Include="Dataset_h.h" />
     <ClInclude Include="DecisionTree_h.h" />
-    <ClInclude Include="Forest_h.h" />
+    <ClInclude Include="RandomForest_h.h" />
     <ClInclude Include="IAdelaforet_h.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Split_h.h" />
