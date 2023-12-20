@@ -157,4 +157,17 @@ bool Subproblem_insert(Subproblem* subproblem, Instance* instance);
  */
 void Subproblem_print(Subproblem* subproblem);
 
+
+
+/**
+ * @brief
+ *
+ *
+ *
+ * @param  :
+ *
+ * @return  :
+ */
+Subproblem* Dataset_bagging(Dataset* data, float proportion);
+
 #endif
