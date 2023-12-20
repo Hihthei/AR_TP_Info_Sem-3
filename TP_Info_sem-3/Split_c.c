@@ -51,12 +51,25 @@ Split Split_compute(Subproblem* subproblem)
 			if (min > subproblem->instances[j]->values[i]) min = (float)subproblem->instances[j]->values[i];
 			if (max < subproblem->instances[j]->values[i]) max = (float)subproblem->instances[j]->values[i];
 		}
-		float threshold = (min + max) / 2;
+		// Valeur initiale du split;
+		/*float threshold = (min + max) / 2;
 		if (best_split_value > Split_gini(subproblem, i, threshold))
 		{
 			best_split_value = Split_gini(subproblem, i, threshold);
 			best_split.threshold = threshold;
 			best_split.featureID = i;
+		}*/
+
+		// Valeur un peu opti du split;
+		//https://www.youtube.com/watch?v=c17UY1o3Gq8 musique pour dm
+		for (float threshold = min; threshold < max; threshold += 3)
+		{
+			if (best_split_value > Split_gini(subproblem, i, threshold))
+			{
+				best_split_value = Split_gini(subproblem, i, threshold);
+				best_split.threshold = threshold;
+				best_split.featureID = i;
+			}
 		}
 	}
 	return best_split;

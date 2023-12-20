@@ -99,6 +99,7 @@ int RandomForest_nodeCount(RandomForest* rf)
 	{
 		rf_node_sum += DecisionTree_nodeCount(rf->trees[i]);
 	}
+	return rf_node_sum;
 }
 
 void RandomForest_destroy(RandomForest* rf)

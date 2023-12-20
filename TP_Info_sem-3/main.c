@@ -62,7 +62,10 @@ int main(int argc, char** argv) {
     
     //en commentaire Dataset_printClasses(trainData);
 
-    RandomForest* rf = RandomForest_create(2000, trainData, 30, 0.5f, 1.0f);
+    RandomForest* rf = RandomForest_create(20, trainData, 30, 0.5f, 1.0f);
+
+    printf("Generation d'une foret de %d noeuds\n", RandomForest_nodeCount(rf));
+
     float trainScore = RandomForest_evaluate(rf, trainData);
     float testScore = RandomForest_evaluate(rf, testData);
     printf("train = %.3f, test = %.3f\n", trainScore, testScore);
@@ -70,8 +73,8 @@ int main(int argc, char** argv) {
 
     //----------------------------------------------------------
 
-    Split split = Split_compute(subproblem);
-    printf("Split : %d _ %.2f\n", split.featureID, split.threshold);
+    /*Split split = Split_compute(subproblem);
+    printf("Split : %d _ %.2f\n", split.featureID, split.threshold);*/
     
 
     //----------------------------------------------------------
@@ -83,6 +86,9 @@ int main(int argc, char** argv) {
     subproblem = NULL;
 
     DecisionTree_destroy(tree);
+    tree = NULL;
+
+    RandomForest_destroy(rf);
     tree = NULL;
 
     //DecisionTree_destroy(tree);
