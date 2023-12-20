@@ -36,6 +36,15 @@
     <ClInclude Include="ABR_h.h">
       <Filter>Fichiers d%27en-tête\ABR_AVL</Filter>
     </ClInclude>
+    <ClInclude Include="DecisionTree_h.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Split_h.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="IAdelaforet_h.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -46,6 +55,15 @@
     </ClCompile>
     <ClCompile Include="ABR_c.c">
       <Filter>Fichiers sources\ABR_AVL</Filter>
+    </ClCompile>
+    <ClCompile Include="DecisionTree_c.c">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Split_c.c">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="IAdelaforet_c.c">
+      <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
