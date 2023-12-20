@@ -10,7 +10,7 @@ RandomForest* RandomForest_create(int numberOfTrees, Dataset* data, int maxDepth
 
 	RandomForest* forest = (RandomForest*)calloc(1, sizeof(RandomForest));
 	forest->treeCount = numberOfTrees;
-	forest->classCount = 0;
+	forest->classCount = data->classCount;
 
 	Subproblem* sp0 = Dataset_bagging(data, baggingProportion);
 	forest->trees = calloc(numberOfTrees, sizeof(DecisionTreeNode*));
@@ -63,7 +63,7 @@ float RandomForest_evaluate(RandomForest* rf, Dataset* data) {
 	
 	if (!rf)
 	{
-		printf("No tree\n");
+		printf("No forest\n");
 		return -1;
 	}
 
