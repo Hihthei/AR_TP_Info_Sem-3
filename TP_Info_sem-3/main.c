@@ -5,8 +5,8 @@
 
 
 //*
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
+
     //TIME CLOCK INITIALISATION --------------------------------
     clock_t start = 0, end = 0;
     double cpu_time_used = 0;
@@ -16,7 +16,6 @@ int main(int argc, char** argv)
     srand((unsigned int)time(NULL));
 
     char* path = "../Dataset/PENDIGITS_train.txt";
-
     
     Dataset* trainData = Dataset_readFromFile(path);
     if (trainData == NULL)
@@ -41,7 +40,12 @@ int main(int argc, char** argv)
 
     //Dataset_printClasses(trainData);
 
-    DecisionTreeNode* tree = DecisionTree_create(subproblem, 0, 30, 1.0);
+    Split split_test = Split_compute(subproblem);
+
+    printf("split : %d %.0f\n", split_test.featureID, split_test.threshold);
+    Subproblem_print(subproblem);
+    
+    DecisionTreeNode* tree = DecisionTree_create(subproblem, 0, 30, 0.8);
     if (tree == NULL)
         return EXIT_FAILURE;
 
@@ -49,7 +53,7 @@ int main(int argc, char** argv)
 
     //en commentaire Dataset_printClasses(trainData);
 
-    //Subproblem_print(subproblem);
+    
 
     //----------------------------------------------------------
 

@@ -38,6 +38,8 @@ Split Split_compute(Subproblem* subproblem)
 {
 	Split nulle = { 0 };
 	if (!subproblem) { printf("No subproblem\n"); return nulle; }
+	if (!subproblem->instances[0]) { printf("No subproblem.instances\n"); return nulle; }
+	if (!subproblem->instances[0]->values) { printf("No subproblem.instances[0]->values\n"); return nulle; }
 
 	Split best_split = { .threshold = 0, .featureID = 0 };
 	float best_split_value = 1;

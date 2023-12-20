@@ -20,6 +20,7 @@ DecisionTreeNode* DecisionTreeNode_create(	DecisionTreeNode* left,
 		CodeError_DT(NULL, "DecisionTreeNode_create - alloc dtNode");
 		return NULL;
 	}
+
 	dtNode->left = left;
 	dtNode->right = right;
 	dtNode->split = split;
@@ -87,6 +88,10 @@ DecisionTreeNode* DecisionTree_create(	Subproblem* subproblem,
 		return NULL;
 	}
 
+	if (currentDepth >= maxDepth)
+		return NULL;
+
+
 	Split null_split = { 0 };
 	
 	DecisionTreeNode* dtNode = DecisionTreeNode_create(NULL, NULL, null_split, 0);
@@ -111,6 +116,9 @@ DecisionTreeNode* DecisionTree_create(	Subproblem* subproblem,
 	}
 
 	dtNode->split = Split_compute(subproblem);
+	if (dtNode->split.featureID == 0 && dtNode->split.threshold == 0)
+		return NULL;
+
 
 	Subproblem* subproblem_left = Subproblem_create(subproblem->capacity, subproblem->featureCount, subproblem->classCount);
 	if (subproblem_left == NULL) {
@@ -131,8 +139,8 @@ DecisionTreeNode* DecisionTree_create(	Subproblem* subproblem,
 		return NULL;
 	}
 
-	dtNode->left = DecisionTree_create(subproblem_left, currentDepth - 1, maxDepth, prunningThreshold);
-	dtNode->right = DecisionTree_create(subproblem_right, currentDepth - 1, maxDepth, prunningThreshold);
+	dtNode->left = DecisionTree_create(subproblem_left, currentDepth + 1, maxDepth, prunningThreshold);
+	dtNode->right = DecisionTree_create(subproblem_right, currentDepth + 1, maxDepth, prunningThreshold);
 
 	return dtNode;
 }
@@ -157,4 +165,12 @@ int DecisionTree_nodeCount(DecisionTreeNode* node) {
 	tmp += DecisionTree_nodeCount(node->right);
 
 	return tmp;
+}
+
+int DecisionTree_predict(DecisionTreeNode* tree, Instance* instance) {
+	return 0;
+}
+
+float DecisionTree_evaluate(DecisionTreeNode* tree, Dataset* dataset) {
+	return 0.0f;
 }
