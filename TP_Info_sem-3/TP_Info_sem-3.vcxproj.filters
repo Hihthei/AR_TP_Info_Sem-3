@@ -25,17 +25,23 @@
     <Filter Include="Fichiers sources\DataSet">
       <UniqueIdentifier>{399863f3-fc99-43e8-bc6b-069d34b0e6dc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers d%27en-tête\Split">
-      <UniqueIdentifier>{43b00f0f-4aab-4c6e-b0b6-7b0095eef033}</UniqueIdentifier>
+    <Filter Include="Fichiers d%27en-tête\Tree">
+      <UniqueIdentifier>{7378fc38-603b-4694-ac60-59b7387b8262}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers d%27en-tête\DecisionTree">
-      <UniqueIdentifier>{fd260772-4624-41e6-aade-fe3df33d5026}</UniqueIdentifier>
+    <Filter Include="Fichiers d%27en-tête\Split">
+      <UniqueIdentifier>{615e1af3-1a22-4d54-9405-0f80c97eca3b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Fichiers sources\Split">
-      <UniqueIdentifier>{50992558-1a2b-465e-9049-aeb31122ea5e}</UniqueIdentifier>
+      <UniqueIdentifier>{aab5add3-0a5e-4d89-9b9b-bedaec9dbddf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers sources\DecisionTree">
-      <UniqueIdentifier>{2fd80969-fd9b-4e8d-a233-9afabc250b8e}</UniqueIdentifier>
+    <Filter Include="Fichiers sources\Tree">
+      <UniqueIdentifier>{043c04ed-ace7-44f1-9f6c-5cbdb3220761}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Forest">
+      <UniqueIdentifier>{f8f85cf0-bbf8-4598-be5e-20154acda783}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Forest">
+      <UniqueIdentifier>{21b3f903-b435-480d-b013-e18ebbefad02}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -48,11 +54,17 @@
     <ClInclude Include="ABR_h.h">
       <Filter>Fichiers d%27en-tête\ABR_AVL</Filter>
     </ClInclude>
+    <ClInclude Include="DecisionTree_h.h">
+      <Filter>Fichiers d%27en-tête\Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="IAdelaforet_h.h">
+      <Filter>Fichiers d%27en-tête\Tree</Filter>
+    </ClInclude>
     <ClInclude Include="Split_h.h">
       <Filter>Fichiers d%27en-tête\Split</Filter>
     </ClInclude>
-    <ClInclude Include="DecisionTree_h.h">
-      <Filter>Fichiers d%27en-tête\DecisionTree</Filter>
+    <ClInclude Include="RandomForest_h.h">
+      <Filter>Fichiers d%27en-tête\Forest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -69,7 +81,13 @@
       <Filter>Fichiers sources\Split</Filter>
     </ClCompile>
     <ClCompile Include="DecisionTree_c.c">
-      <Filter>Fichiers sources\DecisionTree</Filter>
+      <Filter>Fichiers sources\Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="IAdelaforet_c.c">
+      <Filter>Fichiers sources\Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomForest_c.c">
+      <Filter>Fichiers sources\Forest</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
