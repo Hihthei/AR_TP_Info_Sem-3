@@ -2,6 +2,7 @@
 #include "Dataset_h.h"
 #include "Split_h.h"
 #include "DecisionTree_h.h"
+#include "RandomForest_h.h"
 
 
 //*
@@ -60,6 +61,12 @@ int main(int argc, char** argv) {
     printf("train = %.3f, test = %.3f\n", scoreTrain, scoreTest);
     
     //en commentaire Dataset_printClasses(trainData);
+
+    RandomForest* rf = RandomForest_create(20, trainData, 30, 0.5f, 1.0f);
+    /*float trainScore = RandomForest_evaluate(rf, trainData);
+    float testScore = RandomForest_evaluate(rf, testData);
+    printf("train = %.3f, test = %.3f\n", trainScore, testScore);*/
+
 
     //----------------------------------------------------------
 

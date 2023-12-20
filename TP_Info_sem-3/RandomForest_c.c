@@ -22,6 +22,7 @@ RandomForest* RandomForest_create(int numberOfTrees, Dataset* data, int maxDepth
 		}
 
 		forest->trees[i] = DecisionTree_create(sp, 0, maxDepth, prunningThreshold);
+		//Subproblem_destroy(sp);
 	}
 	
 	return forest;
@@ -99,5 +100,15 @@ int RandomForest_nodeCount(RandomForest* rf)
 
 void RandomForest_destroy(RandomForest* rf)
 {
-	;
+	if (!rf)
+	{
+		printf("No more forest in Amazonie\n");
+		return;
+	}
+
+	for (int i = 0; i < rf->treeCount; i++)
+	{
+		DecisionTree_destroy(rf->trees[i]);
+	}
+	free(rf);
 }
