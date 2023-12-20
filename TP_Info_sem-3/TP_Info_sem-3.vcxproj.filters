@@ -25,6 +25,24 @@
     <Filter Include="Fichiers sources\DataSet">
       <UniqueIdentifier>{399863f3-fc99-43e8-bc6b-069d34b0e6dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\Tree">
+      <UniqueIdentifier>{7378fc38-603b-4694-ac60-59b7387b8262}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Split">
+      <UniqueIdentifier>{615e1af3-1a22-4d54-9405-0f80c97eca3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Split">
+      <UniqueIdentifier>{aab5add3-0a5e-4d89-9b9b-bedaec9dbddf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Tree">
+      <UniqueIdentifier>{043c04ed-ace7-44f1-9f6c-5cbdb3220761}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Forest">
+      <UniqueIdentifier>{f8f85cf0-bbf8-4598-be5e-20154acda783}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Forest">
+      <UniqueIdentifier>{21b3f903-b435-480d-b013-e18ebbefad02}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dataset_h.h">
@@ -37,13 +55,16 @@
       <Filter>Fichiers d%27en-tête\ABR_AVL</Filter>
     </ClInclude>
     <ClInclude Include="DecisionTree_h.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Split_h.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>Fichiers d%27en-tête\Tree</Filter>
     </ClInclude>
     <ClInclude Include="IAdelaforet_h.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>Fichiers d%27en-tête\Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="Split_h.h">
+      <Filter>Fichiers d%27en-tête\Split</Filter>
+    </ClInclude>
+    <ClInclude Include="Forest_h.h">
+      <Filter>Fichiers d%27en-tête\Forest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -56,14 +77,17 @@
     <ClCompile Include="ABR_c.c">
       <Filter>Fichiers sources\ABR_AVL</Filter>
     </ClCompile>
-    <ClCompile Include="DecisionTree_c.c">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="Split_c.c">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Fichiers sources\Split</Filter>
+    </ClCompile>
+    <ClCompile Include="DecisionTree_c.c">
+      <Filter>Fichiers sources\Tree</Filter>
     </ClCompile>
     <ClCompile Include="IAdelaforet_c.c">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Fichiers sources\Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomForest_c.c">
+      <Filter>Fichiers sources\Forest</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
