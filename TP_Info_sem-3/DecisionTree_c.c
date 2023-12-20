@@ -1,7 +1,7 @@
 #include "DecisionTree_h.h"
 
 void CodeError_DT(void** freeptr, char* errormsg) {
-	if (strcmp(errormsg, "") != 0 && errormsg != NULL)
+	if (errormsg != NULL)
 		printf("\nCODE ERROR : \" %s \" \n\n", errormsg);
 
 	if (freeptr != NULL && *freeptr != NULL) {
@@ -28,9 +28,60 @@ DecisionTreeNode* DecisionTreeNode_create(	DecisionTreeNode* left,
 	return dtNode;
 }
 
-DecisionTreeNode* DecisionTree_create(Subproblem* subproblem,
-	int currentDepth, int maxDepth,
-	float prunningThreshold) {
+bool DecisionTree_Subproblem_createLeftRight(Subproblem** subproblem_left,
+								Subproblem** subproblem_right,
+								DecisionTreeNode* dtNode,
+								Subproblem* subproblem) {
+	if (subproblem_left == NULL || *subproblem_left == NULL) {
+		CodeError_DT(NULL, "Subproblem_createLeftRight - subproblem_left = NULL");
+		return false;
+	}
+	if (subproblem_right == NULL || *subproblem_right == NULL) {
+		CodeError_DT(NULL, "Subproblem_createLeftRight - subproblem_right = NULL");
+		return false;
+	}
+	if (dtNode == NULL) {
+		CodeError_DT(NULL, "Subproblem_createLeftRight - dtNode = NULL");
+		return false;
+	}
+	if (subproblem == NULL) {
+		CodeError_DT(NULL, "Subproblem_createLeftRight - subproblem = NULL");
+		return false;
+	}
+
+	for (int i = 0; i < subproblem->instanceCount; i++) {
+		Instance* current_instance = (subproblem->instances[i]);
+		if (current_instance == NULL) {
+			CodeError_DT(NULL, "Subproblem_createLeftRight - current_instance = NULL");
+			return false;
+		}
+
+		int feature_value = current_instance->values[dtNode->split.featureID];
+
+		if (feature_value <= dtNode->split.threshold) {
+			if (!Subproblem_insert(*subproblem_left, current_instance)) {
+				printf("Erreur a i = %d\n", i);
+				CodeError_DT((void**)subproblem_left, "DecisionTree_create - echec Subproblem_insert pour subproblem_left");
+				Subproblem_destroy(*subproblem_right);
+
+				return false;
+			}
+		}
+		else {
+			if (!Subproblem_insert(*subproblem_right, current_instance)) {
+				printf("Erreur a i = %d\n", i);
+				CodeError_DT((void**)subproblem_right, "DecisionTree_create - echec Subproblem_insert pour subproblem_right");
+				Subproblem_destroy(*subproblem_left);
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+DecisionTreeNode* DecisionTree_create(	Subproblem* subproblem,
+										int currentDepth, int maxDepth,
+										float prunningThreshold) {
 	if (subproblem == NULL) {
 		CodeError_DT(NULL, "DecisionTree_create - subproblem = NULL");
 		return NULL;
@@ -48,14 +99,14 @@ DecisionTreeNode* DecisionTree_create(Subproblem* subproblem,
 	int majorClassID_sp = subproblem->classes[0].instanceCount;
 	for (int i = 1; i < subproblem->classCount; i++) {
 		if (subproblem->classes[i].instanceCount > majorClassCount_sp) {
-			majorClassCount_sp = subproblem->classes[i].instanceCount;
+			majorClassCount_sp = (float)subproblem->classes[i].instanceCount;
 			majorClassID_sp = i;
 		}
 	}
 	float purete_sp = (float)majorClassCount_sp / (float)subproblem->instanceCount;;
 	
 	if (purete_sp >= prunningThreshold) {
-		dtNode->classID = majorClassCount_sp;
+		dtNode->classID = (int)majorClassCount_sp;
 		return dtNode;
 	}
 
@@ -64,39 +115,20 @@ DecisionTreeNode* DecisionTree_create(Subproblem* subproblem,
 	Subproblem* subproblem_left = Subproblem_create(subproblem->capacity, subproblem->featureCount, subproblem->classCount);
 	if (subproblem_left == NULL) {
 		CodeError_DT(NULL, "DecisionTree_create - subproblem_left = NULL");
-		CodeError_DT(&dtNode, NULL);
+		CodeError_DT((void**)&dtNode, NULL);
 		return NULL;
 	}
 	
 	Subproblem* subproblem_right = Subproblem_create(subproblem->capacity, subproblem->featureCount, subproblem->classCount);
 	if (subproblem_right == NULL) {
 		CodeError_DT(NULL, "DecisionTree_create - subproblem_right = NULL");
-		CodeError_DT(&dtNode, NULL);
+		CodeError_DT((void**)&dtNode, NULL);
 		return NULL;
 	}
 
-	for (int i = 0; i < subproblem->instanceCount; i++) {
-		Instance* current_instance = &(subproblem->instances[i]);
-
-		int feature_value = current_instance->values[dtNode->split.featureID];
-
-		if (feature_value <= dtNode->split.threshold) {
-			if (!Subproblem_insert(subproblem_left, current_instance)) {
-				CodeError_DT(&subproblem_left, "DecisionTree_create - echec Subproblem_insert pour subproblem_left");
-				CodeError_DT(&dtNode, NULL);
-				Subproblem_destroy(subproblem_right);
-
-				return NULL;
-			}
-		}
-		else {
-			if (!Subproblem_insert(subproblem_right, current_instance)) {
-				CodeError_DT(&subproblem_right, "DecisionTree_create - echec Subproblem_insert pour subproblem_right");
-				CodeError_DT(&dtNode, NULL);
-				Subproblem_destroy(subproblem_left);
-				return NULL;
-			}
-		}
+	if (!DecisionTree_Subproblem_createLeftRight(&subproblem_left, &subproblem_right, dtNode, subproblem)) {
+		CodeError_DT((void**)&dtNode, NULL);
+		return NULL;
 	}
 
 	dtNode->left = DecisionTree_create(subproblem_left, currentDepth - 1, maxDepth, prunningThreshold);

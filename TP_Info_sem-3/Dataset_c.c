@@ -2,7 +2,7 @@
 //#include <openMP.h>
 
 void CodeError_DATA(void** freeptr, char* errormsg) {
-	if(strcmp(errormsg, "") != 0 && errormsg != NULL)
+	if(errormsg != NULL)
 		printf("\nCODE ERROR : \" %s \" \n\n", errormsg);
 
 	if (freeptr != NULL && *freeptr != NULL) {
@@ -30,7 +30,7 @@ Dataset* Dataset_dynamicAlloc(FILE* pfile) {
 	if (!fscanf(pfile, "%d %d %d\n",	&dataset->instanceCount,
 										&dataset->classCount,
 										&dataset->featureCount)) {
-		CodeError_DATA(&dataset, "Dataset_dynamicAlloc - fscanf instanceCount / featureCount / classCount");
+		CodeError_DATA((void**)&dataset, "Dataset_dynamicAlloc - fscanf instanceCount / featureCount / classCount");
 
 		fclose(pfile);
 		pfile = NULL;
@@ -62,8 +62,8 @@ Instance* Dataset_instanceAlloc(Dataset* dataset, FILE* pfile) {
 		Instance* inst_tmp = &instances[i];
 
 		if (!fscanf(pfile, "%d\t", &inst_tmp->classID)) {
-			CodeError_DATA(inst_tmp, "Dataset_instanceAlloc - fscanf inst_tmp[].classID");
-			CodeError_DATA(&instances, "");
+			CodeError_DATA((void**)&inst_tmp, "Dataset_instanceAlloc - fscanf inst_tmp[].classID");
+			CodeError_DATA((void**)&instances, "");
 
 			fclose(pfile);
 			pfile = NULL;
@@ -77,11 +77,11 @@ Instance* Dataset_instanceAlloc(Dataset* dataset, FILE* pfile) {
 			if (!fscanf(pfile, "%d", &inst_tmp->values[j])) {
 				int k = 0;
 				while (instances[k].values != NULL || k < dataset->featureCount) {
-					CodeError_DATA(&instances[k].values, "");
+					CodeError_DATA((void**)&instances[k].values, "");
 					k++;
 				}
-				CodeError_DATA(inst_tmp, "Dataset_instanceAlloc - fscanf inst_tmp[].values[]");
-				CodeError_DATA(&instances, "");
+				CodeError_DATA((void**)&inst_tmp, "Dataset_instanceAlloc - fscanf inst_tmp[].values[]");
+				CodeError_DATA((void**)&instances, "");
 
 				fclose(pfile);
 				pfile = NULL;
@@ -158,9 +158,9 @@ Subproblem* Dataset_getSubproblem(Dataset* dataset) {
 	for (int i = 0; i < dataset->instanceCount; i++) {
 		if (!Subproblem_insert(subproblem, &dataset->instances[i])) {
 			for (int j = 0; j < i; j++)
-				CodeError_DATA(subproblem->instances[i], NULL);
+				CodeError_DATA((void**)&subproblem->instances[i], NULL);
 
-			CodeError_DATA(&subproblem, NULL);
+			CodeError_DATA((void**)&subproblem, NULL);
 
 			return NULL;
 		}
@@ -204,7 +204,7 @@ void Dataset_printClasses(Dataset* dataset) {
 SubproblemClass* Subproblem_createClass(Subproblem* subproblem) {
 	SubproblemClass* subproblem_class = (SubproblemClass*)calloc(subproblem->classCount, sizeof(SubproblemClass));
 	if (subproblem_class == NULL) {
-		CodeError_DATA(&subproblem_class, "Subproblem_createClass - allocation subproblem_class");
+		CodeError_DATA((void**)&subproblem_class, "Subproblem_createClass - allocation subproblem_class");
 		return NULL;
 	}
 
@@ -212,7 +212,7 @@ SubproblemClass* Subproblem_createClass(Subproblem* subproblem) {
 		subproblem_class[i].instances = (Instance**)calloc(subproblem->capacity, sizeof(Instance*));
 		if (subproblem_class[i].instances == NULL) {
 			for (int j = 0; j < i; j++)
-				CodeError_DATA(&subproblem_class[j].instances, NULL);
+				CodeError_DATA((void**)subproblem_class[j].instances, NULL);
 
 			CodeError_DATA(NULL, "Subproblem_create - allocation subproblem->classes[].instances");
 
@@ -239,7 +239,7 @@ Subproblem* Subproblem_create(	int maximumCapacity,
 
 	subproblem->instances = (Instance**)calloc(maximumCapacity, sizeof(Instance*));
 	if (subproblem->instances == NULL) {
-		CodeError_DATA(&subproblem, "Subproblem_create - allocation subproblem->instances");
+		CodeError_DATA((void**)&subproblem, "Subproblem_create - allocation subproblem->instances");
 		return NULL;
 	}
 	
@@ -249,9 +249,9 @@ Subproblem* Subproblem_create(	int maximumCapacity,
 
 	subproblem->classes = Subproblem_createClass(subproblem);
 	if (subproblem->classes == NULL) {
-		CodeError_DATA(&subproblem->instances, NULL);
-		CodeError_DATA(&subproblem->classes, NULL);
-		CodeError_DATA(&subproblem, "Subproblem_create - allocation subproblem->classes");
+		CodeError_DATA((void**)subproblem->instances, NULL);
+		CodeError_DATA((void**)subproblem->classes, NULL);
+		CodeError_DATA((void**)subproblem, "Subproblem_create - allocation subproblem->classes");
 
 		return NULL;
 	}
