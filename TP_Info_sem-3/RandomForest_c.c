@@ -15,6 +15,13 @@ RandomForest* RandomForest_create(int numberOfTrees, Dataset* data, int maxDepth
 	for (int i = 0; i < numberOfTrees; i++)
 	{
 		Subproblem* sp = Dataset_bagging(data, baggingProportion);
+
+		if (!sp)
+		{
+			printf("No subproblem\n");
+			return NULL;
+		}
+
 		forest->trees[i] = DecisionTree_create(sp, 0, maxDepth, prunningThreshold * baggingProportion);
 	}
 	

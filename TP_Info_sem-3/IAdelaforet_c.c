@@ -56,5 +56,22 @@ float DecisionTree_evaluate(DecisionTreeNode* tree, Dataset* dataset)
 
 Subproblem* Dataset_bagging(Dataset* data, float proportion)
 {
+	if (!data)
+	{
+		printf("No data\n");
+		return NULL;
+	}
 
+	Subproblem* subproblem = Subproblem_create(data->instanceCount, data->featureCount, data->classCount);
+	if (subproblem == NULL) {
+		CodeError(&subproblem, "Dataset_getSubproblem - allocation subproblem");
+		return NULL;
+	}
+
+	for (int i = 0 ; i < data->instanceCount * proportion; i++)
+	{
+		
+	}
+
+	return subproblem;
 }
