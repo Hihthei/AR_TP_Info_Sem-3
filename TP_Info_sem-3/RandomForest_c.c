@@ -53,6 +53,7 @@ int RandomForest_predict(RandomForest* rf, Instance* instance)
 		if (prediction_value < tab[i])
 		{
 			prediction = i;
+			prediction_value = tab[i];
 		}
 	}
 	free(tab);
