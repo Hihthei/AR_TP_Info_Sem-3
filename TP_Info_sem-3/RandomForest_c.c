@@ -12,6 +12,8 @@ RandomForest* RandomForest_create(int numberOfTrees, Dataset* data, int maxDepth
 	forest->treeCount = numberOfTrees;
 	forest->classCount = 0;
 
+	Subproblem* sp0 = Dataset_bagging(data, baggingProportion);
+	forest->trees = calloc(numberOfTrees, sizeof(DecisionTreeNode*));
 	for (int i = 0; i < numberOfTrees; i++)
 	{
 		Subproblem* sp = Dataset_bagging(data, baggingProportion);
@@ -22,7 +24,7 @@ RandomForest* RandomForest_create(int numberOfTrees, Dataset* data, int maxDepth
 		}
 
 		forest->trees[i] = DecisionTree_create(sp, 0, maxDepth, prunningThreshold);
-		//Subproblem_destroy(sp);
+		Subproblem_destroy(sp);
 	}
 	
 	return forest;
