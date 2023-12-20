@@ -80,7 +80,7 @@ Instance* Dataset_instanceAlloc(Dataset* dataset, FILE* pfile) {
 		for (int j = 0; j < dataset->featureCount; j++) {
 			if (!fscanf(pfile, "%d", &inst_tmp->values[j])) {
 				int k = 0;
-				while (instances[k].values != NULL || k < dataset->featureCount) {
+				while (instances[k].values != NULL && k < dataset->featureCount) {
 					CodeError_DATA((void**)&instances[k].values, "");
 					k++;
 				}
@@ -335,8 +335,9 @@ Subproblem* Dataset_bagging(Dataset* data, float proportion)
 	}
 
 	Subproblem* subproblem = Subproblem_create(data->instanceCount, data->featureCount, data->classCount);
-	if (subproblem == NULL) {
-		CodeError_DATA(&subproblem, "Dataset_getSubproblem - allocation subproblem");
+	if (!subproblem)
+	{
+		printf("No subprobleù\n");
 		return NULL;
 	}
 
