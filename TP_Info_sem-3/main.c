@@ -52,8 +52,6 @@ int main(int argc, char** argv) {
 
     //en commentaire Dataset_printClasses(trainData);
 
-    
-
     //----------------------------------------------------------
 
     Split split = Split_compute(subproblem);
