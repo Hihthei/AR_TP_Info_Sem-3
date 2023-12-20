@@ -18,7 +18,7 @@ typedef struct sDecisionTreeNode {
  *
  * @param  :
  *
- * @return
+ * @return :
  */
 
  //FONCTION : -----------------------------------------------------------------------------------------------------------
@@ -26,15 +26,15 @@ typedef struct sDecisionTreeNode {
 /**
  * @brief
  *
- * implémente l’algorithme donné plus haut, tout en ajoutant une profondeur maximum
- * qui sert de cas d’arrêt supplémentaire. On a également prunningThreshold qui représente
- * le seuil de pureté à atteindre pour qu’un noeud soit une feuille
+ * implÃ©mente lâ€™algorithme donnÃ© plus haut, tout en ajoutant une profondeur maximum
+ * qui sert de cas dâ€™arrÃªt supplÃ©mentaire. On a Ã©galement prunningThreshold qui reprÃ©sente
+ * le seuil de puretÃ© Ã  atteindre pour quâ€™un noeud soit une feuille
  *
  * @param  :
  *
- * @return
+ * @return :
  */
-DecisionTreeNode* DecisionTree_create(	Subproblem* sp,
+DecisionTreeNode* DecisionTree_create(	Subproblem* subproblem,
 										int currentDepth,
 										int maxDepth,
 										float prunningThreshold);
@@ -44,11 +44,11 @@ DecisionTreeNode* DecisionTree_create(	Subproblem* sp,
 /**
  * @brief
  *
- * détruit récursivement les noeuds de l’arbre
+ * dÃ©truit rÃ©cursivement les noeuds de lâ€™arbre
  *
  * @param  :
  *
- * @return
+ * @return :
  */
 void DecisionTree_destroy(DecisionTreeNode* decisionTree);
 
@@ -57,28 +57,28 @@ void DecisionTree_destroy(DecisionTreeNode* decisionTree);
 /**
  * @brief
  *
- * renvoie le nombre de noeuds présents dans l’arbre (y compris les feuilles),
- * qui servira à vérifier le bon fonctionnement de votre procédure de construction,
- * et également d’obtenir la taille de votre modèle.
+ * renvoie le nombre de noeuds prÃ©sents dans lâ€™arbre (y compris les feuilles),
+ * qui servira Ã  vÃ©rifier le bon fonctionnement de votre procÃ©dure de construction,
+ * et Ã©galement dâ€™obtenir la taille de votre modÃ¨le.
  *
  * @param  :
  *
- * @return
+ * @return :
  */
-int Decision_nodeCount(DecisionTreeNode* node);
+int DecisionTree_nodeCount(DecisionTreeNode* node);
 
 
 
 /**
  * @brief
  *
- * détermine la réponse de l’arbre à l’instance. On part de la racine
- * et on descend dans l’arbre jusqu’à atteindre une feuille.
- * La classe représentée par cette feuille correspondra à la prédiction de l’arbre.
+ * dÃ©termine la rÃ©ponse de lâ€™arbre Ã  lâ€™instance. On part de la racine
+ * et on descend dans lâ€™arbre jusquâ€™Ã  atteindre une feuille.
+ * La classe reprÃ©sentÃ©e par cette feuille correspondra Ã  la prÃ©diction de lâ€™arbre.
  *
  * @param  :
  *
- * @return
+ * @return :
  */
 int DecisionTree_predict(DecisionTreeNode* tree, Instance* instance);
 //TODO
@@ -87,14 +87,14 @@ int DecisionTree_predict(DecisionTreeNode* tree, Instance* instance);
 /**
  * @brief
  *
- * permet de calculer la précision de l’arbre sur le dataset passé en paramètre.
- * Le score renvoyé est un réel entre 0 (l’arbre s’est tout le temps trompé)
- * et 1 (l’arbre a déterminé correctement la classe de chacune des instances du dataset).
- * On le calculera facilement comme le nombre d’instances bien classées sur le nombre total d’instances.
+ * permet de calculer la prÃ©cision de lâ€™arbre sur le dataset passÃ© en paramÃ¨tre.
+ * Le score renvoyÃ© est un rÃ©el entre 0 (lâ€™arbre sâ€™est tout le temps trompÃ©)
+ * et 1 (lâ€™arbre a dÃ©terminÃ© correctement la classe de chacune des instances du dataset).
+ * On le calculera facilement comme le nombre dâ€™instances bien classÃ©es sur le nombre total dâ€™instances.
  *
  * @param  :
  *
- * @return
+ * @return :
  */
 float DecisionTree_evaluate(DecisionTreeNode* tree, Dataset* dataset);
 //TODO

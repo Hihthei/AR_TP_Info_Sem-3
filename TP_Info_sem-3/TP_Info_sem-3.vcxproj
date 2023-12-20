@@ -22,6 +22,7 @@
     <ClInclude Include="ABR_h.h" />
     <ClInclude Include="Dataset_h.h" />
     <ClInclude Include="DecisionTree_h.h" />
+    <ClInclude Include="RandomForest_h.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Split_h.h" />
   </ItemGroup>
@@ -30,6 +31,7 @@
     <ClCompile Include="Dataset_c.c" />
     <ClCompile Include="DecisionTree_c.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="RandomForest_c.c" />
     <ClCompile Include="Split_c.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -39,7 +39,7 @@ typedef struct sSubproblem {
  *
  * @param  :
  * 
- * @return 
+ * @return  :
  */
 
 //FONCTION : -----------------------------------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ typedef struct sSubproblem {
  *
  * @param filename : chaîne de charactère du nom du fichier
  * 
- * @return un pointeur vers une structure contenant les informations de DataSet
+ * @return Dataset* : un pointeur vers une structure contenant les informations de DataSet
  */
 Dataset* Dataset_readFromFile(char* filename);
 
@@ -67,7 +67,7 @@ Dataset* Dataset_readFromFile(char* filename);
  * 
  * @param dataset : un pointeur vers une structure Dataset
  * 
- * @return void
+ * @return : void
  */
 void Dataset_destroy(Dataset* dataset);
 
@@ -83,7 +83,7 @@ void Dataset_destroy(Dataset* dataset);
  * 
  * @param dataset : un pointeur vers une structure Dataset
  *
- * @return
+ * @return :
  */
 Subproblem* Dataset_getSubproblem(Dataset* dataset);
 // TODO
@@ -93,13 +93,13 @@ Subproblem* Dataset_getSubproblem(Dataset* dataset);
 /**
  * @brief
  *
+ * Affiche le nombre de features, de classes et d’instances référencées, ainsi que le nombre d’instances pour chacune des classes.
  *
+ * @param  : // TODO
  *
- * @param  : //TODO
- *
- * @return
+ * @return :
  */
-void Dataset_printClasses(Subproblem* subproblem);
+void Dataset_printClasses(Dataset* dataset);
 
 
 
@@ -111,7 +111,7 @@ void Dataset_printClasses(Subproblem* subproblem);
  * 
  * @param  : // TODO
  * 
- * @return 
+ * @return :
  */
 Subproblem* Subproblem_create(int maximumCapacity, int featureCount, int classCount);
 
@@ -126,7 +126,7 @@ Subproblem* Subproblem_create(int maximumCapacity, int featureCount, int classCo
  * 
  * @param  : // TODO
  * 
- * @return 
+ * @return :
  */
 void Subproblem_destroy(Subproblem* subproblem);
 
@@ -140,22 +140,34 @@ void Subproblem_destroy(Subproblem* subproblem);
  * 
  * @param  : // TODO
  * 
- * @return 
+ * @return :
  */
 bool Subproblem_insert(Subproblem* subproblem, Instance* instance);
-// TODO
 
 
 
 /**
  * @brief
  *
- * Affiche le nombre de features, de classes et d’instances référencées, ainsi que le nombre d’instances pour chacune des classes.
  *
- * @param  : // TODO
- * 
- * @return 
+ *
+ * @param  :
+ *
+ * @return  :
  */
-void Dataset_printClasses(Dataset* dataset);
+void Subproblem_print(Subproblem* subproblem);
+
+
+
+/**
+ * @brief
+ *
+ *
+ *
+ * @param  :
+ *
+ * @return  :
+ */
+Subproblem* Dataset_bagging(Dataset* data, float proportion);
 
 #endif
