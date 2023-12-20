@@ -14,11 +14,11 @@ int DecisionTree_predict(DecisionTreeNode* tree, Instance* instance)
 		return -1;
 	}
 
-	if ((!tree->right) && (!tree->left))
+	if ((!tree->right)&&(!tree->left))
 	{
 		return tree->classID;
 	}
-	else if (tree->split.threshold <= instance->values[tree->split.featureID])
+	else if (tree->split.threshold >= instance->values[tree->split.featureID])
 	{
 		DecisionTree_predict(tree->left, instance);
 	}
@@ -42,7 +42,8 @@ float DecisionTree_evaluate(DecisionTreeNode* tree, Dataset* dataset)
 		return -1;
 	}
 
-	float nb_success = 0;
+	int nb_success = 0;
+
 	for (int i = 0; i < dataset->instanceCount; i++)
 	{
 		if (DecisionTree_predict(tree, &dataset->instances[i]) == dataset->instances[i].classID)
@@ -50,8 +51,7 @@ float DecisionTree_evaluate(DecisionTreeNode* tree, Dataset* dataset)
 			nb_success++;
 		}
 	}
-	
-	return (nb_success / (float)dataset->instanceCount);
+	return (float)nb_success / (float)dataset->instanceCount;
 }
 
 Subproblem* Dataset_bagging(Dataset* data, float proportion)
