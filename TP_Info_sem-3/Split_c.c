@@ -28,7 +28,8 @@ float Split_gini(Subproblem* sp, int featureID, float threshold)
 		gspl -= (float)pow((fIl / faspl), 2);
 		gspr -= (float)pow((fIr / faspr), 2);
 	}
-
+	free(Ir);
+	free(Il);	
 	return (float)(((faspl / fasp) * gspl) + ((faspr / fasp) * gspr));
 }
 

@@ -37,25 +37,25 @@ int main(int argc, char** argv) {
 
 
     //----------------------------------------------------------
-
+    
     //Dataset_printClasses(trainData);
 
-    Split split_test = Split_compute(subproblem);
-
     Subproblem_print(subproblem);
+    
     
     DecisionTreeNode* tree = DecisionTree_create(subproblem, 0, 30, 1.0);
     if (tree == NULL)
         return EXIT_FAILURE;
 
     printf("Generation d'un arbre de %d noeuds\n", DecisionTree_nodeCount(tree));
-
+    
     //en commentaire Dataset_printClasses(trainData);
 
     //----------------------------------------------------------
 
     Split split = Split_compute(subproblem);
-    printf("Split : %d _ %.2f\n", split_test.featureID, split_test.threshold);
+    printf("Split : %d _ %.2f\n", split.featureID, split.threshold);
+    
 
     //----------------------------------------------------------
     
@@ -67,6 +67,9 @@ int main(int argc, char** argv) {
 
     DecisionTree_destroy(tree);
     tree = NULL;
+
+    //DecisionTree_destroy(tree);
+    //tree = NULL;
 
     //TIME CLOCK END --------------------------------------------
     end = clock();
