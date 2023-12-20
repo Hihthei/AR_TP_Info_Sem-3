@@ -1,5 +1,5 @@
-#ifndef FOREST_H
-#define FOREST_H
+#ifndef RANDOMFOREST_H
+#define RANDOMFOREST_H
 
 #include "Settings.h"
 #include "DecisionTree_h.h"
