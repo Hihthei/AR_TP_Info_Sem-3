@@ -65,7 +65,7 @@ void DecisionTree_destroy(DecisionTreeNode* decisionTree);
  *
  * @return :
  */
-int Decision_nodeCount(DecisionTreeNode* node);
+int DecisionTree_nodeCount(DecisionTreeNode* node);
 
 
 

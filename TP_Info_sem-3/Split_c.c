@@ -24,7 +24,7 @@ float Split_gini(Subproblem* sp, int featureID, float threshold)
 	float gspl = 1, gspr = 1, faspl = fabs(spl), faspr = fabs(spr), fasp = sp->instanceCount;
 	for (int c = 0; c < C - 1; c++)
 	{
-		float fIl = fabs(Il[c]), fIr = fabs(Ir[c]);
+		float fIl = (float)fabs(Il[c]), fIr = (float)fabs(Ir[c]);
 		gspl -= pow((fIl / faspl), 2);
 		gspr -= pow((fIr / faspr), 2);
 	}

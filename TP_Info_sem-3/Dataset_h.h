@@ -93,13 +93,13 @@ Subproblem* Dataset_getSubproblem(Dataset* dataset);
 /**
  * @brief
  *
+ * Affiche le nombre de features, de classes et d’instances référencées, ainsi que le nombre d’instances pour chacune des classes.
  *
- *
- * @param  : //TODO
+ * @param  : // TODO
  *
  * @return :
  */
-void Dataset_printClasses(Subproblem* subproblem);
+void Dataset_printClasses(Dataset* dataset);
 
 
 
@@ -143,19 +143,18 @@ void Subproblem_destroy(Subproblem* subproblem);
  * @return :
  */
 bool Subproblem_insert(Subproblem* subproblem, Instance* instance);
-// TODO
 
 
 
 /**
  * @brief
  *
- * Affiche le nombre de features, de classes et d’instances référencées, ainsi que le nombre d’instances pour chacune des classes.
  *
- * @param  : // TODO
- * 
- * @return :
+ *
+ * @param  :
+ *
+ * @return  :
  */
-void Dataset_printClasses(Dataset* dataset);
+void Subproblem_print(Subproblem* subproblem);
 
 #endif

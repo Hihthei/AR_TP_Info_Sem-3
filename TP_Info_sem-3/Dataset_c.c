@@ -13,6 +13,8 @@ void CodeError_DATA(void** freeptr, char* errormsg) {
 
 //FONCTION : -----------------------------------------------------------------------------------------------------------
 
+//----------------------------------------DATASET-----------------------------------------------------------------------
+
 Dataset* Dataset_dynamicAlloc(FILE* pfile) {
 	if (pfile == NULL) {
 		CodeError_DATA(NULL, "Dataset_dynamicAlloc - fichier introuvable");
@@ -167,6 +169,38 @@ Subproblem* Dataset_getSubproblem(Dataset* dataset) {
 	return subproblem;
 }
 
+bool Dataset_printFeatures(Instance* instance, int featuresCount) {
+	if (instance == NULL) {
+		CodeError_DATA(NULL, "Dataset_printFeatures - instance = NULL");
+		return false;
+	}
+
+	printf("ClassID %d ", instance->classID);
+
+	for (int i = 0; i < featuresCount; i++)
+		printf("- %d ", instance->values[i]);
+
+	printf("\n");
+
+	return true;
+}
+
+void Dataset_printClasses(Dataset* dataset) {
+	if (dataset == NULL) {
+		CodeError_DATA(NULL, "Dataset_printClasses - subproblem = NULL");
+		return;
+	}
+
+	for (int i = 0; i < dataset->instanceCount; i++) {
+		if (!Dataset_printFeatures(&dataset->instances[i], dataset->featureCount))
+			break;
+	}
+
+	printf("\n");
+}
+
+//----------------------------------------SUBPROBLEM--------------------------------------------------------------------
+
 SubproblemClass* Subproblem_createClass(Subproblem* subproblem) {
 	SubproblemClass* subproblem_class = (SubproblemClass*)calloc(subproblem->classCount, sizeof(SubproblemClass));
 	if (subproblem_class == NULL) {
@@ -286,34 +320,4 @@ void Subproblem_print(Subproblem* subproblem) {
 
 	for (int i = 0; i < subproblem->classCount; i++)
 		printf("- classe numero %d : %d instances\n", i, subproblem->classes[i].instanceCount);
-}
-
-bool Dataset_printFeatures(Instance* instance, int featuresCount) {
-	if (instance == NULL) {
-		CodeError_DATA(NULL, "Dataset_printFeatures - instance = NULL");
-		return false;
-	}
-
-	printf("ClassID %d ", instance->classID);
-
-	for (int i = 0; i < featuresCount; i++)
-		printf("- %d ", instance->values[i]);
-
-	printf("\n");
-
-	return true;
-}
-
-void Dataset_printClasses(Dataset* dataset) {
-	if (dataset == NULL) {
-		CodeError_DATA(NULL, "Dataset_printClasses - subproblem = NULL");
-		return;
-	}
-
-	for (int i = 0; i < dataset->instanceCount; i++) {
-		if (!Dataset_printFeatures(&dataset->instances[i], dataset->featureCount))
-			break;
-	}
-
-	printf("\n");
 }

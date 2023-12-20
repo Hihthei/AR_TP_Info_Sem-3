@@ -1,5 +1,7 @@
 #include "ABR_h.h"
 #include "Dataset_h.h"
+#include "Split_h.h"
+#include "DecisionTree_h.h"
 
 //*
 int main(int argc, char** argv)
@@ -37,7 +39,13 @@ int main(int argc, char** argv)
 
     //Dataset_printClasses(trainData);
 
-    Subproblem_print(subproblem);
+    DecisionTreeNode* tree = DecisionTree_create(subproblem, 0, 30, 1.0);
+    if (tree == NULL)
+        return EXIT_FAILURE;
+
+    printf("Génération d'un arbre de %d noeuds\n", DecisionTree_nodeCount(tree));
+
+    //Subproblem_print(subproblem);
 
     //----------------------------------------------------------
     
@@ -46,6 +54,9 @@ int main(int argc, char** argv)
 
     Subproblem_destroy(subproblem);
     subproblem = NULL;
+
+    DecisionTree_destroy(tree);
+    tree = NULL;
 
     //TIME CLOCK END --------------------------------------------
     end = clock();
