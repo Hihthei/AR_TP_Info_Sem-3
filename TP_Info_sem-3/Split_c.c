@@ -6,10 +6,10 @@ float Split_gini(Subproblem* sp, int featureID, float threshold)
 {
 	if (!sp) { printf("No subproblem\n"); return -1; }
 	int C = sp->classCount;
-	int spl = 0, spr = 0, *Il = (int*)calloc(sp->capacity, sizeof(int)), *Ir = (int*)calloc(sp->capacity, sizeof(int));
+	int spl = 0, spr = 0, * Il = calloc(sp->capacity, sizeof(int)), * Ir = calloc(sp->capacity, sizeof(int));
 	for (int i = 0; i < sp->instanceCount; i++)
 	{
-		if (sp->instances[i]->values[featureID] <= threshold)
+		if (sp->instances[i]->values[featureID] < threshold)
 		{
 			spl++;
 			Il[sp->instances[i]->classID]++;
@@ -22,13 +22,11 @@ float Split_gini(Subproblem* sp, int featureID, float threshold)
 	}
 
 	float gspl = 1, gspr = 1, faspl = (float)fabs(spl), faspr = (float)fabs(spr), fasp = (float)sp->instanceCount;
-	for (int c = 0; c < C - 1; c++)
+	for (int c = 0; c < C; c++)
 	{
 		float fIl = (float)fabs(Il[c]), fIr = (float)fabs(Ir[c]);
 		gspl -= (float)pow((fIl / faspl), 2);
 		gspr -= (float)pow((fIr / faspr), 2);
-
-
 	}
 
 	return (float)(((faspl / fasp) * gspl) + ((faspr / fasp) * gspr));
@@ -49,10 +47,10 @@ Split Split_compute(Subproblem* subproblem)
 		float min = (float)subproblem->instances[0]->values[i], max = (float)subproblem->instances[0]->values[i];
 		for (int j = 0; j < subproblem->instanceCount; j++)
 		{
-			if(min > subproblem->instances[j]->values[i]) min = (float)subproblem->instances[j]->values[i];
-			if(max < subproblem->instances[j]->values[i]) max = (float)subproblem->instances[j]->values[i];
+			if (min > subproblem->instances[j]->values[i]) min = (float)subproblem->instances[j]->values[i];
+			if (max < subproblem->instances[j]->values[i]) max = (float)subproblem->instances[j]->values[i];
 		}
-		float threshold  = (min + max) / 2;
+		float threshold = (min + max) / 2;
 		if (best_split_value > Split_gini(subproblem, i, threshold))
 		{
 			best_split_value = Split_gini(subproblem, i, threshold);

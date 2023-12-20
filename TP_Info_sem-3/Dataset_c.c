@@ -72,11 +72,15 @@ Instance* Dataset_instanceAlloc(Dataset* dataset, FILE* pfile) {
 		}
 
 		inst_tmp->values = (int*)calloc(dataset->featureCount, sizeof(int));
+		if (inst_tmp->values == NULL) {
+			CodeError_DATA((void**)&inst_tmp, "Dataset_instanceAlloc - alloc inst_tmp[].values");
+			return NULL;
+		}
 
 		for (int j = 0; j < dataset->featureCount; j++) {
 			if (!fscanf(pfile, "%d", &inst_tmp->values[j])) {
 				int k = 0;
-				while (instances[k].values != NULL || k < dataset->featureCount) {
+				while (instances[k].values != NULL && k < dataset->featureCount) {
 					CodeError_DATA((void**)&instances[k].values, "");
 					k++;
 				}
@@ -320,4 +324,27 @@ void Subproblem_print(Subproblem* subproblem) {
 
 	for (int i = 0; i < subproblem->classCount; i++)
 		printf("- classe numero %d : %d instances\n", i, subproblem->classes[i].instanceCount);
+}
+
+Subproblem* Dataset_bagging(Dataset* data, float proportion)
+{
+	if (!data)
+	{
+		printf("No data\n");
+		return NULL;
+	}
+
+	Subproblem* subproblem = Subproblem_create(data->instanceCount, data->featureCount, data->classCount);
+	if (!subproblem)
+	{
+		printf("No subprobleù\n");
+		return NULL;
+	}
+
+	for (int i = 0; i < data->instanceCount * proportion; i++)
+	{
+		;
+	}
+
+	return subproblem;
 }
