@@ -343,7 +343,7 @@ Subproblem* Dataset_bagging(Dataset* data, float proportion)
 
 	for (int i = 0; i < data->instanceCount * proportion; i++)
 	{
-		;
+		// rand prof / modulo total / insert la rand instance
 	}
 
 	return subproblem;

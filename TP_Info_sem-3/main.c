@@ -21,6 +21,12 @@ int main(int argc, char** argv) {
     if (trainData == NULL)
         return EXIT_FAILURE;
 
+    char* path2 = "../Dataset/PENDIGITS_test.txt";
+
+    Dataset* testData = Dataset_readFromFile(path2);
+    if (trainData == NULL)
+        return EXIT_FAILURE;
+
     /*
     printf("%d %d %d\n", trainData->instanceCount, trainData->featureCount, trainData->classCount);
 
@@ -48,6 +54,10 @@ int main(int argc, char** argv) {
         return EXIT_FAILURE;
 
     printf("Generation d'un arbre de %d noeuds\n", DecisionTree_nodeCount(tree));
+
+    float scoreTrain = DecisionTree_evaluate(tree, trainData);
+    float scoreTest = DecisionTree_evaluate(tree, testData);
+    printf("train = %.3f, test = %.3f\n", scoreTrain, scoreTest);
     
     //en commentaire Dataset_printClasses(trainData);
 
