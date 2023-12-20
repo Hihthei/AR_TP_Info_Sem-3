@@ -63,8 +63,9 @@ Subproblem* Dataset_bagging(Dataset* data, float proportion)
 	}
 
 	Subproblem* subproblem = Subproblem_create(data->instanceCount, data->featureCount, data->classCount);
-	if (subproblem == NULL) {
-		CodeError(&subproblem, "Dataset_getSubproblem - allocation subproblem");
+	if (!subproblem)
+	{
+		printf("No subprobleù\n");
 		return NULL;
 	}
 

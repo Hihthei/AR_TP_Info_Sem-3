@@ -39,10 +39,8 @@ Split Split_compute(Subproblem* subproblem)
 	Split nulle = { 0 };
 	if (!subproblem) { printf("No subproblem\n"); return nulle; }
 
-	Split best_split;
+	Split best_split = { .threshold = 0, .featureID = 0 };
 	float best_split_value = 1;
-	best_split.threshold = 0;
-	best_split.featureID = 0;
 
 	for (int i = 0; i < subproblem->featureCount; i++)
 	{
