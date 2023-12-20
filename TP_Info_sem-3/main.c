@@ -42,10 +42,9 @@ int main(int argc, char** argv) {
 
     Split split_test = Split_compute(subproblem);
 
-    printf("split : %d %.0f\n", split_test.featureID, split_test.threshold);
     Subproblem_print(subproblem);
     
-    DecisionTreeNode* tree = DecisionTree_create(subproblem, 0, 30, 0.8);
+    DecisionTreeNode* tree = DecisionTree_create(subproblem, 0, 30, 1.0);
     if (tree == NULL)
         return EXIT_FAILURE;
 
@@ -58,7 +57,7 @@ int main(int argc, char** argv) {
     //----------------------------------------------------------
 
     Split split = Split_compute(subproblem);
-    printf("ICI : %f %f %f\n", split.threshold, Split_gini(subproblem, 5, 1), Split_gini(subproblem, 1, 0.6));
+    printf("Split : %d _ %.2f\n", split_test.featureID, split_test.threshold);
 
     //----------------------------------------------------------
     

@@ -91,7 +91,6 @@ DecisionTreeNode* DecisionTree_create(	Subproblem* subproblem,
 	if (currentDepth >= maxDepth)
 		return NULL;
 
-
 	Split null_split = { 0 };
 	
 	DecisionTreeNode* dtNode = DecisionTreeNode_create(NULL, NULL, null_split, 0);
@@ -119,28 +118,34 @@ DecisionTreeNode* DecisionTree_create(	Subproblem* subproblem,
 	if (dtNode->split.featureID == 0 && dtNode->split.threshold == 0)
 		return NULL;
 
-
 	Subproblem* subproblem_left = Subproblem_create(subproblem->capacity, subproblem->featureCount, subproblem->classCount);
 	if (subproblem_left == NULL) {
-		CodeError_DT(NULL, "DecisionTree_create - subproblem_left = NULL");
-		CodeError_DT((void**)&dtNode, NULL);
+		CodeError_DT((void**)&dtNode, "DecisionTree_create - subproblem_left = NULL");
 		return NULL;
 	}
 	
 	Subproblem* subproblem_right = Subproblem_create(subproblem->capacity, subproblem->featureCount, subproblem->classCount);
 	if (subproblem_right == NULL) {
-		CodeError_DT(NULL, "DecisionTree_create - subproblem_right = NULL");
-		CodeError_DT((void**)&dtNode, NULL);
+		CodeError_DT((void**)&dtNode, "DecisionTree_create - subproblem_right = NULL");
 		return NULL;
 	}
 
 	if (!DecisionTree_Subproblem_createLeftRight(&subproblem_left, &subproblem_right, dtNode, subproblem)) {
-		CodeError_DT((void**)&dtNode, NULL);
+		CodeError_DT((void**)&dtNode, "DecisionTree_Subproblem_createLeftRight - alloc subproblem_left / subproblem_right");
 		return NULL;
 	}
 
 	dtNode->left = DecisionTree_create(subproblem_left, currentDepth + 1, maxDepth, prunningThreshold);
+	if (dtNode->left == NULL) {
+		CodeError_DT((void**)&dtNode, "DecisionTree_create - alloc dtNode->left");
+		return NULL;
+	}
+
 	dtNode->right = DecisionTree_create(subproblem_right, currentDepth + 1, maxDepth, prunningThreshold);
+	if (dtNode->right == NULL) {
+		CodeError_DT((void**)&dtNode, "DecisionTree_create - alloc dtNode->right");
+		return NULL;
+	}
 
 	return dtNode;
 }
@@ -168,9 +173,55 @@ int DecisionTree_nodeCount(DecisionTreeNode* node) {
 }
 
 int DecisionTree_predict(DecisionTreeNode* tree, Instance* instance) {
+	if (!tree)
+	{
+		printf("No tree\n");
+		return -1;
+	}
+
+	if (!instance)
+	{
+		printf("No instance\n");
+		return -1;
+	}
+
+	if ((!tree->right) && (!tree->left))
+	{
+		return tree->classID;
+	}
+	else if (tree->split.threshold <= instance->values[tree->split.featureID])
+	{
+		DecisionTree_predict(tree->left, instance);
+	}
+	else
+	{
+		DecisionTree_predict(tree->right, instance);
+	}
+
 	return 0;
 }
 
 float DecisionTree_evaluate(DecisionTreeNode* tree, Dataset* dataset) {
-	return 0.0f;
+	if (!tree)
+	{
+		printf("No tree\n");
+		return -1;
+	}
+
+	if (!dataset)
+	{
+		printf("No dataset\n");
+		return -1;
+	}
+
+	float nb_success = 0;
+	for (int i = 0; i < dataset->instanceCount; i++)
+	{
+		if (DecisionTree_predict(tree, &dataset->instances[i]) == dataset->instances[i].classID)
+		{
+			nb_success++;
+		}
+	}
+
+	return (float)(nb_success / (float)dataset->instanceCount);
 }

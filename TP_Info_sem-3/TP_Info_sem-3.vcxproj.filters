@@ -57,9 +57,6 @@
     <ClInclude Include="DecisionTree_h.h">
       <Filter>Fichiers d%27en-tête\Tree</Filter>
     </ClInclude>
-    <ClInclude Include="IAdelaforet_h.h">
-      <Filter>Fichiers d%27en-tête\Tree</Filter>
-    </ClInclude>
     <ClInclude Include="Split_h.h">
       <Filter>Fichiers d%27en-tête\Split</Filter>
     </ClInclude>
@@ -81,9 +78,6 @@
       <Filter>Fichiers sources\Split</Filter>
     </ClCompile>
     <ClCompile Include="DecisionTree_c.c">
-      <Filter>Fichiers sources\Tree</Filter>
-    </ClCompile>
-    <ClCompile Include="IAdelaforet_c.c">
       <Filter>Fichiers sources\Tree</Filter>
     </ClCompile>
     <ClCompile Include="RandomForest_c.c">
