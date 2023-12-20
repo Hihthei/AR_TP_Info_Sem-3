@@ -6,7 +6,7 @@ float Split_gini(Subproblem* sp, int featureID, float threshold)
 {
 	if (!sp) { printf("No subproblem\n"); return -1; }
 	int C = sp->classCount;
-	int spl = 0, spr = 0, * Il = calloc(sp->classCount, sizeof(int)), * Ir = calloc(sp->classCount, sizeof(int));
+	int spl = 0, spr = 0, *Il = calloc(sp->classCount, sizeof(int)), *Ir = calloc(sp->classCount, sizeof(int));
 	for (int i = 0; i < sp->instanceCount; i++)
 	{
 		if (sp->instances[i]->values[featureID] < threshold)
@@ -21,12 +21,18 @@ float Split_gini(Subproblem* sp, int featureID, float threshold)
 		}
 	}
 
-	float gspl = 1, gspr = 1, faspl = (float)fabs(spl), faspr = (float)fabs(spr), fasp = (float)sp->instanceCount;
+	float gspl = 1, gspr = 1.0, faspl = (float)fabs(spl), faspr = (float)fabs(spr), fasp = (float)sp->instanceCount;
 	for (int c = 0; c < C; c++)
 	{
-		float fIl = (float)fabs(Il[c]), fIr = (float)fabs(Ir[c]);
-		gspl -= (float)pow((fIl / faspl), 2);
-		gspr -= (float)pow((fIr / faspr), 2);
+		float fIl = Il[c], fIr = Ir[c];
+		if (fIl != 0)
+		{
+			gspl -= (float)pow((fIl / faspl), 2);
+		}
+		if(fIr != 0)
+		{
+			gspr -= (float)pow((fIr / faspr), 2);
+		}
 	}
 	free(Ir);
 	free(Il);	
