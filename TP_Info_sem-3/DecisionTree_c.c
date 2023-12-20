@@ -127,13 +127,13 @@ DecisionTreeNode* DecisionTree_create(Subproblem* subproblem, int currentDepth, 
 	}
 
 	Subproblem* subproblem_left = Subproblem_create(subproblem->instanceCount, subproblem->featureCount, subproblem->classCount);
-/*	if (subproblem_left == NULL) {
+	if (subproblem_left == NULL) {
 		CodeError_DT((void**)&dtNode, "DecisionTree_create - subproblem_left = NULL");
 		return NULL;
 	}
 
 	Subproblem* subproblem_right = Subproblem_create(subproblem->instanceCount, subproblem->featureCount, subproblem->classCount);
-/*	if (subproblem_right == NULL) {
+	if (subproblem_right == NULL) {
 		CodeError_DT((void**)&dtNode, "DecisionTree_create - subproblem_right = NULL");
 		return NULL;
 	}
@@ -147,13 +147,13 @@ DecisionTreeNode* DecisionTree_create(Subproblem* subproblem, int currentDepth, 
 	}
 
 	dtNode->left = DecisionTree_create(subproblem_left, currentDepth + 1, maxDepth, prunningThreshold);
-/*	if (dtNode->left == NULL) {
+	if (dtNode->left == NULL) {
 		CodeError_DT((void**)&dtNode, "DecisionTree_create - alloc dtNode->left == NULL");
 		return NULL;
 	}
 
 	dtNode->right = DecisionTree_create(subproblem_right, currentDepth + 1, maxDepth, prunningThreshold);
-/*  if (dtNode->right == NULL) {
+  if (dtNode->right == NULL) {
 		CodeError_DT((void**)&dtNode, "DecisionTree_create - alloc dtNode->right == NULL");
 		return NULL;
 	}
