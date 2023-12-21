@@ -16,8 +16,10 @@ int main(int argc, char** argv) {
 
     srand((unsigned int)time(NULL));
 
-    char* pathPaint = "../WrittingTest.bmp";
-    paintLaunch(pathPaint);
+    char* pathR = "../WrittingTest.bmp";
+    Image *imp = readImage(pathR);
+    char* pathW = "../Dataset/WrittingTest.txt";
+    writeImage(imp, pathW);
 
     char* path = "../Dataset/PENDIGITS_train.txt";
     
@@ -65,13 +67,13 @@ int main(int argc, char** argv) {
     
     //en commentaire Dataset_printClasses(trainData);
 
-    RandomForest* rf = RandomForest_create(20, trainData, 30, 0.5f, 1.0f);
+    /*RandomForest* rf = RandomForest_create(20, trainData, 30, 0.5f, 1.0f);
 
     printf("Generation d'une foret de %d noeuds\n", RandomForest_nodeCount(rf));
 
     float trainScore = RandomForest_evaluate(rf, trainData);
     float testScore = RandomForest_evaluate(rf, testData);
-    printf("train = %.3f, test = %.3f\n", trainScore, testScore);
+    printf("train = %.3f, test = %.3f\n", trainScore, testScore);*/
 
 
     //----------------------------------------------------------
@@ -91,8 +93,8 @@ int main(int argc, char** argv) {
     DecisionTree_destroy(tree);
     tree = NULL;
 
-    RandomForest_destroy(rf);
-    tree = NULL;
+    /*RandomForest_destroy(rf);
+    tree = NULL;*/
 
     //DecisionTree_destroy(tree);
     //tree = NULL;
