@@ -63,6 +63,19 @@ bool FileSave_clearFile();
  *
  * @return  :
  */
+bool FileSave_deleteFile(char* fileName);
+
+
+
+/**
+ * @brief
+ *
+ *
+ *
+ * @param  :
+ *
+ * @return  :
+ */
 bool FileSave_writeFile();
 
 

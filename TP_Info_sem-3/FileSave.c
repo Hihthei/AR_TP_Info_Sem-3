@@ -33,41 +33,65 @@ void FileSave_UIClear(int nodeCount, float trainScore, float testScore) {
 }
 
 bool FileSave_fileExist(char* fileName) {
-	return false;
+	assert(fileName);
+
+	FILE* pfile = NULL;
+	pfile = fopen(fileName, "r");
+
+	if (pfile == NULL)
+		return false;
+	else {
+		fclose(pfile);
+		return true;
+	}
 }
 
-bool FileSave_fileOverwrite(fileName) {
+bool FileSave_fileOverwrite(char* fileName) {
 	system("cls");
+
+	assert(fileName);
+
 	printf("\nFichier deja existant. Voulez-vous l'ecraser ? (Y/N) : ");
 
 	char* buffer = (char*)calloc(1024, sizeof(char));
+	if (buffer == NULL) {
+		CodeError_FILE(NULL, "FileSave_fileOverwrite - alloc buffer");
+		return false;
+	}
 
 	if (!scanf("%s", buffer)) {
-		CodeError_FILE(&buffer, NULL);
-		continue;
+		CodeError_FILE(&buffer, "FileSave_fileOverwrite - Erreur lors de la creation du fichier.");
+		return false;
 	}
 
 	if (strlen(buffer) > 1) {
 		CodeError_FILE(&buffer, NULL);
-		FileSave_UIClear(nodeCount, trainScore, testScore);
-		continue;
+		FileSave_fileOverwrite(fileName);
 	}
 	else if (buffer[0] == 'Y' || buffer[0] == 'y') {
 		free(buffer);
+		FileSave_deleteFile(fileName);
 
+		if (FileSave_fileExist(fileName)) {
+			CodeError_FILE(NULL, "FileSave_fileOverwrite - Erreur lors de la creation du fichier.");
+			return false;
+		}
+
+		return true;
 	}
 	else if (buffer[0] == 'N' || buffer[0] == 'n') {
 		free(buffer);
-		break;
+
 	}
 	else {
-		CodeError_FILE(&buffer, NULL);
-		FileSave_UIClear(nodeCount, trainScore, testScore);
-		continue;
+		CodeError_FILE(&buffer, "FileSave_fileOverwrite - Erreur lors de la creation du fichier.");
+		return false;
 	}
 }
 
 bool FileSave_createFile(char* fileName) {
+	assert(fileName);
+
 	if (strlen(fileName) > 20) {
 		system("cls");
 		printf("\nNom de fichier trop long, veuillez en choisir un nouveau.\n"
@@ -95,6 +119,8 @@ bool FileSave_createFile(char* fileName) {
 	sprintf(command, "ECHO.> %s", fileName);
 
 	system(command);
+
+	free(command);
 	
 	return true;
 }
@@ -146,6 +172,30 @@ FILE* FileSave_loadFile() {
 
 bool FileSave_clearFile() {
 	return false;
+}
+
+bool FileSave_deleteFile(char* fileName) {
+	assert(fileName);
+
+	if (FileSave_fileExist(fileName)) {
+		CodeError_FILE(NULL, "FileSave_deleteFile - Fichier introuvable");
+		return false;
+	}
+
+	char command[50] = "";
+
+	sprintf(command, "DEL %s", fileName);
+
+	system(command);
+
+	free(command);
+
+	if (FileSave_fileExist(fileName)) {
+		CodeError_FILE(NULL, "FileSave_deleteFile - Erreur lors de la suppression du fichier");
+		return false;
+	}
+
+	return true;
 }
 
 bool FileSave_writeFile() {
