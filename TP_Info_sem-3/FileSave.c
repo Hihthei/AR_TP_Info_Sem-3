@@ -37,7 +37,34 @@ bool FileSave_fileExist(char* fileName) {
 }
 
 bool FileSave_fileOverwrite(fileName) {
+	system("cls");
+	printf("\nFichier deja existant. Voulez-vous l'ecraser ? (Y/N) : ");
 
+	char* buffer = (char*)calloc(1024, sizeof(char));
+
+	if (!scanf("%s", buffer)) {
+		CodeError_FILE(&buffer, NULL);
+		continue;
+	}
+
+	if (strlen(buffer) > 1) {
+		CodeError_FILE(&buffer, NULL);
+		FileSave_UIClear(nodeCount, trainScore, testScore);
+		continue;
+	}
+	else if (buffer[0] == 'Y' || buffer[0] == 'y') {
+		free(buffer);
+
+	}
+	else if (buffer[0] == 'N' || buffer[0] == 'n') {
+		free(buffer);
+		break;
+	}
+	else {
+		CodeError_FILE(&buffer, NULL);
+		FileSave_UIClear(nodeCount, trainScore, testScore);
+		continue;
+	}
 }
 
 bool FileSave_createFile(char* fileName) {
@@ -58,17 +85,9 @@ bool FileSave_createFile(char* fileName) {
 	}
 
 	if (FileSave_fileExist(fileName)) {
-		system("cls");
-		printf("\nFichier deja existant. Voulez-vous l'ecraser ? (Y/N) : ");
+		if (FileSave_fileOverwrite(fileName)) {
 
-		free(fileName);
-		char* buffer = (char*)calloc(1024, sizeof(char));
-		if (!scanf("%s", buffer)) {
-			CodeError_FILE(&buffer, NULL);
-			return false;
 		}
-
-		FileSave_createFile(buffer);
 	}
 
 	char command[50] = "";
