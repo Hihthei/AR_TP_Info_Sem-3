@@ -337,7 +337,7 @@ Subproblem* Dataset_bagging(Dataset* data, float proportion)
 	Subproblem* subproblem = Subproblem_create(data->instanceCount, data->featureCount, data->classCount);
 	if (!subproblem)
 	{
-		printf("No subproble�\n");
+		printf("No subproblem\n");
 		return NULL;
 	}
 
@@ -348,7 +348,7 @@ Subproblem* Dataset_bagging(Dataset* data, float proportion)
 		bool test_valid = Subproblem_insert(subproblem, &data->instances[r]);
 		if (!test_valid)
 		{
-			printf("BIG PROBLEM\n");
+			printf("No subproblem\n");
 			return NULL;
 		}
 	}
