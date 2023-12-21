@@ -1,56 +1,10 @@
 #include "Paint_h.h"
 
-//int RGBtoHSV(Pixel* p)
-//{
-//	float r = p->R / 256.f, g = p->G / 256.f, b = p->B / 256.f;
-//	float max = r, min = r;
-//
-//	p->H = 0;
-//	p->S = 0;
-//	p->V = 0;
-//
-//	// Recherche du max et du min
-//	if (b > max)
-//		max = b;
-//	if (g > max)
-//		max = g;
-//
-//	if (b < min)
-//		min = b;
-//	if (g < min)
-//		min = g;
-//
-//	// Hue
-//	if (max == min)
-//		p->H = 0;
-//	if (max == r)
-//		p->H = (int)(60 * (float)(g - b) / (max - min) + 360) % 360;
-//	if (max == g)
-//		p->H = (int)(60 * (float)(b - r) / (max - min) + 120);
-//	if (max == b)
-//		p->H = (int)(60 * (float)(r - g) / (max - min) + 240);
-//
-//	// Saturation
-//	p->S = (max == 0 ? 0.f : 1.f - ((float)min / max));
-//
-//	// Value
-//	p->V = (float)max;
-//
-//	return 0;
-//}
-//
-//int RGBtoYCbCr(Pixel* p)
-//{
-//	unsigned char R = p->R, G = p->G, B = p->B;
-//	p->Y = (int)(0.299 * R + 0.587 * G + 0.114 * B);
-//	p->Cb = (int)(-0.1687 * R - 0.3313 * G + 0.5 * B + 128);
-//	p->Cr = (int)(0.5 * R - 0.4187 * G - 0.0813 * B + 128);
-//	return 0;
-//}
-
-int RGBtoGrey(Pixel* p)
+float RGBtoGrey(Pixel* p)
 {
-	return ((p->R + p->G + p->B) / 3);
+	float sum = p->R + p->G + p->B;
+	float div = sum / (float)3;
+	return div;
 }
 
 Image* readImage(char* imgpath)
@@ -61,14 +15,17 @@ Image* readImage(char* imgpath)
 	int buf = 0, i, pos = 0;
 
 	img = (Image*)calloc(sizeof(Image), 1);
+	if (!img)
+	{
+		printf("No image\n");
+		return NULL;
+	}
 
-	// Ouverture de l'image
-	//printf("Lecture de %s\n", imgpath);
-	pfile = fopen(imgpath, "rb");
+	pfile = fopen(imgpath, "r");
 	if (!pfile)
 	{
-		printf("Impossible d'ouvrir %s\n", imgpath);
-		return 0;
+		printf("No file\n");
+		return NULL;
 	}
 
 	// Lecture du header
@@ -85,6 +42,11 @@ Image* readImage(char* imgpath)
 
 	// Allocation des pixels
 	img->pix = (Pixel*)calloc(sizeof(Pixel), img->size);
+	if (!img->pix)
+	{
+		printf("No pixel\n");
+		return NULL;
+	}
 
 	// Lecture des pixels
 	fseek(pfile, 54, SEEK_SET);
@@ -103,7 +65,7 @@ Image* readImage(char* imgpath)
 	// Conversion au systeme Grey
 	for (i = 0; i < img->size; i++)
 	{
-		RGBtoGrey(&(img->pix[i]));
+		img->pix[i].grey = RGBtoGrey(&(img->pix[i]));
 	}
 
 	fclose(pfile);
@@ -112,45 +74,46 @@ Image* readImage(char* imgpath)
 }
 
 
-int writeImage(Image* img, char* imgpath)
+void writeImage(Image* img, char* imgpath)
 {
 	int pos = 0;
 	int buf = 0;
 	int pad;
 	int i;
-	FILE* output;
-
-	// Ecriture du header et des pixels
-	pad = (4 - (img->width * 3 % 4)) % 4;
-	output = fopen(imgpath, "wb");
-	if (!output)
+	FILE* pfile = NULL;
+	pfile = fopen(imgpath, "w");
+	if (!pfile)
 	{
-		printf("Impossible d'ouvrir le fichier %s en mode écriture.\n", imgpath);
-		return -1;
+		printf("No file\n");
+		return;
 	}
-	fwrite(img->header, 54, 1, output);
+	pad = (4 - (img->width * 3 % 4)) % 4;
+
+	int un = 1;
+	int mil_six = 1600;
+	int six = 6;
+
+	fprintf(pfile, "%d %d %d\n%d\t", un, mil_six, un, six);
+
 	for (i = 0; i < img->height; i++)
 	{
 		for (int j = 0; j < img->width; j++)
 		{
-			fwrite(&(img->pix[pos].B), 1, 1, output);
-			fwrite(&(img->pix[pos].G), 1, 1, output);
-			fwrite(&(img->pix[pos].R), 1, 1, output);
+			int number = (int)img->pix[pos].grey;
+			fprintf(pfile, "%d ", number);
 			pos++;
 		}
-		fwrite(&buf, pad, 1, output);
 	}
 
-	fclose(output);
 
-	return 0;
+	fclose(pfile);
+
+	return;
 }
 
-int freeImage(Image* img)
+void freeImage(Image* img)
 {
-	if (!img) return -1;
-	if (img->pix)
-		free(img->pix);
+	if (!img) return;
+	if (img->pix) free(img->pix);
 	free(img);
-	return 0;
 }

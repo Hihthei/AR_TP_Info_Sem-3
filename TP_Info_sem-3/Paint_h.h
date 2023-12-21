@@ -7,8 +7,8 @@
 
 typedef struct Pixel_t
 {
-	unsigned char B, G, R;
-	int grey;
+	unsigned char R, G, B;
+	float grey;
 }Pixel;
 
 typedef struct Image_t
@@ -21,11 +21,11 @@ typedef struct Image_t
 
 //int RGBtoHSV(Pixel* p);
 //int RGBtoYCbCr(Pixel* p);
-int RGBtoGrey(Pixel* p);
+float RGBtoGrey(Pixel* p);
 
 Image* readImage(char* imgpath);
-int writeImage(Image* img, char* imgpath);
-int freeImage(Image* img);
+void writeImage(Image* img, char* imgpath);
+void freeImage(Image* img);
 
 #endif
 

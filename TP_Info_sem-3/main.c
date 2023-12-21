@@ -16,10 +16,13 @@ int main(int argc, char** argv) {
 
     srand((unsigned int)time(NULL));
 
-    char* pathR = "../WrittingTest.bmp";
+    char* pathR = "../Dataset/WrittingTest.bmp";
     Image *imp = readImage(pathR);
+    assert(imp);
+    printf("ya");
     char* pathW = "../Dataset/WrittingTest.txt";
     writeImage(imp, pathW);
+
 
     char* path = "../Dataset/PENDIGITS_train.txt";
     
@@ -29,23 +32,19 @@ int main(int argc, char** argv) {
 
     char* path2 = "../Dataset/PENDIGITS_test.txt";
 
-    Dataset* testData = Dataset_readFromFile(path2);
+    Dataset* testData = Dataset_readFromFile(pathW);
     if (trainData == NULL)
         return EXIT_FAILURE;
 
-    /*
     printf("%d %d %d\n", trainData->instanceCount, trainData->featureCount, trainData->classCount);
 
-    Subproblem* subproblem = Subproblem_create(10, 10, 10);
+    /*Subproblem* subproblem = Subproblem_create(10, 10, 10);
     if (subproblem == NULL)
-        return EXIT_FAILURE;
-    //*/
+        return EXIT_FAILURE;*/
     
-    //*
     Subproblem* subproblem = Dataset_getSubproblem(trainData);
     if (subproblem == NULL)
 		return EXIT_FAILURE;
-    //*/
 
 
     //----------------------------------------------------------
@@ -67,13 +66,13 @@ int main(int argc, char** argv) {
     
     //en commentaire Dataset_printClasses(trainData);
 
-    /*RandomForest* rf = RandomForest_create(20, trainData, 30, 0.5f, 1.0f);
+    RandomForest* rf = RandomForest_create(20, trainData, 30, 0.5f, 1.0f);
 
     printf("Generation d'une foret de %d noeuds\n", RandomForest_nodeCount(rf));
 
     float trainScore = RandomForest_evaluate(rf, trainData);
     float testScore = RandomForest_evaluate(rf, testData);
-    printf("train = %.3f, test = %.3f\n", trainScore, testScore);*/
+    printf("train = %.3f, test = %.3f\n", trainScore, testScore);
 
 
     //----------------------------------------------------------
@@ -93,8 +92,8 @@ int main(int argc, char** argv) {
     DecisionTree_destroy(tree);
     tree = NULL;
 
-    /*RandomForest_destroy(rf);
-    tree = NULL;*/
+    RandomForest_destroy(rf);
+    tree = NULL;
 
     //DecisionTree_destroy(tree);
     //tree = NULL;
