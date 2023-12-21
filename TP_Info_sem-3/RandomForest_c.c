@@ -10,12 +10,13 @@ RandomForest* RandomForest_create(int numberOfTrees, Dataset* data, int maxDepth
 
 	RandomForest* forest = (RandomForest*)calloc(1, sizeof(RandomForest));
 	forest->treeCount = numberOfTrees;
-	forest->classCount = 0;
+	forest->classCount = data->classCount;
 
+	Subproblem* sp0 = Dataset_bagging(data, baggingProportion);
+	forest->trees = calloc(numberOfTrees, sizeof(DecisionTreeNode*));
 	for (int i = 0; i < numberOfTrees; i++)
 	{
-		//Subproblem* sp = Dataset_bagging(data, baggingProportion);
-		Subproblem* sp = Dataset_getSubproblem(data);
+		Subproblem* sp = Dataset_bagging(data, baggingProportion);
 		if (!sp)
 		{
 			printf("No subproblem\n");
@@ -23,6 +24,7 @@ RandomForest* RandomForest_create(int numberOfTrees, Dataset* data, int maxDepth
 		}
 
 		forest->trees[i] = DecisionTree_create(sp, 0, maxDepth, prunningThreshold);
+		Subproblem_destroy(sp);
 	}
 	
 	return forest;
@@ -51,6 +53,7 @@ int RandomForest_predict(RandomForest* rf, Instance* instance)
 		if (prediction_value < tab[i])
 		{
 			prediction = i;
+			prediction_value = tab[i];
 		}
 	}
 	free(tab);
@@ -61,7 +64,7 @@ float RandomForest_evaluate(RandomForest* rf, Dataset* data) {
 	
 	if (!rf)
 	{
-		printf("No tree\n");
+		printf("No forest\n");
 		return -1;
 	}
 
@@ -96,9 +99,20 @@ int RandomForest_nodeCount(RandomForest* rf)
 	{
 		rf_node_sum += DecisionTree_nodeCount(rf->trees[i]);
 	}
+	return rf_node_sum;
 }
 
 void RandomForest_destroy(RandomForest* rf)
 {
-	;
+	if (!rf)
+	{
+		printf("No more forest in Amazonie\n");
+		return;
+	}
+
+	for (int i = 0; i < rf->treeCount; i++)
+	{
+		DecisionTree_destroy(rf->trees[i]);
+	}
+	free(rf);
 }

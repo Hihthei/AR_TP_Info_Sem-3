@@ -206,16 +206,14 @@ int DecisionTree_predict(DecisionTreeNode* tree, Instance* instance) {
 	{
 		return tree->classID;
 	}
-	else if (tree->split.threshold >= instance->values[tree->split.featureID])
+	else if (tree->split.threshold > instance->values[tree->split.featureID])
 	{
-		DecisionTree_predict(tree->left, instance);
+		return DecisionTree_predict(tree->left, instance);
 	}
 	else
 	{
-		DecisionTree_predict(tree->right, instance);
+		return DecisionTree_predict(tree->right, instance);
 	}
-
-	return 0;
 }
 
 float DecisionTree_evaluate(DecisionTreeNode* tree, Dataset* dataset) {

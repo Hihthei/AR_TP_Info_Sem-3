@@ -2,6 +2,7 @@
 #include "Dataset_h.h"
 #include "Split_h.h"
 #include "DecisionTree_h.h"
+#include "RandomForest_h.h"
 
 
 //*
@@ -18,6 +19,12 @@ int main(int argc, char** argv) {
     char* path = "../Dataset/PENDIGITS_train.txt";
     
     Dataset* trainData = Dataset_readFromFile(path);
+    if (trainData == NULL)
+        return EXIT_FAILURE;
+
+    char* path2 = "../Dataset/PENDIGITS_test.txt";
+
+    Dataset* testData = Dataset_readFromFile(path2);
     if (trainData == NULL)
         return EXIT_FAILURE;
 
@@ -43,18 +50,31 @@ int main(int argc, char** argv) {
     Subproblem_print(subproblem);
     
     
-    DecisionTreeNode* tree = DecisionTree_create(subproblem, 0, 30, 1.0);
+    DecisionTreeNode* tree = DecisionTree_create(subproblem, 0, 30, 1.0f);
     if (tree == NULL)
         return EXIT_FAILURE;
 
     printf("Generation d'un arbre de %d noeuds\n", DecisionTree_nodeCount(tree));
+
+    float scoreTrain = DecisionTree_evaluate(tree, trainData);
+    float scoreTest = DecisionTree_evaluate(tree, testData);
+    printf("train = %.3f, test = %.3f\n", scoreTrain, scoreTest);
     
     //en commentaire Dataset_printClasses(trainData);
 
+    RandomForest* rf = RandomForest_create(20, trainData, 30, 0.5f, 1.0f);
+
+    printf("Generation d'une foret de %d noeuds\n", RandomForest_nodeCount(rf));
+
+    float trainScore = RandomForest_evaluate(rf, trainData);
+    float testScore = RandomForest_evaluate(rf, testData);
+    printf("train = %.3f, test = %.3f\n", trainScore, testScore);
+
+
     //----------------------------------------------------------
 
-    Split split = Split_compute(subproblem);
-    printf("Split : %d _ %.2f\n", split.featureID, split.threshold);
+    /*Split split = Split_compute(subproblem);
+    printf("Split : %d _ %.2f\n", split.featureID, split.threshold);*/
     
 
     //----------------------------------------------------------
@@ -66,6 +86,9 @@ int main(int argc, char** argv) {
     subproblem = NULL;
 
     DecisionTree_destroy(tree);
+    tree = NULL;
+
+    RandomForest_destroy(rf);
     tree = NULL;
 
     //DecisionTree_destroy(tree);
