@@ -3,7 +3,7 @@
 #include "Split_h.h"
 #include "DecisionTree_h.h"
 #include "RandomForest_h.h"
-
+#include "Paint_h.h"
 
 //*
 int main(int argc, char** argv) {
@@ -15,6 +15,9 @@ int main(int argc, char** argv) {
     //----------------------------------------------------------
 
     srand((unsigned int)time(NULL));
+
+    char* pathPaint = "../WrittingTest.bmp";
+    paintLaunch(pathPaint);
 
     char* path = "../Dataset/PENDIGITS_train.txt";
     

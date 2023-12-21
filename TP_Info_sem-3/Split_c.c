@@ -61,8 +61,7 @@ Split Split_compute(Subproblem* subproblem)
 		}*/
 
 		// Valeur un peu opti du split;
-		//https://www.youtube.com/watch?v=c17UY1o3Gq8 musique pour dm
-		for (float threshold = min; threshold < max; threshold += 3)
+		for (float threshold = min; threshold < max; threshold += 0.5f)
 		{
 			if (best_split_value > Split_gini(subproblem, i, threshold))
 			{
