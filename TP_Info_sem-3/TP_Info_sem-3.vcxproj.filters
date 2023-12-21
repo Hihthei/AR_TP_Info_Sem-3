@@ -43,6 +43,12 @@
     <Filter Include="Fichiers d%27en-tête\Forest">
       <UniqueIdentifier>{21b3f903-b435-480d-b013-e18ebbefad02}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\File_Save">
+      <UniqueIdentifier>{03210205-1789-4cbe-b0fb-98b9c0b40d08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\File_Save">
+      <UniqueIdentifier>{c9511093-7886-4ca3-8232-e49ef75dacc6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dataset_h.h">
@@ -63,6 +69,9 @@
     <ClInclude Include="RandomForest_h.h">
       <Filter>Fichiers d%27en-tête\Forest</Filter>
     </ClInclude>
+    <ClInclude Include="FileSave.h">
+      <Filter>Fichiers d%27en-tête\File_Save</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -82,6 +91,9 @@
     </ClCompile>
     <ClCompile Include="RandomForest_c.c">
       <Filter>Fichiers sources\Forest</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSave.c">
+      <Filter>Fichiers sources\File_Save</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
