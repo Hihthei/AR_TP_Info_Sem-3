@@ -12,6 +12,6 @@
 
 //#define SPLIT_INITIAL
 //#define ENSACHAGE_INITIAL
-//#define DATASET_MAISON
+#define DATASET_MAISON
 
 #endif

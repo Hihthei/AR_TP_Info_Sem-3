@@ -57,6 +57,7 @@ int RandomForest_predict(RandomForest* rf, Instance* instance)
 		}
 	}
 	free(tab);
+	printf("%d ", prediction);
 	return prediction;
 }
 

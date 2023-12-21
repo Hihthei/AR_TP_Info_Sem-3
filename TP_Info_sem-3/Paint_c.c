@@ -89,11 +89,13 @@ void writeImage(Image* img, char* imgpath)
 	}
 	pad = (4 - (img->width * 3 % 4)) % 4;
 
-	int un = 1;
-	int mil_six = 1600;
-	int six = 6;
+	int nb = 0;
 
-	fprintf(pfile, "%d %d %d\n%d\t", un, mil_six, un, six);
+	printf("Entrer la classe du nombre : ");
+
+	scanf("%d", &nb);
+
+	fprintf(pfile, "%d %d %d\n%d\t", 1, 10, 16, nb);
 
 	for (i = 0; i < img->height; i++)
 	{
