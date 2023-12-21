@@ -343,7 +343,14 @@ Subproblem* Dataset_bagging(Dataset* data, float proportion)
 
 	for (int i = 0; i < data->instanceCount * proportion; i++)
 	{
-		;
+		int r = (rand() ^ (rand() << 15)) & 0x7FFFFFFF;
+		r = r % data->instanceCount;
+		bool test_valid = Subproblem_insert(subproblem, &data->instances[r]);
+		if (!test_valid)
+		{
+			printf("BIG PROBLEM\n");
+			return NULL;
+		}
 	}
 
 	return subproblem;
