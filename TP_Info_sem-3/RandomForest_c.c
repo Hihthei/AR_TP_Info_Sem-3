@@ -62,6 +62,9 @@ int RandomForest_predict(RandomForest* rf, Instance* instance)
 		}
 	}
 	free(tab);
+	#ifdef FOR_MOODLE
+		printf("%d\n", prediction);
+	#endif
 	return prediction;
 }
 
