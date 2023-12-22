@@ -106,6 +106,19 @@ void Dataset_printClasses(Dataset* dataset);
 /**
  * @brief
  *
+ *
+ *
+ * @param  :
+ *
+ * @return  :
+ */
+Subproblem* Dataset_bagging(Dataset* data, float proportion);
+
+
+
+/**
+ * @brief
+ *
  * Renvoie une allocation de la structure Subproblem, en instanciant les valeurs des attributs featureCount et classCount,
  * et en allouant le tableau de pointeurs d’instance à sa capacité donnée en paramètre.
  * 
@@ -156,18 +169,5 @@ bool Subproblem_insert(Subproblem* subproblem, Instance* instance);
  * @return  :
  */
 void Subproblem_print(Subproblem* subproblem);
-
-
-
-/**
- * @brief
- *
- *
- *
- * @param  :
- *
- * @return  :
- */
-Subproblem* Dataset_bagging(Dataset* data, float proportion);
 
 #endif

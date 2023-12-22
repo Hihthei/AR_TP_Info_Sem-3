@@ -43,6 +43,12 @@
     <Filter Include="Fichiers d%27en-tête\Forest">
       <UniqueIdentifier>{21b3f903-b435-480d-b013-e18ebbefad02}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\File_Save">
+      <UniqueIdentifier>{03210205-1789-4cbe-b0fb-98b9c0b40d08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\File_Save">
+      <UniqueIdentifier>{c9511093-7886-4ca3-8232-e49ef75dacc6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dataset_h.h">
@@ -65,6 +71,8 @@
     </ClInclude>
     <ClInclude Include="Paint_h.h">
       <Filter>Fichiers d%27en-tête</Filter>
+    <ClInclude Include="FileSave.h">
+      <Filter>Fichiers d%27en-tête\File_Save</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +96,8 @@
     </ClCompile>
     <ClCompile Include="Paint_c.c">
       <Filter>Fichiers sources</Filter>
+    <ClCompile Include="FileSave.c">
+      <Filter>Fichiers sources\File_Save</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

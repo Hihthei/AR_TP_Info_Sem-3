@@ -4,25 +4,31 @@
 #include "DecisionTree_h.h"
 #include "RandomForest_h.h"
 #include "Paint_h.h"
+#include "FileSave.h"
 
 //*
 int main(int argc, char** argv) {
 
     //TIME CLOCK INITIALISATION --------------------------------
-    clock_t start = 0, end = 0;
+    clock_t start = 0, middle = 0, end = 0;
     double cpu_time_used = 0;
     start = clock();
+
     //----------------------------------------------------------
 
-    srand((unsigned int)time(NULL));
+    //RECUPERATION DU PROBLEME ---------------------------------
 
-    char* path = "../Dataset/MNIST_train.txt";
-    
-    Dataset* trainData = Dataset_readFromFile(path);
-    if (trainData == NULL)
-        return EXIT_FAILURE;
+    char* path_train = NULL;
+    char* path_test = NULL;
 
-    char* path2 = "../Dataset/MNIST_test.txt";
+    if (argv[1] != NULL && argv[2] != NULL) {
+        path_train = argv[1];
+        path_test = argv[2];
+    }
+    else {
+        path_train = "../Dataset/PENDIGITS_train.txt";
+        path_test = "../Dataset/PENDIGITS_test.txt";
+    }
 
     #ifdef DATASET_MAISON
     char* pathR = "../Dataset/WrittingTest4.bmp";
@@ -54,6 +60,7 @@ int main(int argc, char** argv) {
     #else
     Dataset* testData = Dataset_readFromFile(path2);
     #endif
+  
     if (trainData == NULL)
         return EXIT_FAILURE;
 
@@ -65,23 +72,34 @@ int main(int argc, char** argv) {
     
     Subproblem* subproblem = Dataset_getSubproblem(trainData);
     if (subproblem == NULL)
+		    return EXIT_FAILURE;
+
+    Dataset* trainData = Dataset_readFromFile(path_train);
+    if (trainData == NULL)
+        return EXIT_FAILURE;
+
+    Dataset* testData = Dataset_readFromFile(path_test);
+    if (trainData == NULL)
+        return EXIT_FAILURE;
+
+    Subproblem* subproblem = Dataset_getSubproblem(trainData);
+    if (subproblem == NULL)
 		return EXIT_FAILURE;
 
-
     //----------------------------------------------------------
-    
-    //Dataset_printClasses(trainData);
+
+    //CALCUL PAR L'ARBRE ---------------------------------------
 
     Subproblem_print(subproblem);
-    
-    //en commentaire Dataset_printClasses(trainData);
 
     #ifdef ENSACHAGE_INITIAL
     DecisionTreeNode* tree = DecisionTree_create(subproblem, 0, 25, 1.0f);
+
     if (tree == NULL)
         return EXIT_FAILURE;
 
-    printf("Generation d'un arbre de %d noeuds\n", DecisionTree_nodeCount(tree));
+    int nodeCount = DecisionTree_nodeCount(tree);
+    printf("Generation d'un arbre de %d noeuds\n", nodeCount);
 
     float scoreTrain = DecisionTree_evaluate(tree, trainData);
     float scoreTest = DecisionTree_evaluate(tree, testData);
@@ -105,17 +123,27 @@ int main(int argc, char** argv) {
 
     float trainScore = RandomForest_evaluate(rf, trainData);
     float testScore = RandomForest_evaluate(rf, testData);
+
     printf("train = %.3f, test = %.3f\n", trainScore, testScore);
+
     #endif
 
+        //TIME CLOCK END --------------------------------------------
+    middle = clock();
+    cpu_time_used = ((double)(middle - start)) / CLOCKS_PER_SEC;
+    printf( "\nTemps d'execution : %.3fs.\n"
+            "____________________________\n", cpu_time_used);
+        //----------------------------------------------------------
 
     //----------------------------------------------------------
 
-    /*Split split = Split_compute(subproblem);
-    printf("Split : %d _ %.2f\n", split.featureID, split.threshold);*/
-    
+    //SAUVEGARDE DE L'ARBRE / LA FORET -------------------------
+
+    int tmp = FileSave_UserInterface(nodeCount, trainScore, testScore);
 
     //----------------------------------------------------------
+
+    //DESTROY --------------------------------------------------
     
     Dataset_destroy(trainData);
     trainData = NULL;
@@ -126,8 +154,7 @@ int main(int argc, char** argv) {
     RandomForest_destroy(rf);
     rf = NULL;
 
-    //DecisionTree_destroy(tree);
-    //tree = NULL;
+    //----------------------------------------------------------
 
     //TIME CLOCK END --------------------------------------------
     end = clock();
