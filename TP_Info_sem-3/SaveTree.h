@@ -2,6 +2,8 @@
 #define SAVETREE_H
 
 #include "Settings.h"
+#include "DecisionTree_h.h"
+#include "RandomForest_h.h"
 
 /**
  * @brief
@@ -15,5 +17,28 @@
 
  //FONCTION : -----------------------------------------------------------------------------------------------------------
 
+/**
+ * @brief
+ *
+ *
+ *
+ * @param  :
+ *
+ * @return  :
+ */
+void SaveTree_saveTree(FILE** pfile, DecisionTreeNode* node);
+
+
+
+/**
+ * @brief
+ *
+ *
+ *
+ * @param  :
+ *
+ * @return  :
+ */
+void SaveTree_saveForest(char* fileName, RandomForest* forest);
 
 #endif

@@ -63,45 +63,6 @@ void FileFonction_createFile(char* fileName);
  *
  * @return  :
  */
-FILE* FileFonction_loadFile(char* fileName, char* mode);
-
-
-
-/**
- * @brief
- *
- *
- *
- * @param  :
- *
- * @return  :
- */
 void FileFonction_deleteFile(char* fileName);
-
-
-
-/**
- * @brief
- *
- *
- *
- * @param  :
- *
- * @return  :
- */
-void FileFonction_writeFile();
-
-
-
-/**
- * @brief
- *
- *
- *
- * @param  :
- *
- * @return  :
- */
-void FileFonction_saveFile();
 
 #endif

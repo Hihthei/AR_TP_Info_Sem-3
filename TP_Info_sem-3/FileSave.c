@@ -9,7 +9,7 @@ void FileSave_UIClear(int nodeCount, float trainScore, float testScore) {
 
 			"_________________________________\n\n"
 
-			"Generation d'un arbre de %d noeuds\n"
+			"Generation d'une foret de %d noeuds\n"
 			"train = %.3f, test = %.3f\n\n", nodeCount, trainScore, testScore);
 }
 
@@ -38,7 +38,7 @@ void FileSave_overwriteUI(char* fileName) {
 	return;
 }
 
-void FileSave_createUI() {
+void FileSave_createUI(RandomForest* forest) {
 	system("cls");
 
 	printf("Veuillez entrer un nom de fichier pour la sauvegarde (.txt) : ");
@@ -55,22 +55,26 @@ void FileSave_createUI() {
 		return;
 
 	if (buffer[0] == 'Y' || buffer[0] == 'y') {
-		if (FileFonction_fileExist(fileName))
+		if (FileFonction_fileExist(fileName)) {
 			FileSave_overwriteUI(fileName);
-		else
+			SaveTree_saveForest(fileName, forest);
+		}
+		else {
 			FileFonction_createFile(fileName);
+			SaveTree_saveForest(fileName, forest);
+		}
 	}
 	else if (buffer[0] == 'N' || buffer[0] == 'n')
-		FileSave_createUI();
+		FileSave_createUI(forest);
 
 	return;
 }
 
-int FileSave_UserInterface(int nodeCount, float trainScore, float testScore) {
+int FileSave_UserInterface(int nodeCount, float trainScore, float testScore, RandomForest* forest) {
 	
 	printf("\n_________________________________\n\n");
 
-	printf("Souhaitez-vous sauvegarder l'arbre ? (Y/N)\n"
+	printf("Souhaitez-vous sauvegarder la random forest ? (Y/N)\n"
 			"Reponse : ");
 
 	char buffer[1024] = "";
@@ -80,16 +84,16 @@ int FileSave_UserInterface(int nodeCount, float trainScore, float testScore) {
 
 	if (strlen(buffer) > 1) {
 		FileSave_UIClear(nodeCount, trainScore, testScore);
-		FileSave_UserInterface(nodeCount, trainScore, testScore);
+		FileSave_UserInterface(nodeCount, trainScore, testScore, forest);
 	}
 	else if (buffer[0] == 'Y' || buffer[0] == 'y')
-		FileSave_createUI();
+		FileSave_createUI(forest);
 	
 	else if (buffer[0] == 'N' || buffer[0] == 'n')
 		return 0;
 	else {
 		FileSave_UIClear(nodeCount, trainScore, testScore);
-		FileSave_UserInterface(nodeCount, trainScore, testScore);
+		FileSave_UserInterface(nodeCount, trainScore, testScore, forest);
 	}
 
 	return 0;

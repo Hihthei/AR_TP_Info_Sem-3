@@ -61,13 +61,15 @@ int main(int argc, char** argv) {
 
     RandomForest* rf = RandomForest_create(20, trainData, 30, 0.5f, 1.0f);
 
-    printf("Generation d'une foret de %d noeuds\n", RandomForest_nodeCount(rf));
+    int rf_nodeCount = RandomForest_nodeCount(rf);
+
+    printf("Generation d'une foret de %d noeuds\n", rf_nodeCount);
 
     float trainScore = RandomForest_evaluate(rf, trainData);
     float testScore = RandomForest_evaluate(rf, testData);
     printf("train = %.3f, test = %.3f\n\n", trainScore, testScore);
 
-        //TIME CLOCK END --------------------------------------------
+        //TIME CLOCK MIDDLE ----------------------------------------
     middle = clock();
     cpu_time_used = ((double)(middle - start)) / CLOCKS_PER_SEC;
     printf( "\nTemps d'execution : %.3fs.\n"
@@ -80,7 +82,7 @@ int main(int argc, char** argv) {
 
     //SAUVEGARDE DE L'ARBRE / LA FORET -------------------------
 
-    if(FileSave_UserInterface(0, 0, 0) == -1)
+    if(FileSave_UserInterface(rf_nodeCount, trainScore, testScore, rf) == -1)
         return EXIT_FAILURE;
 
     //----------------------------------------------------------

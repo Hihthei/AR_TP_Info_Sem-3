@@ -57,17 +57,3 @@ void FileFonction_deleteFile(char* fileName) {
 
 	system(command);
 }
-
-FILE* FileFonction_loadFile(char* fileName, char* mode) {
-	return NULL;
-}
-
-
-
-void FileFonction_writeFile() {
-	return;
-}
-
-void FileFonction_saveFile() {
-	return;
-}

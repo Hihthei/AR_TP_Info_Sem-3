@@ -26,6 +26,7 @@
  */
 int FileSave_UserInterface(	int nodeCount,
 							float trainScore,
-							float testScore);
+							float testScore,
+							RandomForest* forest);
 
 #endif
