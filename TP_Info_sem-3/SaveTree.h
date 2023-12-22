@@ -26,7 +26,7 @@
  *
  * @return  :
  */
-void SaveTree_saveTree(FILE** pfile, DecisionTreeNode* node);
+void SaveTree_saveTree(FILE** pfile, DecisionTreeNode* node, int direction);
 
 
 
