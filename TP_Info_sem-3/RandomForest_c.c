@@ -9,11 +9,15 @@ RandomForest* RandomForest_create(int numberOfTrees, Dataset* data, int maxDepth
 	}
 
 	RandomForest* forest = (RandomForest*)calloc(1, sizeof(RandomForest));
+	assert(forest);
+
 	forest->treeCount = numberOfTrees;
 	forest->classCount = data->classCount;
 
 	Subproblem* sp0 = Dataset_bagging(data, baggingProportion);
 	forest->trees = calloc(numberOfTrees, sizeof(DecisionTreeNode*));
+	assert(forest->trees);
+
 	for (int i = 0; i < numberOfTrees; i++)
 	{
 		Subproblem* sp = Dataset_bagging(data, baggingProportion);
@@ -44,6 +48,8 @@ int RandomForest_predict(RandomForest* rf, Instance* instance)
 	}
 
 	int prediction = 0, prediction_value = 0, *tab = calloc(rf->classCount, sizeof(int));
+	assert(tab);
+
 	for (int i = 0 ; i < rf->treeCount ; i++)
 	{
 		tab[DecisionTree_predict(rf->trees[i], instance)]++;

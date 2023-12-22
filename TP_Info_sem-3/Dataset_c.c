@@ -53,10 +53,7 @@ Instance* Dataset_instanceAlloc(Dataset* dataset, FILE* pfile) {
 	}
 
 	Instance* instances = (Instance*)calloc(dataset->instanceCount, sizeof(Instance));
-	if (instances == NULL) {
-		CodeError_DATA(NULL, "Dataset_instanceAlloc - dynamic alloc instances");
-		return NULL;
-	}
+	assert(instances);
 
 	for (int i = 0; i < dataset->instanceCount; i++) {
 		Instance* inst_tmp = &instances[i];
@@ -203,6 +200,36 @@ void Dataset_printClasses(Dataset* dataset) {
 	printf("\n");
 }
 
+Subproblem* Dataset_bagging(Dataset* data, float proportion)
+{
+	if (!data)
+	{
+		printf("No data\n");
+		return NULL;
+	}
+
+	Subproblem* subproblem = Subproblem_create(data->instanceCount, data->featureCount, data->classCount);
+	if (!subproblem)
+	{
+		printf("No subproble�\n");
+		return NULL;
+	}
+
+	for (int i = 0; i < data->instanceCount * proportion; i++)
+	{
+		int r = (rand() ^ (rand() << 15)) & 0x7FFFFFFF;
+		r = r % data->instanceCount;
+		bool test_valid = Subproblem_insert(subproblem, &data->instances[r]);
+		if (!test_valid)
+		{
+			printf("BIG PROBLEM\n");
+			return NULL;
+		}
+	}
+
+	return subproblem;
+}
+
 //----------------------------------------SUBPROBLEM--------------------------------------------------------------------
 
 SubproblemClass* Subproblem_createClass(Subproblem* subproblem) {
@@ -324,34 +351,4 @@ void Subproblem_print(Subproblem* subproblem) {
 
 	for (int i = 0; i < subproblem->classCount; i++)
 		printf("- classe numero %d : %d instances\n", i, subproblem->classes[i].instanceCount);
-}
-
-Subproblem* Dataset_bagging(Dataset* data, float proportion)
-{
-	if (!data)
-	{
-		printf("No data\n");
-		return NULL;
-	}
-
-	Subproblem* subproblem = Subproblem_create(data->instanceCount, data->featureCount, data->classCount);
-	if (!subproblem)
-	{
-		printf("No subproble�\n");
-		return NULL;
-	}
-
-	for (int i = 0; i < data->instanceCount * proportion; i++)
-	{
-		int r = (rand() ^ (rand() << 15)) & 0x7FFFFFFF;
-		r = r % data->instanceCount;
-		bool test_valid = Subproblem_insert(subproblem, &data->instances[r]);
-		if (!test_valid)
-		{
-			printf("BIG PROBLEM\n");
-			return NULL;
-		}
-	}
-
-	return subproblem;
 }
