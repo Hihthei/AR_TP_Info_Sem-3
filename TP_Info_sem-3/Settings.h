@@ -9,4 +9,9 @@
 #include <string.h>
 #include <assert.h>
 
+
+#define SPLIT_INITIAL
+#define ENSACHAGE_INITIAL
+#define DATASET_MAISON
+
 #endif

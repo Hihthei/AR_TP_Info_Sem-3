@@ -69,6 +69,8 @@
     <ClInclude Include="RandomForest_h.h">
       <Filter>Fichiers d%27en-tête\Forest</Filter>
     </ClInclude>
+    <ClInclude Include="Paint_h.h">
+      <Filter>Fichiers d%27en-tête</Filter>
     <ClInclude Include="FileSave.h">
       <Filter>Fichiers d%27en-tête\File_Save</Filter>
     </ClInclude>
@@ -98,6 +100,8 @@
     <ClCompile Include="RandomForest_c.c">
       <Filter>Fichiers sources\Forest</Filter>
     </ClCompile>
+    <ClCompile Include="Paint_c.c">
+      <Filter>Fichiers sources</Filter>
     <ClCompile Include="FileSave.c">
       <Filter>Fichiers sources\File_Save</Filter>
     </ClCompile>
