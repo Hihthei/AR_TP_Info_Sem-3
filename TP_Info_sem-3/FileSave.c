@@ -5,9 +5,9 @@
 void FileSave_UIClear(int nodeCount, float trainScore, float testScore) {
 	system("cls");
 
-	printf(	"\nVeuillez rentrer une reponse valide !\n"
+	printf(	"Veuillez rentrer une reponse valide !\n\n"
 
-			"\n_________________________________\n\n"
+			"_________________________________\n\n"
 
 			"Generation d'un arbre de %d noeuds\n"
 			"train = %.3f, test = %.3f\n\n", nodeCount, trainScore, testScore);
@@ -18,33 +18,22 @@ void FileSave_overwriteUI(char* fileName) {
 
 	system("cls");
 
-	printf(	"\n\" %s \"\n"
+	printf(	"\" %s \"\n"
 			"Fichier deja existant. Voulez-vous l'ecraser ? (Y/N) : ", fileName);
 
 	char buffer[1024] = "";
 
-	if (!scanf("%s", buffer)) {
-		free(buffer);
+	if (!scanf("%s", buffer))
 		return;
-	}
 
-	if (strlen(buffer) > 1) {
-		free(buffer);
+	if (strlen(buffer) > 1)
 		FileSave_overwriteUI(fileName);
-	}
-	else if (buffer[0] == 'Y' || buffer[0] == 'y') {
-		free(buffer);
+	else if (buffer[0] == 'Y' || buffer[0] == 'y')
 		FileFonction_fileOverwrite(fileName);
+	else if (buffer[0] == 'N' || buffer[0] == 'n')
 		return;
-	}
-	else if (buffer[0] == 'N' || buffer[0] == 'n') {
-		free(buffer);
-		return;
-	}
-	else {
-		free(buffer);
-		return;
-	}
+	else
+		FileSave_overwriteUI(fileName);
 
 	return;
 }
@@ -57,44 +46,23 @@ void FileSave_createUI() {
 	char buffer[1024] = "";
 	char fileName[256] = "";
 
-	if (!scanf("%s", fileName)) {
-		free(buffer);
+	if (!scanf("%s", fileName))
 		return;
-	}
 
 	printf("\" %s \" Confirmer vous votre choix ? (Y/N) : ", fileName);
 
-	if (!scanf("%s", buffer)) {
-		free(buffer);
-		free(fileName);
+	if (!scanf("%s", buffer))
 		return;
-	}
 
 	if (buffer[0] == 'Y' || buffer[0] == 'y') {
-		free(buffer);
-		if (FileFonction_fileExist(fileName)) {
-			free(buffer);
+		if (FileFonction_fileExist(fileName))
 			FileSave_overwriteUI(fileName);
-			return;
-		}
-		else {
-			free(buffer);
+		else
 			FileFonction_createFile(fileName);
-			return;
-		}
-		return;
 	}
-	else if (buffer[0] == 'N' || buffer[0] == 'n') {
-		free(buffer);
-		free(fileName);
+	else if (buffer[0] == 'N' || buffer[0] == 'n')
 		FileSave_createUI();
-		return;
-	}
-	else {
-		free(buffer);
-		free(fileName);
-		return;
-	}
+
 	return;
 }
 
@@ -107,27 +75,19 @@ int FileSave_UserInterface(int nodeCount, float trainScore, float testScore) {
 
 	char buffer[1024] = "";
 
-	if (!scanf("%s", buffer)) {
-		free(buffer);
+	if (!scanf("%s", buffer))
 		return EXIT_FAILURE;
-	}
-
-	printf("%s", buffer);
 
 	if (strlen(buffer) > 1) {
-		free(buffer);
 		FileSave_UIClear(nodeCount, trainScore, testScore);
 		FileSave_UserInterface(nodeCount, trainScore, testScore);
 	}
-	else if (buffer[0] == 'Y' || buffer[0] == 'y') {
-		free(buffer);
+	else if (buffer[0] == 'Y' || buffer[0] == 'y')
 		FileSave_createUI();
-	}
-	else if (buffer[0] == 'N' || buffer[0] == 'n') {
-		free(buffer);
-	}
+	
+	else if (buffer[0] == 'N' || buffer[0] == 'n')
+		return 0;
 	else {
-		free(buffer);
 		FileSave_UIClear(nodeCount, trainScore, testScore);
 		FileSave_UserInterface(nodeCount, trainScore, testScore);
 	}
