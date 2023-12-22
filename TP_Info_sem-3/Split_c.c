@@ -7,6 +7,14 @@ float Split_gini(Subproblem* sp, int featureID, float threshold)
 	if (!sp) { printf("No subproblem\n"); return -1; }
 	int C = sp->classCount;
 	int spl = 0, spr = 0, * Il = calloc(sp->classCount, sizeof(int)), * Ir = calloc(sp->classCount, sizeof(int));
+	if (!Ir)
+	{
+		return -1;
+	}
+	if (!Il)
+	{
+		return -1;
+	}
 	for (int i = 0; i < sp->instanceCount; i++)
 	{
 		if (sp->instances[i]->values[featureID] < threshold)
@@ -44,6 +52,10 @@ Split Split_compute(Subproblem* subproblem)
 	float best_split_value = 1;
 
 	bool* go_feature = (bool*)calloc(subproblem->featureCount, sizeof(bool));
+	if (!go_feature)
+	{
+		return best_split;
+	}
 
 	#ifdef ENSACHAGE_INITIAL
 	for (int i = 0; i < subproblem->featureCount; i++)

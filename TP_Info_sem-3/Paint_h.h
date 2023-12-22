@@ -26,6 +26,8 @@ float RGBtoGrey(Pixel* p);
 Image* readImage(char* imgpath);
 void writeImage(Image* img, char* imgpath);
 void freeImage(Image* img);
+void modifyDataset(Image* img, char* imgpathW, char* imgpathD, char* imgpathC);
+void copyDataset(char* imgpathD, char* imgpathC);
 
 #endif
 

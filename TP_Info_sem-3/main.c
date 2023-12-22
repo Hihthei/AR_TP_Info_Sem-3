@@ -16,21 +16,41 @@ int main(int argc, char** argv) {
 
     srand((unsigned int)time(NULL));
 
-    char* path = "../Dataset/PENDIGITS_train.txt";
+    char* path = "../Dataset/MNIST_train.txt";
     
     Dataset* trainData = Dataset_readFromFile(path);
     if (trainData == NULL)
         return EXIT_FAILURE;
 
-    char* path2 = "../Dataset/PENDIGITS_test.txt";
+    char* path2 = "../Dataset/MNIST_test.txt";
 
     #ifdef DATASET_MAISON
-    char* pathR = "../Dataset/etsr.bmp";
+    char* pathR = "../Dataset/WrittingTest4.bmp";
     Image* img = readImage(pathR);
     assert(img);
+    char cookie = 0;
+    printf("Voulez-vous participer à l'experience DATASETMAISON ? (y/n) : ");
+    int poubelle = scanf("%c", &cookie);
+    Dataset* testData;
+    while ((cookie != 'y') && (cookie != 'n'))
+    {
+        printf("Voulez-vous participer à l'experience DATASETMAISON ? (y/n) : ");
+        int poubelle = scanf("%c", &cookie);
+    }
     char* pathW = "../Dataset/WrittingTest.txt";
-    writeImage(img, pathW);
-    Dataset* testData = Dataset_readFromFile(pathW);
+    if (cookie == 'n')
+    {
+        writeImage(img, pathW);
+        testData = Dataset_readFromFile(pathW);
+    }
+    else
+    {
+        char* pathD = "../Dataset/WrittingDataset.txt";
+        char* pathC = "../Dataset/WrittingCopy.txt";
+        modifyDataset(img, pathW, pathD, pathC);
+        copyDataset(pathD, pathC);
+        testData = Dataset_readFromFile(pathC);
+    }
     #else
     Dataset* testData = Dataset_readFromFile(path2);
     #endif
@@ -56,7 +76,7 @@ int main(int argc, char** argv) {
     
     //en commentaire Dataset_printClasses(trainData);
 
-    #ifndef ENSACHAGE_INITIAL
+    #ifdef ENSACHAGE_INITIAL
     DecisionTreeNode* tree = DecisionTree_create(subproblem, 0, 25, 1.0f);
     if (tree == NULL)
         return EXIT_FAILURE;
@@ -70,55 +90,22 @@ int main(int argc, char** argv) {
     DecisionTree_destroy(tree);
     tree = NULL;
 
-    RandomForest* rf = RandomForest_create(17, trainData, 25, 0.5f, 1.0f);
+    RandomForest* rf = RandomForest_create(5, trainData, 25, 0.5f, 1.0f);
 
     printf("Generation d'une foret de %d noeuds\n", RandomForest_nodeCount(rf));
 
     float trainScore = RandomForest_evaluate(rf, trainData);
     float testScore = RandomForest_evaluate(rf, testData);
     printf("train = %.3f, test = %.3f\n", trainScore, testScore);
-
-    RandomForest* rf2 = RandomForest_create(17, trainData, 25, 0.5f, 1.0f);
-
-    printf("Generation d'une foret de %d noeuds\n", RandomForest_nodeCount(rf2));
-
-    float trainScore2 = RandomForest_evaluate(rf2, trainData);
-    float testScore2 = RandomForest_evaluate(rf2, testData);
-    printf("train = %.3f, test = %.3f\n", trainScore2, testScore2);
-
-    RandomForest* rf3 = RandomForest_create(20, trainData, 25, 0.5f, 1.0f);
-
-    printf("Generation d'une foret de %d noeuds\n", RandomForest_nodeCount(rf3));
-
-    float trainScore3 = RandomForest_evaluate(rf3, trainData);
-    float testScore3 = RandomForest_evaluate(rf3, testData);
-    printf("train = %.3f, test = %.3f\n", trainScore3, testScore3);
 
     #else
-    RandomForest* rf = RandomForest_create(20, trainData, 30, 1.0f, 1.0f);
+    RandomForest* rf = RandomForest_create(3, trainData, 30, 1.0f, 1.0f);
 
     printf("Generation d'une foret de %d noeuds\n", RandomForest_nodeCount(rf));
 
     float trainScore = RandomForest_evaluate(rf, trainData);
     float testScore = RandomForest_evaluate(rf, testData);
     printf("train = %.3f, test = %.3f\n", trainScore, testScore);
-
-    RandomForest* rf2 = RandomForest_create(20, trainData, 30, 1.0f, 1.0f);
-
-    printf("Generation d'une foret de %d noeuds\n", RandomForest_nodeCount(rf2));
-
-    float trainScore2 = RandomForest_evaluate(rf2, trainData);
-    float testScore2 = RandomForest_evaluate(rf2, testData);
-    printf("train = %.3f, test = %.3f\n", trainScore2, testScore2);
-
-    RandomForest* rf3 = RandomForest_create(20, trainData, 30, 1.0f, 1.0f);
-
-    printf("Generation d'une foret de %d noeuds\n", RandomForest_nodeCount(rf3));
-
-    float trainScore3 = RandomForest_evaluate(rf3, trainData);
-    float testScore3 = RandomForest_evaluate(rf3, testData);
-    printf("train = %.3f, test = %.3f\n", trainScore3, testScore3);
-
     #endif
 
 
