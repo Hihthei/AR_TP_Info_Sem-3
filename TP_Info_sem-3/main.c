@@ -28,6 +28,61 @@ int main(int argc, char** argv) {
         double cpu_time_used = 0;
         start = clock();
 
+    Dataset* trainData = Dataset_readFromFile(path_train);
+    if (trainData == NULL)
+        return EXIT_FAILURE;
+
+    Dataset* testData = Dataset_readFromFile(path_test);
+    if (trainData == NULL)
+        return EXIT_FAILURE;
+
+    Subproblem* subproblem = Dataset_getSubproblem(trainData);
+    if (subproblem == NULL)
+		return EXIT_FAILURE;
+
+    //----------------------------------------------------------
+
+    //CALCUL PAR L'ARBRE ---------------------------------------
+
+    //Subproblem_print(subproblem);
+    
+    DecisionTreeNode* tree = DecisionTree_create(subproblem, 0, 30, 1.0f);
+    if (tree == NULL)
+        return EXIT_FAILURE;
+
+    int nodeCount = DecisionTree_nodeCount(tree);
+    printf("Generation d'un arbre de %d noeuds\n", nodeCount);
+
+    float scoreTrain = DecisionTree_evaluate(tree, trainData);
+    float scoreTest = DecisionTree_evaluate(tree, testData);
+    printf("train = %.3f, test = %.3f\n", scoreTrain, scoreTest);
+    
+    //en commentaire Dataset_printClasses(trainData);
+
+    char* fileLoad = NULL;
+    fileLoad = FileLoad_UserInterface();
+
+    RandomForest* rf = NULL;
+
+    if (fileLoad == NULL)
+        rf = RandomForest_create(17, trainData, 30, 0.5f, 1.0f);
+    else
+        rf = SaveTree_loadForest(fileLoad);
+
+    int rf_nodeCount = RandomForest_nodeCount(rf);
+
+    printf("Generation d'une foret de %d noeuds\n", rf_nodeCount);
+
+    float trainScore = RandomForest_evaluate(rf, trainData);
+    float testScore = RandomForest_evaluate(rf, testData);
+    printf("train = %.3f, test = %.3f\n\n", trainScore, testScore);
+
+        //TIME CLOCK MIDDLE ----------------------------------------
+    middle = clock();
+    cpu_time_used = ((double)(middle - start)) / CLOCKS_PER_SEC;
+    printf( "\nTemps d'execution : %.3fs.\n"
+            "____________________________\n", cpu_time_used);
+    
         //----------------------------------------------------------
 
         //RECUPERATION DU PROBLEME ---------------------------------

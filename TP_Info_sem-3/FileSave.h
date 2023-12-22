@@ -29,4 +29,6 @@ int FileSave_UserInterface(	int nodeCount,
 							float testScore,
 							RandomForest* forest);
 
+char* FileLoad_UserInterface();
+
 #endif
