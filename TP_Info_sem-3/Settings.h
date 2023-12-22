@@ -9,8 +9,8 @@
 	#include <string.h>
 	#include <assert.h>
 
-	//#define BASIC_RUN
-	#define BONUS
+	#define BASIC_RUN
+	//#define BONUS
 
 
 	// PERMET DE REALISER UNE RUN POUR MOODLE (SORTIES SONT CELLES ATTENDUES PAR MOODLE)
