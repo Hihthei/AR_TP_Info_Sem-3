@@ -68,16 +68,27 @@ DecisionTreeNode* DecisionTree_create(Subproblem* subproblem, int currentDepth, 
 	Subproblem* Spl = Subproblem_create(subproblem->instanceCount, subproblem->featureCount, subproblem->classCount);
 	Subproblem* Spr = Subproblem_create(subproblem->instanceCount, subproblem->featureCount, subproblem->classCount);
 
+	int cptR = 0, cptL = 0;
 	for (int i = 0; i < subproblem->instanceCount; i++)
 	{
 		if (subproblem->instances[i]->values[dtNode->split.featureID] <= dtNode->split.threshold)
 		{
+			cptL++;
 			Subproblem_insert(Spl, subproblem->instances[i]);
 		}
 		else
 		{
+			cptR++;
 			Subproblem_insert(Spr, subproblem->instances[i]);
 		}
+	}
+
+	if ((cptL == 0)||(cptR == 0))
+	{
+		dtNode->classID = (int)DecisionTree_mainClass(subproblem);
+		dtNode->left = NULL;
+		dtNode->right = NULL;
+		return dtNode;
 	}
 
 	// Construction récursive des sous-arbres gauche et droit
