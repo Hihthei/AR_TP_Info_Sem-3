@@ -83,6 +83,8 @@ DecisionTreeNode* DecisionTree_create(Subproblem* subproblem, int currentDepth, 
 		}
 	}
 
+	#ifndef ENSACHAGE_INITIAL
+
 	if ((cptL == 0)||(cptR == 0))
 	{
 		dtNode->classID = (int)DecisionTree_mainClass(subproblem);
@@ -90,6 +92,8 @@ DecisionTreeNode* DecisionTree_create(Subproblem* subproblem, int currentDepth, 
 		dtNode->right = NULL;
 		return dtNode;
 	}
+
+	#endif
 
 	// Construction récursive des sous-arbres gauche et droit
 	dtNode->left = DecisionTree_create(Spl, currentDepth + 1, maxDepth, prunningThreshold);
