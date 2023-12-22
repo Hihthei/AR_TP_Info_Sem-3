@@ -77,7 +77,8 @@ DecisionTreeNode* SaveTree_loadTree(FILE** pfile) {
 }
 
 RandomForest* SaveTree_loadForest(char* fileName) {
-	assert(fileName);
+	if (fileName == NULL || fileName == "")
+		return NULL;
 
 	FILE* pfile = fopen(fileName, "r");
 	if (pfile == NULL)

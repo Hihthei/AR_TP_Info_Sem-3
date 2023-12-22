@@ -59,7 +59,9 @@ int main(int argc, char** argv) {
     
     //en commentaire Dataset_printClasses(trainData);
 
-    RandomForest* rf = RandomForest_create(20, trainData, 30, 0.5f, 1.0f);
+    //RandomForest* rf = RandomForest_create(20, trainData, 30, 0.5f, 1.0f);
+
+    RandomForest* rf = SaveTree_loadForest("original.txt");
 
     int rf_nodeCount = RandomForest_nodeCount(rf);
 
@@ -85,6 +87,7 @@ int main(int argc, char** argv) {
     if(FileSave_UserInterface(rf_nodeCount, trainScore, testScore, rf) == -1)
         return EXIT_FAILURE;
 
+
     //----------------------------------------------------------
 
     //DESTROY --------------------------------------------------
@@ -100,7 +103,7 @@ int main(int argc, char** argv) {
     tree = NULL;
 
     RandomForest_destroy(rf);
-    tree = NULL;
+    rf = NULL;
     
 
     //----------------------------------------------------------
