@@ -41,4 +41,30 @@ void SaveTree_saveTree(FILE** pfile, DecisionTreeNode* node, int direction);
  */
 void SaveTree_saveForest(char* fileName, RandomForest* forest);
 
+
+
+/**
+ * @brief
+ *
+ *
+ *
+ * @param  :
+ *
+ * @return  :
+ */
+DecisionTreeNode* SaveTree_loadTree(FILE** pfile);
+
+
+
+/**
+ * @brief
+ *
+ *
+ *
+ * @param  :
+ *
+ * @return  :
+ */
+RandomForest* SaveTree_loadForest(char* fileName);
+
 #endif
