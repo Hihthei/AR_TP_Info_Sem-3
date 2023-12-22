@@ -29,10 +29,10 @@
 		
 			#ifdef BONUS
 				// PERMET DE POUVOIR CREER SA PROPRE BASE DE DONNEE (image paint en .bmp), S'UTILISE UNIQUEMENT AVEC MNIST
-				#define DATASET_MAISON
+				//#define DATASET_MAISON
 
 				// PERMET DE POUVOIR SAUVEGARDER DES FORETS ET DE LES CHARGER AU LANCEMENT DU PROGRAMME
-				#define SAVE_LOAD
+				//#define SAVE_LOAD
 
 			#endif
 
@@ -53,7 +53,7 @@
 	// IL NE FAUT PAS DECOMMENTER :
 
 	#define CHEMIN_IMAGE_BMP "../Dataset/WrittingTest6.bmp"
-	#define NOMBRE_ARBRES 50
+	#define NOMBRE_ARBRES 5
 	#define PRUNNING_THRESHOLD 1.0f
 	#define MAX_DEPTH 25
 

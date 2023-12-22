@@ -30,7 +30,7 @@ RandomForest* RandomForest_create(int numberOfTrees, Dataset* data, int maxDepth
 		forest->trees[i] = DecisionTree_create(sp, 0, maxDepth, prunningThreshold);
 		Subproblem_destroy(sp);
 	}
-	
+
 	return forest;
 }
 

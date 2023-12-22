@@ -100,7 +100,7 @@ int FileSave_UserInterface(int nodeCount, float trainScore, float testScore, Ran
 }
 
 char* FileLoad_loadUI() {
-	printf("Veuillez entrer un nom de fichier à charger (.txt) : ");
+	printf("Veuillez entrer un nom de fichier a charger (.txt) : ");
 
 	char buffer[1024] = "";
 	char fileName[256] = "";
@@ -137,7 +137,7 @@ char* FileLoad_loadUI() {
 }
 
 char* FileLoad_UserInterface() {
-	printf("Souhaitez-vous charger une forêt existante ? (Y/N)\n"
+	printf("Souhaitez-vous charger une foret existante ? (Y/N)\n"
 		"Reponse : ");
 
 	char buffer[1024] = "";

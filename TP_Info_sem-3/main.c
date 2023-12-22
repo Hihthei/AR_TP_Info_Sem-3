@@ -111,7 +111,14 @@ int main(int argc, char** argv) {
         float scoreTest = DecisionTree_evaluate(tree, testData);
         printf("train = %.3f, test = %.3f\n", scoreTrain, scoreTest);
 
-        RandomForest* rf = RandomForest_create(NOMBRE_ARBRES, trainData, MAX_DEPTH, BAGGING_PROPORTION, PRUNNING_THRESHOLD);
+        RandomForest* rf = NULL;
+
+            #ifdef SAVE_LOAD
+                    char* fileName = FileLoad_UserInterface();
+                    rf = SaveTree_loadForest(fileName);
+            #else
+                    rf = RandomForest_create(NOMBRE_ARBRES, trainData, MAX_DEPTH, BAGGING_PROPORTION, PRUNNING_THRESHOLD);
+            #endif
 
         int rf_nodeCount = RandomForest_nodeCount(rf);
 
@@ -120,6 +127,18 @@ int main(int argc, char** argv) {
         float trainScore = RandomForest_evaluate(rf, trainData);
         float testScore = RandomForest_evaluate(rf, testData);
         printf("train = %.3f, test = %.3f\n", trainScore, testScore);
+
+        //TIME CLOCK MIDDLE ----------------------------------------
+        middle = clock();
+        cpu_time_used = ((double)(middle - start)) / CLOCKS_PER_SEC;
+        printf("\nTemps d'execution : %.3fs.\n"
+            "____________________________\n", cpu_time_used);
+        //----------------------------------------------------------
+
+            #ifdef SAVE_LOAD
+                    if (FileSave_UserInterface(rf_nodeCount, trainScore, testScore, rf) == -1)
+                        return EXIT_FAILURE;
+            #endif
 
         #else
         DecisionTreeNode* tree = DecisionTree_create(subproblem, 0, MAX_DEPTH, PRUNNING_THRESHOLD);
@@ -138,7 +157,14 @@ int main(int argc, char** argv) {
 
             #ifdef SAVE_LOAD
                 char* fileName = FileLoad_UserInterface();
-                rf = SaveTree_loadForest(fileName);
+
+                if (fileName == NULL)
+                    rf = RandomForest_create(NOMBRE_ARBRES, trainData, MAX_DEPTH, BAGGING_PROPORTION, PRUNNING_THRESHOLD);
+                else
+                    rf = SaveTree_loadForest(fileName);
+
+                free(fileName);
+
             #else
                 rf = RandomForest_create(NOMBRE_ARBRES, trainData, MAX_DEPTH, BAGGING_PROPORTION, PRUNNING_THRESHOLD);
             #endif
