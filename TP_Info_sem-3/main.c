@@ -59,9 +59,9 @@ int main(int argc, char** argv) {
     
     //en commentaire Dataset_printClasses(trainData);
 
-    //RandomForest* rf = RandomForest_create(20, trainData, 30, 0.5f, 1.0f);
+    //RandomForest* rf = RandomForest_create(17, trainData, 30, 0.5f, 1.0f);
 
-    RandomForest* rf = SaveTree_loadForest("original.txt");
+    RandomForest* rf = SaveTree_loadForest("test.txt");
 
     int rf_nodeCount = RandomForest_nodeCount(rf);
 

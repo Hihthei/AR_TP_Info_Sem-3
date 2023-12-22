@@ -10,13 +10,11 @@ void SaveTree_saveTree(FILE** pfile, DecisionTreeNode* node, int direction) {
 		return;
 
 	if (node->left == NULL && node->right == NULL) {
-		fprintf(*pfile, "%d\n", 2);
-		fprintf(*pfile, "%d %f %d\n", node->split.featureID, node->split.threshold, node->classID);
+		fprintf(*pfile, "%d\t%d\n", 2, node->classID);
 		return;
 	}
 	else {
-		fprintf(*pfile, "%d\n", direction);
-		fprintf(*pfile, "%d %f %d\n", node->split.featureID, node->split.threshold, node->classID);
+		fprintf(*pfile, "%d\t%d %f\n", direction, node->split.featureID, node->split.threshold);
 	}
 
 	SaveTree_saveTree(pfile, node->left, 0);
@@ -33,8 +31,7 @@ void SaveTree_saveForest(char* fileName, RandomForest* forest) {
 
 	for (int i = 0; i < forest->treeCount; i++) {
 		SaveTree_saveTree(&pfile, forest->trees[i], -1);
-
-		fprintf(pfile, "-2\n\n");
+		fprintf(pfile, "\n");
 	}
 
 	fclose(pfile);
@@ -50,27 +47,26 @@ DecisionTreeNode* SaveTree_loadTree(FILE** pfile) {
 	DecisionTreeNode* node = (DecisionTreeNode*)calloc(1, sizeof(DecisionTreeNode));
 	assert(node);
 
-	fscanf(*pfile, "%d %f %d\n", &featureID, &threshold, &classID);
-	fscanf(*pfile, "%d\n", &direction);
+	fscanf(*pfile, "%d\t", &direction);
 
 	switch (direction)
 	{
-	case 0:
-		node->split.featureID = featureID;
-		node->split.threshold = threshold;
-		node->left = SaveTree_loadTree(pfile);
+	case 2:
+		fscanf(*pfile, "%d\n", &node->classID);
 		break;
-	case 1:
+	/*case 1:
 		node->split.featureID = featureID;
 		node->split.threshold = threshold;
+
 		node->right = SaveTree_loadTree(pfile);
 		break;
 	case 2:
 		node->classID = classID;
-		break;
-	case -2:
-		break;
+		break;*/
 	default:
+		fscanf(*pfile, "%d %f\n", &node->split.featureID, &node->split.threshold);
+		node->left = SaveTree_loadTree(pfile);
+		node->right = SaveTree_loadTree(pfile);
 		break;
 	}
 	return node;
@@ -85,12 +81,14 @@ RandomForest* SaveTree_loadForest(char* fileName) {
 		return NULL;
 
 	RandomForest* rf = (RandomForest*)calloc(1, sizeof(RandomForest));
-	assert(rf);
+	if (rf == NULL)
+		return NULL;
 
 	fscanf(pfile, "%d %d\n", &rf->treeCount, &rf->classCount);
 
 	rf->trees = (DecisionTreeNode**)calloc(rf->treeCount, sizeof(DecisionTreeNode*));
-	assert(rf->trees);
+	if (rf->trees == NULL)
+		return NULL;
 
 	for (int i = 0; i < rf->treeCount; i++) {
 		rf->trees[i] = SaveTree_loadTree(&pfile);
