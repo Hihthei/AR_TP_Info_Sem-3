@@ -11,6 +11,7 @@ void CodeError_FILE(void** freeptr, char* errormsg) {
 }
 
 void ClearBuffer() {
+	return;
 	int c;
 	while ((c = getchar()) != '\n' && c != EOF)
 		continue;
@@ -28,8 +29,6 @@ void FileSave_UIClear(int nodeCount, float trainScore, float testScore) {
 
 			"Generation d'un arbre de %d noeuds\n"
 			"train = %.3f, test = %.3f\n\n", nodeCount, trainScore, testScore);
-
-	return;
 }
 
 bool FileSave_fileExist(char* fileName) {
@@ -47,13 +46,21 @@ bool FileSave_fileExist(char* fileName) {
 }
 
 bool FileSave_fileOverwrite(char* fileName) {
-	system("cls");
-
 	assert(fileName);
+
+	if (!FileSave_fileExist(fileName)) {
+		CodeError_FILE(NULL, "FileSave_fileOverwrite - fichier non existant");
+		return false;
+	}
+
+	system("cls");
+	ClearBuffer();
 
 	printf("\nFichier deja existant. Voulez-vous l'ecraser ? (Y/N) : ");
 
 	char* buffer = (char*)calloc(1024, sizeof(char));
+	assert(buffer);
+
 	if (buffer == NULL) {
 		CodeError_FILE(NULL, "FileSave_fileOverwrite - alloc buffer");
 		return false;
@@ -81,25 +88,48 @@ bool FileSave_fileOverwrite(char* fileName) {
 	}
 	else if (buffer[0] == 'N' || buffer[0] == 'n') {
 		free(buffer);
-
+		return false;
 	}
 	else {
 		CodeError_FILE(&buffer, "FileSave_fileOverwrite - Erreur lors de la creation du fichier.");
 		return false;
 	}
+
+	return false;
 }
 
 bool FileSave_createFile(char* fileName) {
-	assert(fileName);
+	if (fileName == NULL || fileName == "") {
+		system("cls");
+		ClearBuffer();
+
+		printf("\nVeuillez entrer un nom de fichier (20 caractères maximum)\n"
+			"Votre nom de fichier .txt : ");
+
+		free(fileName);
+		char* buffer = (char*)calloc(1024, sizeof(char));
+		assert(buffer);
+
+		if (!scanf("%s", buffer)) {
+			CodeError_FILE(&buffer, NULL);
+			return false;
+		}
+
+		FileSave_createFile(buffer);
+	}
 
 	if (strlen(fileName) > 20) {
 		system("cls");
+		ClearBuffer();
+
 		printf("\nNom de fichier trop long, veuillez en choisir un nouveau.\n"
 			"(20 caractères maximum)\n"
 			"Votre nouveau nom de fichier : ");
 
 		free(fileName);
 		char* buffer = (char*)calloc(1024, sizeof(char));
+		assert(buffer);
+
 		if (!scanf("%s", buffer)) {
 			CodeError_FILE(&buffer, NULL);
 			return false;
@@ -110,7 +140,8 @@ bool FileSave_createFile(char* fileName) {
 
 	if (FileSave_fileExist(fileName)) {
 		if (FileSave_fileOverwrite(fileName)) {
-
+			CodeError_FILE(NULL, "FileSave_createFile - Erreur lors de la creation du fichier");
+			return false;
 		}
 	}
 
@@ -121,18 +152,26 @@ bool FileSave_createFile(char* fileName) {
 	system(command);
 
 	free(command);
+
+	if (!FileSave_fileExist(fileName)) {
+		CodeError_FILE(NULL, "FileSave_createFile - Erreur lors de la creation du fichier");
+		return false;
+	}
 	
 	return true;
 }
 
 int FileSave_UserInterface(int nodeCount, float trainScore, float testScore) {
 	while (true) {
+		ClearBuffer();
+
 		printf("\n_________________________________\n\n");
 
 		printf("Souhaitez-vous sauvegarder l'arbre ? (Y/N)\n"
 				"Reponse : ");
 
 		char* buffer = (char*)calloc(1024, sizeof(char));
+		assert(buffer);
 
 		if (!scanf("%s", buffer)) {
 			CodeError_FILE(&buffer, NULL);
@@ -177,7 +216,7 @@ bool FileSave_clearFile() {
 bool FileSave_deleteFile(char* fileName) {
 	assert(fileName);
 
-	if (FileSave_fileExist(fileName)) {
+	if (!FileSave_fileExist(fileName)) {
 		CodeError_FILE(NULL, "FileSave_deleteFile - Fichier introuvable");
 		return false;
 	}
