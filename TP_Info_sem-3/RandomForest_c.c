@@ -46,7 +46,6 @@ int RandomForest_predict(RandomForest* rf, Instance* instance)
 		printf("No instance\n");
 		return -1;
 	}
-
 	int prediction = 0, prediction_value = 0, *tab = calloc(rf->classCount, sizeof(int));
 	assert(tab);
 
@@ -63,6 +62,9 @@ int RandomForest_predict(RandomForest* rf, Instance* instance)
 		}
 	}
 	free(tab);
+	#ifdef FOR_MOODLE
+		printf("%d\n", prediction);
+	#endif
 	return prediction;
 }
 
