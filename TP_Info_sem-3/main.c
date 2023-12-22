@@ -5,8 +5,6 @@
 #include "RandomForest_h.h"
 #include "FileSave.h"
 
-
-//*
 int main(int argc, char** argv) {
 
     //TIME CLOCK INITIALISATION --------------------------------
@@ -17,8 +15,7 @@ int main(int argc, char** argv) {
     //----------------------------------------------------------
 
     //RECUPERATION DU PROBLEME ---------------------------------
-
-    /*
+    
     char* path_train = NULL;
     char* path_test = NULL;
 
@@ -77,7 +74,7 @@ int main(int argc, char** argv) {
             "____________________________\n", cpu_time_used);
         //----------------------------------------------------------
 
-    */
+    
 
     //----------------------------------------------------------
 
@@ -90,7 +87,7 @@ int main(int argc, char** argv) {
 
     //DESTROY --------------------------------------------------
     
-    /*
+    
     Dataset_destroy(trainData);
     trainData = NULL;
 
@@ -102,7 +99,7 @@ int main(int argc, char** argv) {
 
     RandomForest_destroy(rf);
     tree = NULL;
-    */
+    
 
     //----------------------------------------------------------
 
