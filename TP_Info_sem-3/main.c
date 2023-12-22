@@ -8,11 +8,17 @@
 
 int main(int argc, char** argv) {
 
+    //TIME CLOCK INITIALISATION --------------------------------
+    clock_t start = 0, middle = 0, end = 0;
+    double cpu_time_used = 0;
+    start = clock();
+    //  //----------------------------------------------------------
+
     #ifdef FOR_MOODLE
 
         Dataset* trainData = Dataset_readFromFile(argv[1]);
         Subproblem* sp = Dataset_getSubproblem(trainData);
-        RandomForest* rf = RandomForest_create(100, trainData, 30, 0.5f, 1.0f);
+        RandomForest* rf = RandomForest_create(NOMBRE_ARBRES, trainData, MAX_DEPTH, BAGGING_PROPORTION, PRUNNING_THRESHOLD);
         Dataset* testData = Dataset_readFromFile(argv[2]);
         float scoreTest = RandomForest_evaluate(rf, testData);
         RandomForest_destroy(rf);
@@ -23,48 +29,37 @@ int main(int argc, char** argv) {
 
     #else
 
-        //TIME CLOCK INITIALISATION --------------------------------
-        clock_t start = 0, middle = 0, end = 0;
-        double cpu_time_used = 0;
-        start = clock();
+    //RECUPERATION DU PROBLEME ---------------------------------
 
-        //----------------------------------------------------------
+    char* path_train = NULL;
+    char* path_test = NULL;
 
-        //RECUPERATION DU PROBLEME ---------------------------------
-    
-        char* path_pendigits_train = NULL;
-        char* path_pendigits_test = NULL;
-        char* path_fashion_train = NULL;
-        char* path_fashion_test = NULL;
-        char* path_mnist_train = NULL;
-        char* path_mnist_test = NULL;
-        char* path_train = NULL;
-        char* path_test = NULL;
+    if (argv[1] != NULL && argv[2] != NULL) {
+        path_train = argv[1];
+        path_test = argv[2];
+    }
+    else {
+        path_train = "../Dataset/PENDIGITS_train.txt";
+        path_test = "../Dataset/PENDIGITS_test.txt";
+         
+        //path_train = "../Dataset/FASHION_train.txt";
+        //path_test = "../Dataset/FASHION_test.txt";
 
-        if (argv[1] != NULL && argv[2] != NULL) {
-            path_train = argv[1];
-            path_test = argv[2];
-        }
-        else {
-            //path_pendigits_train = "../Dataset/PENDIGITS_train.txt";
-            //path_pendigits_test = "../Dataset/PENDIGITS_test.txt";
-            //path_fashion_train = "../Dataset/FASHION_train.txt";
-            //path_fashion_test = "../Dataset/FASHION_test.txt";
-            path_mnist_train = "../Dataset/MNIST_train.txt";
-            path_mnist_test = "../Dataset/MNIST_test.txt";
-        }
+        //path_train = "../Dataset/MNIST_train.txt";
+        //path_test = "../Dataset/MNIST_test.txt";
+    }
 
         #ifdef DATASET_MAISON
         char* pathR = CHEMIN_IMAGE_BMP;
         Image* img = readImage(pathR);
         assert(img);
         char cookie = 0;
-        printf("Voulez-vous participer à l'experience DATASETMAISON ? (y/n) : ");
+        printf("Voulez-vous participer a l'experience DATASETMAISON ? (y/n) : ");
         int poubelle = scanf("%c", &cookie);
         Dataset* testData;
         while ((cookie != 'y') && (cookie != 'n'))
         {
-            printf("Voulez-vous participer à l'experience DATASETMAISON ? (y/n) : ");
+            printf("Voulez-vous participer a l'experience DATASETMAISON ? (y/n) : ");
             int poubelle = scanf("%c", &cookie);
         }
         char* pathW = "../Dataset/WrittingTest.txt";
@@ -82,17 +77,14 @@ int main(int argc, char** argv) {
             testData = Dataset_readFromFile(pathC);
         }
         #else
-        Dataset* testData = Dataset_readFromFile(path_mnist_test);
+
+        Dataset* testData = Dataset_readFromFile(path_test);
         if (testData == NULL)
             return EXIT_FAILURE;
         
         #endif    
 
-        /*Subproblem* subproblem = Subproblem_create(10, 10, 10);
-        if (subproblem == NULL)
-            return EXIT_FAILURE;*/
-
-        Dataset* trainData = Dataset_readFromFile(path_mnist_train);
+        Dataset* trainData = Dataset_readFromFile(path_train);
         if (trainData == NULL)
             return EXIT_FAILURE; 
 
@@ -142,35 +134,37 @@ int main(int argc, char** argv) {
         float scoreTest = DecisionTree_evaluate(tree, testData);
         printf("train = %.3f, test = %.3f\n", scoreTrain, scoreTest);
 
-        RandomForest* rf = RandomForest_create(NOMBRE_ARBRES, trainData, MAX_DEPTH, BAGGING_PROPORTION, PRUNNING_THRESHOLD);
+        RandomForest* rf = NULL;
 
-        printf("Generation d'une foret de %d noeuds\n", RandomForest_nodeCount(rf));
+            #ifdef SAVE_LOAD
+                char* fileName = FileLoad_UserInterface();
+                rf = SaveTree_loadForest(fileName);
+            #else
+                rf = RandomForest_create(NOMBRE_ARBRES, trainData, MAX_DEPTH, BAGGING_PROPORTION, PRUNNING_THRESHOLD);
+            #endif
+
+        int rf_nodeCount = RandomForest_nodeCount(rf);
+
+        printf("Generation d'une foret de %d noeuds\n", rf_nodeCount);
 
         float trainScore = RandomForest_evaluate(rf, trainData);
         float testScore = RandomForest_evaluate(rf, testData);
 
         printf("train = %.3f, test = %.3f\n", trainScore, testScore);
 
-        #endif
-
-            //TIME CLOCK MIDDLE ----------------------------------------
+        //TIME CLOCK MIDDLE ----------------------------------------
         middle = clock();
         cpu_time_used = ((double)(middle - start)) / CLOCKS_PER_SEC;
-        printf( "\nTemps d'execution : %.3fs.\n"
-                "____________________________\n", cpu_time_used);
-            //----------------------------------------------------------
-
-    
-
+        printf("\nTemps d'execution : %.3fs.\n"
+            "____________________________\n", cpu_time_used);
         //----------------------------------------------------------
 
-        //SAUVEGARDE DE L'ARBRE / LA FORET -------------------------
+            #ifdef SAVE_LOAD
+                    if (FileSave_UserInterface(rf_nodeCount, trainScore, testScore, rf) == -1)
+                        return EXIT_FAILURE;
+            #endif
 
-       /* if(FileSave_UserInterface(rf_nodeCount, trainScore, testScore, rf) == -1)
-            return EXIT_FAILURE;*/
-
-
-        //----------------------------------------------------------
+        #endif
 
         //DESTROY --------------------------------------------------
     
