@@ -8,6 +8,12 @@
 
 int main(int argc, char** argv) {
 
+    //TIME CLOCK INITIALISATION --------------------------------
+    clock_t start = 0, middle = 0, end = 0;
+    double cpu_time_used = 0;
+    start = clock();
+    //  //----------------------------------------------------------
+
     #ifdef FOR_MOODLE
 
         Dataset* trainData = Dataset_readFromFile(argv[1]);
@@ -23,10 +29,7 @@ int main(int argc, char** argv) {
 
     #else
 
-        //TIME CLOCK INITIALISATION --------------------------------
-        clock_t start = 0, middle = 0, end = 0;
-        double cpu_time_used = 0;
-        start = clock();
+       
 
   //  Dataset* trainData = Dataset_readFromFile(path_train);
   //  if (trainData == NULL)
@@ -40,7 +43,6 @@ int main(int argc, char** argv) {
   //  if (subproblem == NULL)
 		//return EXIT_FAILURE;
 
-  //  //----------------------------------------------------------
 
   //  //CALCUL PAR L'ARBRE ---------------------------------------
 
