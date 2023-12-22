@@ -47,12 +47,12 @@ DecisionTreeNode* SaveTree_loadTree(FILE** pfile) {
 	DecisionTreeNode* node = (DecisionTreeNode*)calloc(1, sizeof(DecisionTreeNode));
 	assert(node);
 
-	fscanf(*pfile, "%d\t", &direction);
+	int noWarning = fscanf(*pfile, "%d\t", &direction);
 
 	switch (direction)
 	{
 	case 2:
-		fscanf(*pfile, "%d\n", &node->classID);
+		noWarning = fscanf(*pfile, "%d\n", &node->classID);
 		break;
 	/*case 1:
 		node->split.featureID = featureID;
@@ -64,7 +64,7 @@ DecisionTreeNode* SaveTree_loadTree(FILE** pfile) {
 		node->classID = classID;
 		break;*/
 	default:
-		fscanf(*pfile, "%d %f\n", &node->split.featureID, &node->split.threshold);
+		noWarning = fscanf(*pfile, "%d %f\n", &node->split.featureID, &node->split.threshold);
 		node->left = SaveTree_loadTree(pfile);
 		node->right = SaveTree_loadTree(pfile);
 		break;
@@ -84,7 +84,7 @@ RandomForest* SaveTree_loadForest(char* fileName) {
 	if (rf == NULL)
 		return NULL;
 
-	fscanf(pfile, "%d %d\n", &rf->treeCount, &rf->classCount);
+	int noWarning= fscanf(pfile, "%d %d\n", &rf->treeCount, &rf->classCount);
 
 	rf->trees = (DecisionTreeNode**)calloc(rf->treeCount, sizeof(DecisionTreeNode*));
 	if (rf->trees == NULL)
@@ -92,7 +92,7 @@ RandomForest* SaveTree_loadForest(char* fileName) {
 
 	for (int i = 0; i < rf->treeCount; i++) {
 		rf->trees[i] = SaveTree_loadTree(&pfile);
-		fscanf(pfile, "\n");
+		noWarning = fscanf(pfile, "\n");
 	}
 
 	fclose(pfile);

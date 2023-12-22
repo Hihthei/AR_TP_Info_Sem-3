@@ -98,3 +98,70 @@ int FileSave_UserInterface(int nodeCount, float trainScore, float testScore, Ran
 
 	return 0;
 }
+
+char* FileLoad_loadUI() {
+	printf("Veuillez entrer un nom de fichier à charger (.txt) : ");
+
+	char buffer[1024] = "";
+	char fileName[256] = "";
+
+	if (!scanf("%s", fileName))
+		return NULL;
+
+	printf("\" %s \" Confirmer vous votre choix ? (Y/N) (N pour quitter) : ", fileName);
+
+	if (!scanf("%s", buffer))
+		return NULL;
+
+	if (buffer[0] == 'Y' || buffer[0] == 'y') {
+		if (FileFonction_fileExist(fileName)) {
+			char* file = (char*)calloc(strlen(fileName)+1, sizeof(char));
+			if (file == NULL)
+				return NULL;
+
+			strcpy(file, fileName);
+
+			return file;
+		}
+		else {
+			system("cls");
+			printf("Fichier introuvable ou inexistant.\n");
+
+			return FileLoad_loadUI();
+		}
+	}
+	else if (buffer[0] == 'N' || buffer[0] == 'n')
+		return NULL;
+
+	return NULL;
+}
+
+char* FileLoad_UserInterface() {
+	printf("Souhaitez-vous charger une forêt existante ? (Y/N)\n"
+		"Reponse : ");
+
+	char buffer[1024] = "";
+
+	if (!scanf("%s", buffer))
+		return NULL;
+
+	if (strlen(buffer) > 1) {
+		system("cls");
+		printf("Veuillez rentrer une reponse valide.\n\n");
+		return FileLoad_UserInterface();
+	}
+	else if (buffer[0] == 'Y' || buffer[0] == 'y') {
+		system("cls");
+		return FileLoad_loadUI();
+	}
+
+	else if (buffer[0] == 'N' || buffer[0] == 'n')
+		return NULL;
+	else {
+		system("cls");
+		printf("Veuillez rentrer une reponse valide.\n\n");
+		return FileLoad_UserInterface();
+	}
+
+	return NULL;
+}

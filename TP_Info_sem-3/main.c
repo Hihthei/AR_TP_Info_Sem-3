@@ -44,7 +44,7 @@ int main(int argc, char** argv) {
 
     //CALCUL PAR L'ARBRE ---------------------------------------
 
-    Subproblem_print(subproblem);
+    //Subproblem_print(subproblem);
     
     DecisionTreeNode* tree = DecisionTree_create(subproblem, 0, 30, 1.0f);
     if (tree == NULL)
@@ -59,9 +59,15 @@ int main(int argc, char** argv) {
     
     //en commentaire Dataset_printClasses(trainData);
 
-    //RandomForest* rf = RandomForest_create(17, trainData, 30, 0.5f, 1.0f);
+    char* fileLoad = NULL;
+    fileLoad = FileLoad_UserInterface();
 
-    RandomForest* rf = SaveTree_loadForest("test.txt");
+    RandomForest* rf = NULL;
+
+    if (fileLoad == NULL)
+        rf = RandomForest_create(17, trainData, 30, 0.5f, 1.0f);
+    else
+        rf = SaveTree_loadForest(fileLoad);
 
     int rf_nodeCount = RandomForest_nodeCount(rf);
 
