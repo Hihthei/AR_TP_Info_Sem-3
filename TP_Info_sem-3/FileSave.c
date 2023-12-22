@@ -10,17 +10,9 @@ void CodeError_FILE(void** freeptr, char* errormsg) {
 	}
 }
 
-void ClearBuffer() {
-	return;
-	int c;
-	while ((c = getchar()) != '\n' && c != EOF)
-		continue;
-}
-
 //FONCTION : -----------------------------------------------------------------------------------------------------------
 
 void FileSave_UIClear(int nodeCount, float trainScore, float testScore) {
-	ClearBuffer();
 	system("cls");
 
 	printf(	"\nVeuillez rentrer une reponse valide !\n"
@@ -54,25 +46,19 @@ bool FileSave_fileOverwrite(char* fileName) {
 	}
 
 	system("cls");
-	ClearBuffer();
 
 	printf("\nFichier deja existant. Voulez-vous l'ecraser ? (Y/N) : ");
 
-	char* buffer = (char*)calloc(1024, sizeof(char));
-	assert(buffer);
-
-	if (buffer == NULL) {
-		CodeError_FILE(NULL, "FileSave_fileOverwrite - alloc buffer");
-		return false;
-	}
+	char buffer[1024] = "";
 
 	if (!scanf("%s", buffer)) {
-		CodeError_FILE(&buffer, "FileSave_fileOverwrite - Erreur lors de la creation du fichier.");
+		free(buffer);
+		CodeError_FILE(NULL, "FileSave_fileOverwrite - Erreur lors de la creation du fichier.");
 		return false;
 	}
 
 	if (strlen(buffer) > 1) {
-		CodeError_FILE(&buffer, NULL);
+		free(buffer);
 		FileSave_fileOverwrite(fileName);
 	}
 	else if (buffer[0] == 'Y' || buffer[0] == 'y') {
@@ -80,6 +66,7 @@ bool FileSave_fileOverwrite(char* fileName) {
 		FileSave_deleteFile(fileName);
 
 		if (FileSave_fileExist(fileName)) {
+			free(buffer);
 			CodeError_FILE(NULL, "FileSave_fileOverwrite - Erreur lors de la creation du fichier.");
 			return false;
 		}
@@ -91,51 +78,57 @@ bool FileSave_fileOverwrite(char* fileName) {
 		return false;
 	}
 	else {
-		CodeError_FILE(&buffer, "FileSave_fileOverwrite - Erreur lors de la creation du fichier.");
+		free(buffer);
+		CodeError_FILE(NULL, "FileSave_fileOverwrite - Erreur lors de la creation du fichier.");
 		return false;
 	}
 
 	return false;
 }
 
-bool FileSave_createFile(char* fileName) {
+bool FileSave_createFile(char* fileName, int compteur) {
+	if (compteur > 5) {
+		system("cls");
+
+		printf("Nombre de tentatives maximales atteintes. Echec de la creation de fichier.\n");
+
+		return false;
+	}
+
 	if (fileName == NULL || fileName == "") {
 		system("cls");
-		ClearBuffer();
 
 		printf("\nVeuillez entrer un nom de fichier (20 caractères maximum)\n"
-			"Votre nom de fichier .txt : ");
+			"Votre nom de fichier (.txt) : ");
 
 		free(fileName);
-		char* buffer = (char*)calloc(1024, sizeof(char));
-		assert(buffer);
+		char buffer[1024] = "";
 
 		if (!scanf("%s", buffer)) {
-			CodeError_FILE(&buffer, NULL);
+			free(buffer);
 			return false;
 		}
 
-		FileSave_createFile(buffer);
+		return FileSave_createFile(buffer, compteur +1);
 	}
 
 	if (strlen(fileName) > 20) {
 		system("cls");
-		ClearBuffer();
 
 		printf("\nNom de fichier trop long, veuillez en choisir un nouveau.\n"
 			"(20 caractères maximum)\n"
 			"Votre nouveau nom de fichier : ");
 
 		free(fileName);
-		char* buffer = (char*)calloc(1024, sizeof(char));
-		assert(buffer);
+
+		char buffer[1024] = "";
 
 		if (!scanf("%s", buffer)) {
-			CodeError_FILE(&buffer, NULL);
+			free(buffer);
 			return false;
 		}
 
-		FileSave_createFile(buffer);
+		return FileSave_createFile(buffer, compteur + 1);
 	}
 
 	if (FileSave_fileExist(fileName)) {
@@ -163,30 +156,29 @@ bool FileSave_createFile(char* fileName) {
 
 int FileSave_UserInterface(int nodeCount, float trainScore, float testScore) {
 	while (true) {
-		ClearBuffer();
-
 		printf("\n_________________________________\n\n");
 
 		printf("Souhaitez-vous sauvegarder l'arbre ? (Y/N)\n"
 				"Reponse : ");
 
-		char* buffer = (char*)calloc(1024, sizeof(char));
-		assert(buffer);
+		char buffer[1024] = "";
 
 		if (!scanf("%s", buffer)) {
-			CodeError_FILE(&buffer, NULL);
+			free(buffer);
 			FileSave_UIClear(nodeCount, trainScore, testScore);
 			continue;
 		}
 
 		if (strlen(buffer) > 1) {
-			CodeError_FILE(&buffer, NULL);
+			free(buffer);
 			FileSave_UIClear(nodeCount, trainScore, testScore);
 			continue;
 		}
 		else if (buffer[0] == 'Y' || buffer[0] == 'y') {
 			free(buffer);
-			FileSave_createFile("test.txt");
+			if(!FileSave_createFile("test.txt", 0))
+				return -1;
+
 			break;
 		}
 		else if (buffer[0] == 'N' || buffer[0] == 'n') {
@@ -194,7 +186,7 @@ int FileSave_UserInterface(int nodeCount, float trainScore, float testScore) {
 			break;
 		}
 		else {
-			CodeError_FILE(&buffer, NULL);
+			free(buffer);
 			FileSave_UIClear(nodeCount, trainScore, testScore);
 			continue;
 		}

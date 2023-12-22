@@ -17,6 +17,7 @@ int main(int argc, char** argv) {
 
     //RECUPERATION DU PROBLEME ---------------------------------
 
+    /*
     char* path_train = NULL;
     char* path_test = NULL;
 
@@ -75,16 +76,20 @@ int main(int argc, char** argv) {
             "____________________________\n", cpu_time_used);
         //----------------------------------------------------------
 
+    */
+
     //----------------------------------------------------------
 
     //SAUVEGARDE DE L'ARBRE / LA FORET -------------------------
 
-    int tmp = FileSave_UserInterface(nodeCount, trainScore, testScore);
+    if(FileSave_UserInterface(0, 0, 0) == -1)
+        return EXIT_FAILURE;
 
     //----------------------------------------------------------
 
     //DESTROY --------------------------------------------------
     
+    /*
     Dataset_destroy(trainData);
     trainData = NULL;
 
@@ -96,6 +101,7 @@ int main(int argc, char** argv) {
 
     RandomForest_destroy(rf);
     tree = NULL;
+    */
 
     //----------------------------------------------------------
 
