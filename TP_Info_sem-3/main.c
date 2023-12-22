@@ -6,7 +6,6 @@
 #include "Paint_h.h"
 #include "FileSave.h"
 
-//*
 int main(int argc, char** argv) {
 
     //TIME CLOCK INITIALISATION --------------------------------
@@ -17,7 +16,7 @@ int main(int argc, char** argv) {
     //----------------------------------------------------------
 
     //RECUPERATION DU PROBLEME ---------------------------------
-
+    
     char* path_train = NULL;
     char* path_test = NULL;
 
@@ -35,12 +34,12 @@ int main(int argc, char** argv) {
     Image* img = readImage(pathR);
     assert(img);
     char cookie = 0;
-    printf("Voulez-vous participer à l'experience DATASETMAISON ? (y/n) : ");
+    printf("Voulez-vous participer Ã  l'experience DATASETMAISON ? (y/n) : ");
     int poubelle = scanf("%c", &cookie);
     Dataset* testData;
     while ((cookie != 'y') && (cookie != 'n'))
     {
-        printf("Voulez-vous participer à l'experience DATASETMAISON ? (y/n) : ");
+        printf("Voulez-vous participer Ã  l'experience DATASETMAISON ? (y/n) : ");
         int poubelle = scanf("%c", &cookie);
     }
     char* pathW = "../Dataset/WrittingTest.txt";
@@ -105,12 +104,11 @@ int main(int argc, char** argv) {
     float scoreTest = DecisionTree_evaluate(tree, testData);
     printf("train = %.3f, test = %.3f\n", scoreTrain, scoreTest);
 
-    DecisionTree_destroy(tree);
-    tree = NULL;
-
     RandomForest* rf = RandomForest_create(5, trainData, 25, 0.5f, 1.0f);
 
-    printf("Generation d'une foret de %d noeuds\n", RandomForest_nodeCount(rf));
+    int rf_nodeCount = RandomForest_nodeCount(rf);
+
+    printf("Generation d'une foret de %d noeuds\n", rf_nodeCount);
 
     float trainScore = RandomForest_evaluate(rf, trainData);
     float testScore = RandomForest_evaluate(rf, testData);
@@ -128,22 +126,27 @@ int main(int argc, char** argv) {
 
     #endif
 
-        //TIME CLOCK END --------------------------------------------
+        //TIME CLOCK MIDDLE ----------------------------------------
     middle = clock();
     cpu_time_used = ((double)(middle - start)) / CLOCKS_PER_SEC;
     printf( "\nTemps d'execution : %.3fs.\n"
             "____________________________\n", cpu_time_used);
         //----------------------------------------------------------
 
+    
+
     //----------------------------------------------------------
 
     //SAUVEGARDE DE L'ARBRE / LA FORET -------------------------
 
-    int tmp = FileSave_UserInterface(nodeCount, trainScore, testScore);
+    if(FileSave_UserInterface(rf_nodeCount, trainScore, testScore, rf) == -1)
+        return EXIT_FAILURE;
+
 
     //----------------------------------------------------------
 
     //DESTROY --------------------------------------------------
+    
     
     Dataset_destroy(trainData);
     trainData = NULL;
@@ -151,6 +154,9 @@ int main(int argc, char** argv) {
     Subproblem_destroy(subproblem);
     subproblem = NULL;
 
+    DecisionTree_destroy(tree);
+    tree = NULL;
+  
     RandomForest_destroy(rf);
     rf = NULL;
 

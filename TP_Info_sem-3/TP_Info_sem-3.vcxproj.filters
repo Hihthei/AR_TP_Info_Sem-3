@@ -74,6 +74,12 @@
     <ClInclude Include="FileSave.h">
       <Filter>Fichiers d%27en-tête\File_Save</Filter>
     </ClInclude>
+    <ClInclude Include="FileFonction.h">
+      <Filter>Fichiers d%27en-tête\File_Save</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveTree.h">
+      <Filter>Fichiers d%27en-tête\File_Save</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
@@ -97,6 +103,12 @@
     <ClCompile Include="Paint_c.c">
       <Filter>Fichiers sources</Filter>
     <ClCompile Include="FileSave.c">
+      <Filter>Fichiers sources\File_Save</Filter>
+    </ClCompile>
+    <ClCompile Include="FileFonction.c">
+      <Filter>Fichiers sources\File_Save</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveTree.c">
       <Filter>Fichiers sources\File_Save</Filter>
     </ClCompile>
   </ItemGroup>

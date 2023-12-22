@@ -53,10 +53,7 @@ Instance* Dataset_instanceAlloc(Dataset* dataset, FILE* pfile) {
 	}
 
 	Instance* instances = (Instance*)calloc(dataset->instanceCount, sizeof(Instance));
-	if (instances == NULL) {
-		CodeError_DATA(NULL, "Dataset_instanceAlloc - dynamic alloc instances");
-		return NULL;
-	}
+	assert(instances);
 
 	for (int i = 0; i < dataset->instanceCount; i++) {
 		Instance* inst_tmp = &instances[i];

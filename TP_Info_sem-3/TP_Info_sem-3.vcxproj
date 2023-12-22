@@ -24,7 +24,9 @@
     <ClInclude Include="DecisionTree_h.h" />
     <ClInclude Include="Paint_h.h" />
     <ClInclude Include="FileSave.h" />
+    <ClInclude Include="FileFonction.h" />
     <ClInclude Include="RandomForest_h.h" />
+    <ClInclude Include="SaveTree.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Split_h.h" />
   </ItemGroup>
@@ -33,9 +35,11 @@
     <ClCompile Include="Dataset_c.c" />
     <ClCompile Include="DecisionTree_c.c" />
     <ClCompile Include="FileSave.c" />
+    <ClCompile Include="FileFonction.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="Paint_c.c" />
     <ClCompile Include="RandomForest_c.c" />
+    <ClCompile Include="SaveTree.c" />
     <ClCompile Include="Split_c.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
