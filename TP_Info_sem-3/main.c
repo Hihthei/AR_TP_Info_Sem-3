@@ -46,16 +46,16 @@ int main(int argc, char** argv) {
             path_test = argv[2];
         }
         else {
-            path_pendigits_train = "../Dataset/PENDIGITS_train.txt";
-            path_pendigits_test = "../Dataset/PENDIGITS_test.txt";
-            path_fashion_train = "../Dataset/FASHION_train.txt";
-            path_fashion_test = "../Dataset/FASHION_test.txt";
+            //path_pendigits_train = "../Dataset/PENDIGITS_train.txt";
+            //path_pendigits_test = "../Dataset/PENDIGITS_test.txt";
+            //path_fashion_train = "../Dataset/FASHION_train.txt";
+            //path_fashion_test = "../Dataset/FASHION_test.txt";
             path_mnist_train = "../Dataset/MNIST_train.txt";
             path_mnist_test = "../Dataset/MNIST_test.txt";
         }
 
         #ifdef DATASET_MAISON
-        char* pathR = "../Dataset/WrittingTest4.bmp";
+        char* pathR = CHEMIN_IMAGE_BMP;
         Image* img = readImage(pathR);
         assert(img);
         char cookie = 0;
@@ -81,7 +81,12 @@ int main(int argc, char** argv) {
             copyDataset(pathD, pathC);
             testData = Dataset_readFromFile(pathC);
         }
-        #endif
+        #else
+        Dataset* testData = Dataset_readFromFile(path_mnist_test);
+        if (testData == NULL)
+            return EXIT_FAILURE;
+        
+        #endif    
 
         /*Subproblem* subproblem = Subproblem_create(10, 10, 10);
         if (subproblem == NULL)
@@ -90,10 +95,6 @@ int main(int argc, char** argv) {
         Dataset* trainData = Dataset_readFromFile(path_mnist_train);
         if (trainData == NULL)
             return EXIT_FAILURE; 
-
-        Dataset* testData = Dataset_readFromFile(path_mnist_test);
-        if (trainData == NULL)
-            return EXIT_FAILURE;
 
         Subproblem* subproblem = Dataset_getSubproblem(trainData);
         if (subproblem == NULL)
@@ -106,7 +107,7 @@ int main(int argc, char** argv) {
         Subproblem_print(subproblem);
 
         #ifdef ENSACHAGE_INITIAL
-        DecisionTreeNode* tree = DecisionTree_create(subproblem, 0, 25, 1.0f);
+        DecisionTreeNode* tree = DecisionTree_create(subproblem, 0, MAX_DEPTH, PRUNNING_THRESHOLD);
 
         if (tree == NULL)
             return EXIT_FAILURE;
@@ -118,7 +119,7 @@ int main(int argc, char** argv) {
         float scoreTest = DecisionTree_evaluate(tree, testData);
         printf("train = %.3f, test = %.3f\n", scoreTrain, scoreTest);
 
-        RandomForest* rf = RandomForest_create(5, trainData, 25, 0.5f, 1.0f);
+        RandomForest* rf = RandomForest_create(NOMBRE_ARBRES, trainData, MAX_DEPTH, BAGGING_PROPORTION, PRUNNING_THRESHOLD);
 
         int rf_nodeCount = RandomForest_nodeCount(rf);
 
@@ -129,7 +130,7 @@ int main(int argc, char** argv) {
         printf("train = %.3f, test = %.3f\n", trainScore, testScore);
 
         #else
-        DecisionTreeNode* tree = DecisionTree_create(subproblem, 0, 25, 1.0f);
+        DecisionTreeNode* tree = DecisionTree_create(subproblem, 0, MAX_DEPTH, PRUNNING_THRESHOLD);
 
         if (tree == NULL)
             return EXIT_FAILURE;
@@ -141,7 +142,7 @@ int main(int argc, char** argv) {
         float scoreTest = DecisionTree_evaluate(tree, testData);
         printf("train = %.3f, test = %.3f\n", scoreTrain, scoreTest);
 
-        RandomForest* rf = RandomForest_create(20, trainData, 30, 1.0f, 1.0f);
+        RandomForest* rf = RandomForest_create(NOMBRE_ARBRES, trainData, MAX_DEPTH, BAGGING_PROPORTION, PRUNNING_THRESHOLD);
 
         printf("Generation d'une foret de %d noeuds\n", RandomForest_nodeCount(rf));
 
