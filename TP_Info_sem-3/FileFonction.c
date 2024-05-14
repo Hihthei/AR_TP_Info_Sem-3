@@ -38,7 +38,7 @@ void FileFonction_fileOverwrite(char* fileName) {
 void FileFonction_createFile(char* fileName) {
 	assert(fileName);
 
-	char command[275] = "";
+	char command[256] = "";
 
 	sprintf(command, "ECHO.> %s", fileName);
 
@@ -51,7 +51,7 @@ void FileFonction_deleteFile(char* fileName) {
 	if (!FileFonction_fileExist(fileName))
 		return;
 
-	char command[275] = "";
+	char command[256] = "";
 
 	sprintf(command, "DEL %s", fileName);
 
